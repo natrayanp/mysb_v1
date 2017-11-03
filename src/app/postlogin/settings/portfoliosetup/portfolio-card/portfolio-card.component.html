@@ -196,7 +196,7 @@
                         <p><label><h3>{{stksummed}}</h3></label></p>
                         </div>
                         
-                    <div fxFlex>
+                    <div fxFlex [fxHide]="!onEdit" >
                         <label  >Balance Amount split by</label>
                         <mat-form-field fxFlex="1 1 25%">
                             
@@ -238,11 +238,11 @@
                                 <input matInput placeholder="LTP" formControlName= "pfstLtp" [readonly]="!onEdit" [(ngModel)]="Mypfdetailcpy.pfStocklists[i].pfstLtp">
                               </mat-form-field>
 
-                            <mat-form-field fxFlex="1 0 80px" *ngIf ="selectedAmtSplitType=='Amount'" >
+                            <mat-form-field fxFlex="1 0 80px" *ngIf ="selectedAmtSplitType=='Amount'" [fxHide]="!onEdit">
                                 <input matInput type="number" placeholder="Amount" formControlName= "pfstAmt" [readonly]="!onEdit" [(ngModel)]="Mypfdetailcpy.pfStocklists[i].pfstAmt">
                             </mat-form-field>
     
-                            <mat-form-field fxFlex="1 0 80px" *ngIf ="selectedAmtSplitType!='Amount'" >
+                            <mat-form-field fxFlex="1 0 80px" *ngIf ="selectedAmtSplitType!='Amount'" [fxHide]="!onEdit">
                             <input matInput placeholder="Percent" formControlName= "pfstPercent" [readonly]="!onEdit" [(ngModel)]="Mypfdetailcpy.pfStocklists[i].pfstPercent">
                             </mat-form-field>
 
@@ -406,7 +406,7 @@
 <div fxLayout="column">
         <pre>{{pfForm.value | json}}</pre>
 </div>
--->
+
 
 <div style="display: flex; justify-content: center;">
         <div style="padding: 1em; border: 1px solid lightgray;">
