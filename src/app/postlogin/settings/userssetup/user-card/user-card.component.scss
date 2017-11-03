@@ -1,0 +1,34 @@
+.my-card {
+    padding-top: 0;
+    
+    width: 350px;
+    margin:10px;
+    border:groove 1px green;
+  }
+
+  .my-card-image{
+      margin: 0 -24px 0 0;
+      width:100%;
+      height:250px;
+      background-size: cover;
+  }
+  
+  .example-header-image {
+    
+    background-size: cover;
+    
+  }
+  .shadow, .shadow:hover{
+    box-shadow: 10px 10px 5px #888888;
+    
+  }
+
+  .crdhdr{
+    margin:0 -24px 0 -24px;
+    height:70px;
+    
+  }
+
+  .full-width{
+    min-width:900px;
+  }

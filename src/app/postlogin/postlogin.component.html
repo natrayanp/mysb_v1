@@ -1,0 +1,35 @@
+<app-postlogintoolbar></app-postlogintoolbar>
+<mat-sidenav-container fullscreen style="margin-top:65px">
+    <mat-sidenav #navss mode="side" opened="true" class="mat-elevation-z4" style="background-color: white; width: 280px;"  >
+        <div fxFlexLayout="row" fxLayoutWrap  fxLayoutGap="500px">
+         <!-- sidenav content -->
+         <span>&nbsp;</span>
+         <a type ="button" mat-icon-button routerLink="/securedpg/dashboard" routerLinkActive="active" fxFlexAlign ="center" style="padding-left:10px; font-size:20px"> <mat-icon fxFlexAlign ="center">poll</mat-icon> &nbsp; Dashboard</a>
+
+         <a type ="button" mat-icon-button routerLink="/securedpg/orders" routerLinkActive="active" fxFlexAlign ="center" style="padding-left:10px; font-size:20px"> <mat-icon fxFlexAlign ="center">shopping_basket</mat-icon> &nbsp; Orders</a>
+         <a type ="button" mat-icon-button routerLink="/securedpg/dashboard" routerLinkActive="active" fxFlexAlign ="center" style="padding-left:10px; font-size:20px"> <mat-icon fxFlexAlign ="center">history</mat-icon> &nbsp; Order History</a>
+         <a type ="button" mat-icon-button routerLink="/securedpg/dashboard" routerLinkActive="active" fxFlexAlign ="center" style="padding-left:10px; font-size:20px"> <mat-icon fxFlexAlign ="center">account_balance</mat-icon> &nbsp; Holdings</a>
+         <a type ="button" mat-icon-button fxFlexAlign ="center" style="padding-left:10px; font-size:20px"> <mat-icon fxFlexAlign ="center">tune</mat-icon> &nbsp; Fund Allocation</a>
+         <a type ="button" mat-icon-button fxFlexAlign ="center" style="padding-left:10px; font-size:20px"> <mat-icon fxFlexAlign ="center">settings</mat-icon> &nbsp; Settings</a>
+         
+
+         <a type ="button" mat-icon-button routerLink="/securedpg/settings/portfoliosetup" routerLinkActive="active" fxFlexAlign ="center" style="padding-left:55px; font-size:18px"> <mat-icon fxFlexAlign ="center">card_travel</mat-icon> &nbsp; Portfolio</a>
+         <a type ="button" mat-icon-button routerLink="/securedpg/settings/usersetup" routerLinkActive="active" fxFlexAlign ="center" style="padding-left:55px; font-size:18px"> <mat-icon fxFlexAlign ="center">person_add</mat-icon> &nbsp; Users</a>
+
+         <a type ="button" mat-icon-button fxFlexAlign ="center" style="padding-left:10px; font-size:20px" (click)=navss.close()> <mat-icon fxFlexAlign ="center">folder_open</mat-icon> &nbsp; close NAV</a>
+
+       </div>        
+      </mat-sidenav> 
+        <div fxLayout="column" fxFlexFill>
+            
+                  <mat-card fxFlex>
+                        <router-outlet></router-outlet>
+                  </mat-card>
+            
+
+            
+        </div>
+
+</mat-sidenav-container>
+<!--button fxFlex mat-button (click)=navss.open() >Open</button>
+-->

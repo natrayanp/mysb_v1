@@ -1,0 +1,59 @@
+<form>
+<mat-card [ngClass]="{'shadow': onEdit}" fxLayout="column" fxLayouWrap class="my-card" >
+  <mat-card-header>
+      <mat-card-title [fxHide]="onEdit" ><h3>{{edittedUser.name}}</h3></mat-card-title>
+      <mat-form-field [fxShow]="onEdit"  class="example-full-width" >
+          <input matInput value={{edittedUser.name}} >
+      </mat-form-field>
+
+
+
+  </mat-card-header>
+  <img mat-card-image [src]="edittedUser.image" class=" my-card-image">
+  <mat-card-content>
+      <mat-card-title [fxHide]="onEdit" >{{edittedUser.usertype}}</mat-card-title>
+      <mat-form-field [fxShow]="onEdit"  class="example-full-width" >
+          <input matInput value={{edittedUser.usertype}} >
+      </mat-form-field>
+       
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button [fxHide]="onEdit" (click)="UserEdit($event)" color="accent" fxFlex="0 1 auto">Edit</button>
+    <button mat-raised-button (click)="UserCancel()" color="accent" fxFlex="0 1 auto">Cancel</button>
+    <button mat-raised-button [fxShow]="onEdit" (click)="UserSave()" color="accent" fxFlex="0 1 auto">Save</button>
+      <!--button mat-raised-button [fxHide]="onEdit" (click)="UserEdit($event)" color="accent">Edit</button>
+      <button mat-raised-button [fxShow]="onEdit" (click)="UserSave()" color="accent">Save</button>
+      <button mat-raised-button (click)="UserCancel()" color="accent">Cancel</button-->
+
+  </mat-card-actions>
+
+</mat-card>
+</form>
+
+<!--mat-card class="my-card" [ngClass]="{'shadow': onEdit}" fxLayout="column" fxLayouWrap>
+  <mat-card-header class='crdhdr' >
+    
+    <mat-card-title [fxHide]="onEdit" ><h3>{{edittedUser.name}}</h3></mat-card-title>
+
+    <div [fxShow]="onEdit">
+    <form >
+        <mat-form-field class="example-full-width" >
+          <input matInput value={{edittedUser.name}} >
+        </mat-form-field>
+      </form>
+    </div>  
+
+  </mat-card-header>
+
+  <img mat-card-image [src]="edittedUser.imglocation" class=" my-card-image">
+  
+  <mat-card-content>
+  
+   
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button [fxHide]="onEdit" (click)="UserEdit($event)" color="accent">Edit</button>
+    <button mat-raised-button [fxShow]="onEdit" (click)="UserSave()" color="accent">Save</button>
+    <button mat-raised-button (click)="UserCancel()" color="accent">Cancel</button>
+  </mat-card-actions>
+</mat-card-->

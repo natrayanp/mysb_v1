@@ -1,0 +1,426 @@
+
+<!-- This is to be placed in the parent item >
+<div fxLayout="row" fxLayoutWrap fxLayoutGap="10px" style="background-color: blue">
+<!-- This is to be placed in the parent item -->
+
+<!--
+
+<div fxLayout="row" fxLayouWrap fxFlex.lt-lg="0 1 100" fxFlex="1 1 40" style="background-color: brown">
+    <p > natra</p>
+</div>
+
+<div fxLayout="row" fxLayouWrap fxFlex.lt-lg="0 1 100" fxFlex="1 1 40" style="background-color: yellow">
+        <p > natra</p>
+    </div>
+
+-->
+
+
+
+<form [formGroup]="pfForm" >
+<mat-card  [ngClass]="{'shadow': onEdit}" style="margin-top:15px">
+    <mat-card-header>
+        <div fxLayout="row" fxLayoutWrap fxLayoutAlign="start center" fxFlex="1 1 100"> 
+      
+        <mat-card-title [fxHide]="onEdit"><h1>{{Mypfdetailcpy.pfPortfolioname}}</h1></mat-card-title>
+      
+        <mat-form-field [fxHide]="!onEdit" fxFlex>
+            <input matInput placeholder="Portfolioname" formControlName="pfPortfolioname" [(ngModel)]="Mypfdetailcpy.pfPortfolioname">
+            <mat-error *ngIf="!pfForm.controls['pfPortfolioname'].valid">
+                Portfolioname is <strong>required</strong>
+            </mat-error>
+        </mat-form-field >
+        </div>
+    
+    </mat-card-header>
+    <mat-card-content >
+<!--  This is for NONEDIT START-->
+<div [fxHide]="onEdit" fxFlexLayout="row" fxLayoutWrap> 
+      
+      
+      <div  fxFlex="1 0 120px" fxFlex="1 0 100%" style="line-height: 0.5em;"> 
+
+          <p><label matInput  fxFlex="100%">Pupose of portfolio:</label></p>
+          <p ><label><h3>Summa summa</h3></label></p>
+      
+      </div>
+
+      <div fxFlex="1 0 120px" style="line-height: 0.5em;"> 
+          
+          <p>Start date  </p>
+          <p ><label><h3>{{today|date:"dd-MM-yyyy"}}</h3></label></p>
+          
+                
+      </div>
+
+      <div  fxFlex="1 0 120px" style="line-height: 0.5em;"> 
+
+          <p>End date  </p>
+          <p ><label><h3>{{today|date:"dd-MM-yyyy"}}</h3></label></p>
+          
+         
+                
+                </div>
+
+
+                <div  fxFlex="1 0 120px" style="line-height: 0.5em;"> 
+                    
+                    <p>Investment Amount  </p>
+                    <p ><label><h3>10000</h3></label></p>                   
+                          
+                          </div>
+
+
+                          <div  fxFlex="1 0 120px" style="line-height: 0.5em;"> 
+                              <p>Investment Freq  </p>
+                              <p ><label><h3>Daily</h3></label></p>
+                              
+                                    
+                                    </div>
+                                    <div  fxFlex="1 0 120px" style="line-height: 0.5em;"> 
+                                        
+                                        <p>Target Percent </p>
+                                        <p ><label><h3>10%</h3></label></p>
+                                              
+                                    </div>
+                                  
+
+
+    </div>
+
+<!--  This is for NONEDIT END-->
+
+
+<!--  This is for edit START-->
+
+    <div [fxHide]="!onEdit" fxFlexLayout="row" fxLayoutWrap> 
+        
+        
+        <div  fxFlex="1 0 120px" fxFlex="1 0 100%" style="line-height: 0.5em;"> 
+  
+            <mat-form-field  fxFlex="100%">
+                <textarea matInput  placeholder="Pupose of PF" formControlName="pfPurpose" ></textarea>
+      
+            </mat-form-field >
+        
+        </div>
+  
+        <div fxFlex="1 0 120px" style="line-height: 0.5em;"> 
+            
+            <mat-form-field  fxFlex="1 0 120px">
+                <input matInput [min]="today" [matDatepicker]="picker1" placeholder="Start date" formControlName= "pfStartDt" [value]="today" >
+                <mat-datepicker-toggle matSuffix [for]="picker1" ></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
+            
+            
+                  
+        </div>
+  
+        <div  fxFlex="1 0 120px" style="line-height: 0.5em;"> 
+  
+            <mat-form-field fxFlex="1 0 120px">
+                <input  matInput [min]="today" [matDatepicker]="picker2" placeholder="Target End date" formControlName= "pfTargetDt" >
+                <mat-datepicker-toggle matSuffix [for]="picker2" ></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+              </mat-form-field>
+            
+           
+                  
+                  </div>
+  
+  
+                  <div  fxFlex="1 0 120px" style="line-height: 0.5em;"> 
+                      
+                      <mat-form-field  fxFlex="1 0 120px">
+                          
+                          <input type="number" matInput placeholder="Investment Amount"  formControlName= "pfPlannedInvAmt">   
+                          
+                        </mat-form-field>              
+                            
+                            </div>
+  
+  
+                            <div  fxFlex="1 0 120px" style="line-height: 0.5em;"> 
+                                <mat-form-field fxFlex="1 0 120px">
+                                    <input type="text" placeholder="Investment Freq" matInput formControlName="pfInvAmtFeq" [matAutocomplete]="auto1" [(ngModel)]="Invfreq">
+                                    <mat-autocomplete #auto1="matAutocomplete">
+                                      <mat-option *ngFor="let freq of freqs" [value]="freq" >
+                                        {{ freq }}
+                                      </mat-option>
+                                    </mat-autocomplete>
+                                  </mat-form-field>
+                                
+                                      
+                                      </div>
+                                      <div  fxFlex="1 0 120px" style="line-height: 0.5em;"> 
+                                          
+                                          <mat-form-field  fxFlex="1 0 120px">
+                                              
+                                              <input type="number" matInput placeholder="Percent"  formControlName= "pfTargetIntRate">
+                                              <span matSuffix>&nbsp;%</span>
+                                              
+                                            </mat-form-field>
+                                                
+                                      </div>
+                                    
+  
+  
+      </div>
+      <!--  This is for edit END-->
+
+      <!-- This is for any new row -->
+
+    <div fxFlexLayout="row" fxLayoutAlign="center center" > 
+        <mat-expansion-panel fxFlex = "1 1 auto">
+            <mat-expansion-panel-header>
+              <mat-panel-title fxFlexAlign="center" style="color:rgb(74, 23, 190)">
+                <h3>Stock List</h3>
+              </mat-panel-title>
+              <mat-panel-description fxFlexAlign="center">
+                Stocks Planned
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            
+            <!--mat-toolbar ><span>MyToolBar</span-->
+
+                <div fxLayout="row"  fxLayoutWrap fxLayoutAlign ="end center" style="line-height: 0.5em;">
+                    
+                        <div fxFlex>
+                        <label >Balance Left :</label> 
+                        <p><label><h3>{{balanceleft}}</h3></label></p>
+                        </div>
+
+                        <div fxFlex>
+                        <label >Allocated For Stock :</label> 
+                        <p><label><h3>{{stksummed}}</h3></label></p>
+                        </div>
+                        
+                    <div fxFlex>
+                        <label  >Balance Amount split by</label>
+                        <mat-form-field fxFlex="1 1 25%">
+                            
+                            <input type="text" matInput formControlName="pfStkAmtsplittype" [matAutocomplete]="auto2" [(ngModel)]="selectedAmtSplitType" [readonly]="!onEdit">
+                            <mat-autocomplete #auto2="matAutocomplete">
+                              <mat-option *ngFor="let AmtSplitType of AmtSplitTypes" [value]="AmtSplitType" (onSelectionChange)="AmtSplitchange(AmtSplitType)">
+                                {{ AmtSplitType }}
+                              </mat-option>
+                            </mat-autocomplete>
+                          </mat-form-field>
+                    </div>
+                    
+    
+                    
+                </div>
+
+            <!--/mat-toolbar-->
+            &nbsp;
+            &nbsp;
+            
+                    
+                      <div formArrayName="pfStocklists">
+                    
+                      <div *ngFor="let pfStocklist of pfForm.controls.pfStocklists.controls; let i=index"  [formGroupName]="i">
+                        
+
+                        <div fxFlexLayout="row"  fxLayoutWrap>
+                           
+                        
+                            <mat-form-field fxFlex="1 0 80px">
+                                <input matInput placeholder="Exchange" formControlName= "pfstExchange" [readonly]="!onEdit" [(ngModel)]="Mypfdetailcpy.pfStocklists[i].pfstExchange" >
+                            </mat-form-field>
+
+                            <mat-form-field fxFlex="1 0 80px">
+                                <input matInput placeholder="Trading Symbol" formControlName= "pfstTradingsymbl" [readonly]="!onEdit" [(ngModel)]="Mypfdetailcpy.pfStocklists[i].pfstTradingsymbl">
+                              </mat-form-field>
+
+                              <mat-form-field fxFlex="1 0 80px">
+                                <input matInput placeholder="LTP" formControlName= "pfstLtp" [readonly]="!onEdit" [(ngModel)]="Mypfdetailcpy.pfStocklists[i].pfstLtp">
+                              </mat-form-field>
+
+                            <mat-form-field fxFlex="1 0 80px" *ngIf ="selectedAmtSplitType=='Amount'" >
+                                <input matInput type="number" placeholder="Amount" formControlName= "pfstAmt" [readonly]="!onEdit" [(ngModel)]="Mypfdetailcpy.pfStocklists[i].pfstAmt">
+                            </mat-form-field>
+    
+                            <mat-form-field fxFlex="1 0 80px" *ngIf ="selectedAmtSplitType!='Amount'" >
+                            <input matInput placeholder="Percent" formControlName= "pfstPercent" [readonly]="!onEdit" [(ngModel)]="Mypfdetailcpy.pfStocklists[i].pfstPercent">
+                            </mat-form-field>
+
+                            <mat-form-field fxFlex="1 0 80px">
+                                <input matInput type="number" placeholder="Alloted Amt" formControlName= "pfstAllotedAmt" readonly [(ngModel)]="Mypfdetailcpy.pfStocklists[i].pfstAllotedAmt">
+                            </mat-form-field>
+    
+                            <mat-form-field fxFlex="1 0 80px">
+                            <input matInput placeholder="Total Units" formControlName= "pfstTotUnit" readonly [(ngModel)]="Mypfdetailcpy.pfStocklists[i].pfstTotUnit">
+                            </mat-form-field>
+                        
+                        
+                        <button mat-icon-button *ngIf="pfForm.controls.pfStocklists.controls.length > 1" (click)="deleteStkRow(i)" [fxHide]="!onEdit"><mat-icon fxAlign="end">cancel</mat-icon></button>
+                        </div>
+                    </div>                    
+                  
+                   <button mat-icon-button (click)="addNewStkRow()" [fxHide]="!onEdit"><mat-icon fxAlign="end" >add</mat-icon></button>
+
+            
+                               </div>
+          </mat-expansion-panel>
+        
+    </div>
+    <div>
+        <span><br></span>
+    </div>
+    <div fxFlexLayout="row" fxLayoutAlign="center center" > 
+        <mat-expansion-panel fxFlex = "1 1 auto">
+            <mat-expansion-panel-header>
+              <mat-panel-title fxFlexAlign="center" style="color:rgb(74, 23, 190)">
+                <h3>Mutual Fund List</h3>
+              </mat-panel-title>
+              <mat-panel-description fxFlexAlign="center">
+                Funds Planned
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            
+            <!--mat-toolbar ><span>MyToolBar</span-->
+
+                <div fxLayout="row"  fxLayoutWrap  >
+                        
+                            <div fxFlex>
+                            <label >Balance Left :</label> 
+                            <p><label><h3>{{balanceleft}}</h3></label></p>
+                            </div>
+
+                            <div fxFlex>
+                            <label >Allocated For MF :</label> 
+                            <p><label><h3>{{mfsummed}}</h3></label></p>
+                            </div>
+                            
+                        <div>
+                        <label fxFlex>Balance Amount split by</label>
+                        <mat-form-field fxFlex="1 1 25%">                            
+                            <input type="text" matInput formControlName="pfmfAmtsplittype" [matAutocomplete]="auto3" [(ngModel)]="selectedMFAmtSplitType" [readonly]="!onEdit">
+                            <mat-autocomplete #auto3="matAutocomplete">
+                              <mat-option *ngFor="let AmtSplitType of AmtSplitTypes" [value]="AmtSplitType" (onSelectionChange)="MFAmtSplitchange(AmtSplitType)">
+                                {{ AmtSplitType }}
+                              </mat-option>
+                            </mat-autocomplete>
+                          </mat-form-field>
+                        </div>
+                        
+        
+                        
+                    </div>
+            <!--/mat-toolbar-->
+               
+                    
+                      <div formArrayName="pfMFlists">
+                    
+                      <div *ngFor="let pfMFlist of pfForm.controls.pfMFlists.controls; let i=index"  [formGroupName]="i">
+                        
+
+                        <div fxFlexLayout="row"  fxLayoutWrap>
+                           
+                        
+                            <mat-form-field fxFlex="1 0 80px">
+                                <input matInput placeholder="Exchange" formControlName= "pfmfFundname" [readonly]="!onEdit" [(ngModel)]="Mypfdetailcpy.pfMFlists[i].pfmfFundname" >
+                            </mat-form-field>
+
+                            <mat-form-field fxFlex="1 0 80px">
+                                <input matInput placeholder="Trading Symbol" formControlName= "pfmfNAV" [readonly]="!onEdit" [(ngModel)]="Mypfdetailcpy.pfMFlists[i].pfmfNAV">
+                              </mat-form-field>
+
+                            <mat-form-field fxFlex="1 0 80px" *ngIf ="selectedMFAmtSplitType=='Amount'" >
+                                <input matInput type="number" placeholder="Amount" formControlName= "pfmfAmt" [readonly]="!onEdit" [(ngModel)]="Mypfdetailcpy.pfMFlists[i].pfmfAmt">
+                            </mat-form-field>
+    
+                            <mat-form-field fxFlex="1 0 80px" *ngIf ="selectedMFAmtSplitType!='Amount'" >
+                            <input matInput placeholder="Percent" formControlName= "pfmfPercent" [readonly]="!onEdit" [(ngModel)]="Mypfdetailcpy.pfMFlists[i].pfmfPercent">
+                            </mat-form-field>
+
+                            <mat-form-field fxFlex="1 0 80px">
+                                <input matInput type="number" placeholder="Alloted Amt" formControlName= "pfmfAllotedAmt" readonly [(ngModel)]="Mypfdetailcpy.pfMFlists[i].pfmfAllotedAmt">
+                            </mat-form-field>
+                        
+                        
+                        <button mat-icon-button *ngIf="pfForm.controls.pfMFlists.controls.length > 1" (click)="deleteMFRow(i)" [fxHide]="!onEdit"><mat-icon fxAlign="end">cancel</mat-icon></button>
+                        </div>
+                    </div>                    
+                  
+                   <button mat-icon-button (click)="addNewMFRow()" [fxHide]="!onEdit"><mat-icon fxAlign="end" >add</mat-icon></button>
+
+            
+                               </div>
+          </mat-expansion-panel>
+        
+    </div>
+<!--
+
+        <div [fxHide]="onEdit" fxFlexLayout="row" fxLayoutWrap> 
+        <div style="background-color: blue" fxFlex="1 0 120px"> 
+            
+            <p>new page</p>
+                  
+        </div>
+      </div>
+
+
+
+      <div [fxHide]="onEdit" fxFlexLayout="row" fxLayoutWrap> 
+          
+          
+          <div style="background-color: brown" fxFlex="1 0 120px"> 
+    
+       <p>dkdkdkdkkd</p>
+          
+          </div>
+    
+          <div style="background-color: green" fxFlex="1 0 120px"> 
+              
+              <p>dkdkdkdkkd</p>
+                    
+          </div>
+</div-->
+
+
+    </mat-card-content>
+
+    <mat-card-actions>
+        <div fxLayout="row" fxLayoutWrap fxLayoutAlign="center center"> 
+        
+        <button mat-raised-button (click)="cancel_cardedit(index)" color="accent" [fxHide]="Cancelutlogic()" >Cancel</button>   
+        
+        <button mat-raised-button (click)="UserEdit($event)" color="accent" [fxHide]="onEdit"  >Edit</button>
+        <span fxFlex="30" [fxHide]="!onEdit"></span>      
+        
+        <button mat-raised-button  (click)="save_cardedit(pfForm)" color="accent" [fxHide]="!onEdit"> Save</button>
+      
+
+          </div>
+      </mat-card-actions>
+  
+</mat-card>
+
+</form>
+
+<!--
+    ##### DON NOT DELETED.  THIS IS FOR DEBUGGING #####
+<div fxLayout="column">
+        <pre>{{pfForm.value | json}}</pre>
+</div>
+-->
+
+<div style="display: flex; justify-content: center;">
+        <div style="padding: 1em; border: 1px solid lightgray;">
+          <h5>Form Controls:</h5>
+          <pre>{{ pfForm.value | json }}</pre>
+        </div>
+        <div style="padding: 1em; border: 1px solid lightgray;">
+          <h5>myModelcpy</h5>
+          <pre>{{ Mypfdetailcpy | json }}</pre>
+        </div>
+        <div style="padding: 1em; border: 1px solid lightgray;">
+                <h5>myModel</h5>
+                <pre>{{ Mypfdetail | json }}</pre>
+              </div>
+      </div>
+
+<!--##### DON NOT DELETED.  THIS IS FOR DEBUGGING #####-->

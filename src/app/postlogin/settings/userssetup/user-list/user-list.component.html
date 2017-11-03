@@ -1,0 +1,13 @@
+<mat-toolbar color ="primary">
+  <button mat-raised-button color="warn">add</button>
+  <span>&nbsp;</span>
+  <button mat-raised-button color="warn">Cancel</button>
+</mat-toolbar>
+
+
+
+<div fxLayoutWrap>
+<div *ngFor="let user of Users" >    
+    <app-user-card [edittedUser]="user"> </app-user-card>
+</div>
+</div>
