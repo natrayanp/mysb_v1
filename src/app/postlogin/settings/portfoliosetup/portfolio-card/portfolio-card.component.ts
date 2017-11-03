@@ -21,6 +21,7 @@ export class PortfolioCardComponent implements OnInit
   today = new Date();
   @Input() Mypfdetail;
   @Input() OnAdd;
+  
   Mypfdetailcpy:any;
   OnAddEdit=false;
 
@@ -401,6 +402,8 @@ cancel_cardedit(i){
 
 save_cardedit(pfFormfrm){
   this.onEdit=!this.onEdit;
+  console.log("natnat");
+  console.log(pfFormfrm);
   this.cardsave.emit(pfFormfrm);
   
   //To be implemented either with service or with emitter to go back to parent

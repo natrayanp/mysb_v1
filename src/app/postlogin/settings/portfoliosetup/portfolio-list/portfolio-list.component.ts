@@ -78,13 +78,13 @@ cardacancel(event,index){
 
 }
 
-cardasave(event,pfformobj){
+cardasave(pfformobj){
   //this.onAddmode=!this.onAddmode;
   console.log("save card");
   console.log(event);
   console.log(pfformobj);
   console.log(pfformobj.value);
-  this.pfdetails.unshift(pfformobj.value);
+  //this.pfdetails.unshift(pfformobj.value);
 // logic to be added to save it in DB
 
 }
