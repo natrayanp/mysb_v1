@@ -21,6 +21,7 @@ export class PortfolioCardComponent implements OnInit
   today = new Date();
   @Input() Mypfdetail;
   @Input() OnAdd;
+  @Input() myindex;
   
   Mypfdetailcpy:any;
   OnAddEdit=false;
@@ -97,7 +98,9 @@ export class PortfolioCardComponent implements OnInit
 
  //Empty
  console.log("this.Mypfdetail");
- console.log(this.Mypfdetail);
+  console.log(this.Mypfdetail);
+  console.log("this.myindex");
+  console.log(this.myindex);
     if (this.Mypfdetail == null || this.Mypfdetail.pfportfolioname == null )
     {
       this.onEdit=true;
@@ -108,6 +111,7 @@ export class PortfolioCardComponent implements OnInit
     if(this.Mypfdetail.pfmfAmtsplittype !== null){
       this.selectedMFAmtSplitType = this.Mypfdetail.pfmfamtsplittype;
     }
+    
     
 
     this.pfForm = this.pffb.group({ 
@@ -134,7 +138,7 @@ export class PortfolioCardComponent implements OnInit
   console.log("check mypfdetailscopy");
   console.log(JSON.stringify(this.Mypfdetailcpy));
 
-      this.pfForm.get('pfStocklists').valueChanges.subscribe(values => {
+     this.pfForm.get('pfStocklists').valueChanges.subscribe(values => {
      resolvedPromise.then(() => {
         
        switch (this.pfForm.controls.pfStkAmtsplittype.value)
@@ -396,5 +400,11 @@ save_cardedit(pfFormfrm){
   
   //To be implemented either with service or with emitter to go back to parent
 }
+
+chtoupper(){
+  console.log("inside key press");
+  this.Mypfdetailcpy.pfportfolioname=this.Mypfdetailcpy.pfportfolioname.toUpperCase();
+}
+
 
 }

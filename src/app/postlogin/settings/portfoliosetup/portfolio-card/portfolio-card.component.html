@@ -25,13 +25,16 @@
         <mat-card-title [fxHide]="onEdit"><h1>{{Mypfdetailcpy.pfportfolioname}}</h1></mat-card-title>
       
         <mat-form-field [fxHide]="!onEdit" fxFlex>
-            <input matInput placeholder="Portfolioname" formControlName="pfPortfolioname" [(ngModel)]="Mypfdetailcpy.pfportfolioname">
+            <input matInput placeholder="Portfolioname" formControlName="pfPortfolioname" [(ngModel)]="Mypfdetailcpy.pfportfolioname" (keyup)="chtoupper()">
             <mat-error *ngIf="!pfForm.controls['pfPortfolioname'].valid">
                 Portfolioname is <strong>required</strong>
             </mat-error>
         </mat-form-field >
         </div>
-    
+        <label style="color:green">{{myindex + 1}}</label>
+        <!--mat-chip-list>
+            <mat-chip selected="true" style="background-color:green; color:white; font:30px"><strong>{{myindex + 1}} of {{myindex + 1}}</strong></mat-chip>
+          </mat-chip-list-->
     </mat-card-header>
     <mat-card-content >
 <!--  This is for NONEDIT START-->
@@ -414,7 +417,7 @@
         <pre>{{pfForm.value | json}}</pre>
 </div>
 
--->
+
 <div style="display: flex; justify-content: right;">
         <div style="padding: 1em; border: 1px solid lightgray;">
           <h5>pfForm Controls:</h5>

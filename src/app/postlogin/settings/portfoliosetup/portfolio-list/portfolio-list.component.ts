@@ -97,7 +97,7 @@ CanceladdNewPortfolio(){
 }
 
 cardasave(pfformobj){
-  this.onAddmode=!this.onAddmode;
+  
   console.log("save card");
   console.log(event);
   console.log(pfformobj);
@@ -115,6 +115,7 @@ cardasave(pfformobj){
 }
 
 cardasaveNewPortfolio(formval){
+  this.onAddmode=!this.onAddmode;
   this.onfetch=!this.onfetch;
   this.pfdetails.shift(formval);
 }
