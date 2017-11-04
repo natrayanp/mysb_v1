@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 //import { HttpModule }    from '@angular/http';
 
 
+
 import { MatSidenavModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material';
 import { MatButtonModule } from '@angular/material';
@@ -58,6 +59,7 @@ import { PortfolioListComponent } from './postlogin/settings/portfoliosetup/port
 import { GooglePieChartService } from './googlechartservice/google-pie-chart.service';
 import { ChartComponent } from './chart/chart.component';
 import { PfserviceService } from './natservices/pfservice.service'
+import { SettingspfService } from './natservices/settingspf.service'
 
 @NgModule({
   declarations: [
@@ -111,7 +113,7 @@ import { PfserviceService } from './natservices/pfservice.service'
     RouterModule.forRoot(ROUTES ,/*{enableTracing: true }*/)
   ],
   entryComponents: [Dialog1,PfqtypopupComponent],
-  providers: [SetjwtService,GooglePieChartService],
+  providers: [SetjwtService,GooglePieChartService,SettingspfService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

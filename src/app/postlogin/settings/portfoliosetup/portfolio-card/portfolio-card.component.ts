@@ -30,22 +30,22 @@ export class PortfolioCardComponent implements OnInit
 
  
  emptyPayOff = {
-      pfstExchange: "",
-      pfstTradingsymbl: "",
-      pfstLtp: 0,
-      pfstAmt: 0,
-      pfstPercent: 0,
-      pfstAllotedAmt: 0,
-      pfstTotUnit: 0
+      pfstexchange: "",
+      pfsttradingsymbl: "",
+      pfstltp: 0,
+      pfstamt: 0,
+      pfstpercent: 0,
+      pfstallotedamt: 0,
+      pfsttotunit: 0
     };
 
 
     emptymf= {
-      pfmfFundname: "",
-      pfmfNAV: 0,
-      pfmfAmt: 0,
-      pfmfPercent: 0,
-      pfmfAllotedAmt: 0
+      pfmffundname: "",
+      pfmfnav: 0,
+      pfmfamt: 0,
+      pfmfpercent: 0,
+      pfmfallotedamt: 0
     };
  
   freqs = ['Daily','Weekly','Fortnightly','Monthly','Quaterly','Halfyearly','Yearly','Adhoc'];
@@ -96,15 +96,17 @@ export class PortfolioCardComponent implements OnInit
  // this has to come from master component*/
 
  //Empty
-    if (this.Mypfdetail == null || this.Mypfdetail.pfPortfolioname == null )
+ console.log("this.Mypfdetail");
+ console.log(this.Mypfdetail);
+    if (this.Mypfdetail == null || this.Mypfdetail.pfportfolioname == null )
     {
       this.onEdit=true;
     }
-    if(this.Mypfdetail.pfStkAmtsplittype !== null){
-      this.selectedAmtSplitType = this.Mypfdetail.pfStkAmtsplittype;
+    if(this.Mypfdetail.pfstksmtsplittype !== null){
+      this.selectedAmtSplitType = this.Mypfdetail.pfstkamtsplittype;
     }
     if(this.Mypfdetail.pfmfAmtsplittype !== null){
-      this.selectedMFAmtSplitType = this.Mypfdetail.pfmfAmtsplittype;
+      this.selectedMFAmtSplitType = this.Mypfdetail.pfmfamtsplittype;
     }
     
 
@@ -123,40 +125,12 @@ export class PortfolioCardComponent implements OnInit
       pfmfAmtsplittype:[null,Validators.required],
       pfSummed: [0],
       pfStocklists:new FormArray([]),
-      pfMFlists:new FormArray([])
-      /*this.pffb.array([
-        this.initStkItemRows()])*/
-      
+      pfMFlists:new FormArray([])  
       });
 
     
     this.FormCardpopulate();
 
-    /* replacing the below with populatevalues() function
-
-    this.Mypfdetailcpy=JSON.parse(JSON.stringify(this.Mypfdetail));
-      
-    
-    if (this.Mypfdetailcpy !== null){
-    this.Mypfdetailcpy.pfStocklists.forEach( 
-      (stklstobjor) => {
-        //this.pfForm.controls.pfStocklists.push(this.initStkItemRows(po);
-        var scontrol = <FormArray>this.pfForm.controls['pfStocklists'];
-        scontrol.push(this.initStkItemRows(stklstobjor));
-       
-      }
-      
-    );
-
-    this.Mypfdetailcpy.pfMFlists.forEach( 
-      (mflstobjor) => {
-        //this.pfForm.controls.pfStocklists.push(this.initStkItemRows(po);
-        var scontrol = <FormArray>this.pfForm.controls['pfMFlists'];
-        scontrol.push(this.initMFItemRows(mflstobjor));
-       
-      }
-    );
-  }*/
   console.log("check mypfdetailscopy");
   console.log(JSON.stringify(this.Mypfdetailcpy));
 
@@ -166,21 +140,27 @@ export class PortfolioCardComponent implements OnInit
        switch (this.pfForm.controls.pfStkAmtsplittype.value)
        {
          case "%":
+         console.log("inside %");
             values.forEach((cure,inder) => {             
-              
-              this.Mypfdetailcpy.pfStocklists[inder].pfstAllotedAmt = this.Mypfdetailcpy.pfPlannedInvAmt *(this.Mypfdetailcpy.pfStocklists[inder].pfstPercent/100);
-              this.Mypfdetailcpy.pfStocklists[inder].pfstTotUnit = (Math.floor((this.Mypfdetailcpy.pfStocklists[inder].pfstAllotedAmt/this.Mypfdetailcpy.pfStocklists[inder].pfstLtp))).toFixed(0);
+              console.log("this.Mypfdetailcpy.pfplannedinvamt");
+              console.log(this.Mypfdetailcpy.pfplannedinvamt);
+              console.log("this.Mypfdetailcpy.pfstklist[inder].pfstpercent");
+              console.log(this.Mypfdetailcpy.pfstklist[inder].pfstpercent);
+
+
+              this.Mypfdetailcpy.pfstklist[inder].pfstallotedamt = this.Mypfdetailcpy.pfplannedinvamt *(this.Mypfdetailcpy.pfstklist[inder].pfstpercent/100);
+              this.Mypfdetailcpy.pfstklist[inder].pfstTotUnit = (Math.floor((this.Mypfdetailcpy.pfstklist[inder].pfstallotedamt/this.Mypfdetailcpy.pfstklist[inder].pfstltp))).toFixed(0);
             });
             break;
 
          case "Amount":
             values.forEach((cure,inder) => {
-              this.Mypfdetailcpy.pfStocklists[inder].pfstAllotedAmt = <number>this.Mypfdetailcpy.pfStocklists[inder].pfstAmt;
-              this.Mypfdetailcpy.pfStocklists[inder].pfstTotUnit = (Math.floor((this.Mypfdetailcpy.pfStocklists[inder].pfstAllotedAmt/this.Mypfdetailcpy.pfStocklists[inder].pfstLtp))).toFixed(0);
+              this.Mypfdetailcpy.pfstklist[inder].pfstallotedamt = <number>this.Mypfdetailcpy.pfstklist[inder].pfstamt;
+              this.Mypfdetailcpy.pfstklist[inder].pfstTotUnit = (Math.floor((this.Mypfdetailcpy.pfstklist[inder].pfstallotedamt/this.Mypfdetailcpy.pfstklist[inder].pfstltp))).toFixed(0);
             });
           break;
         default:
-            values.forEach((cure,inder) => this.Mypfdetailcpy.pfStocklists[inder].pfstTotUnit = 0);
+            values.forEach((cure,inder) => this.Mypfdetailcpy.pfstklist[inder].pfstTotUnit = 0);
             break;
         };
 
@@ -188,8 +168,8 @@ export class PortfolioCardComponent implements OnInit
 
         this.stksummed = values.reduce((acc, cur) => acc + cur.pfstAllotedAmt, 0);
         this.summed = this.mfsummed  + this.stksummed;
-        this.Mypfdetailcpy.pfSummed = this.summed;
-        this.balanceleft= this.Mypfdetailcpy.pfPlannedInvAmt - this.Mypfdetailcpy.pfSummed ;
+        this.Mypfdetailcpy.pfsummed = this.summed;
+        this.balanceleft= this.Mypfdetailcpy.pfplannedinvamt - this.Mypfdetailcpy.pfsummed ;
       
       });
       //this.summed = values.reduce((acc, cur) => acc + cur.pfstTotUnit, 0);
@@ -206,24 +186,23 @@ export class PortfolioCardComponent implements OnInit
           case "%":
              values.forEach((cure,inder) => {             
                
-               this.Mypfdetailcpy.pfMFlists[inder].pfmfAllotedAmt = this.Mypfdetailcpy.pfPlannedInvAmt * (this.Mypfdetailcpy.pfMFlists[inder].pfmfPercent/100);
-               //this.Mypfdetailcpy.pfMFlists[inder].pfstTotUnit = this.Mypfdetailcpy.pfMFlists[inder].pfmfAllotedAmt/this.Mypfdetailcpy.pfStocklists[inder].pfmfLtp;
+               this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamt = this.Mypfdetailcpy.pfplannedinvamt * (this.Mypfdetailcpy.pfmflist[inder].pfmfpercent/100);
+               //this.Mypfdetailcpy.pfmflist[inder].pfstTotUnit = this.Mypfdetailcpy.pfmflist[inder].pfmfAllotedAmt/this.Mypfdetailcpy.pfstklist[inder].pfmfLtp;
              });
              break;
  
           case "Amount":
              values.forEach((cure,inder) => {
-               this.Mypfdetailcpy.pfMFlists[inder].pfmfAllotedAmt = this.Mypfdetailcpy.pfMFlists[inder].pfmfAmt;
-               //this.Mypfdetailcpy.pfStocklists[inder].pfstTotUnit = this.Mypfdetailcpy.pfStocklists[inder].pfstAllotedAmt/this.Mypfdetailcpy.pfStocklists[inder].pfstLtp;
+               this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamt = this.Mypfdetailcpy.pfmflist[inder].pfmfamt;
+               //this.Mypfdetailcpy.pfstklist[inder].pfstTotUnit = this.Mypfdetailcpy.pfstklist[inder].pfstAllotedAmt/this.Mypfdetailcpy.pfstklist[inder].pfstLtp;
              });
            break;
          };
          
          this.mfsummed = values.reduce((acc, cur) => acc + cur.pfmfAllotedAmt, 0);
          this.summed = this.mfsummed  + this.stksummed;
-         this.Mypfdetailcpy.pfSummed = this.summed;
-
-         this.balanceleft= this.Mypfdetailcpy.pfPlannedInvAmt - this.Mypfdetailcpy.pfSummed ;
+         this.Mypfdetailcpy.pfsummed = this.summed;
+         this.balanceleft= this.Mypfdetailcpy.pfplannedinvamt - this.Mypfdetailcpy.pfsummed ;
         
        });
       
@@ -277,11 +256,11 @@ initStkItemRows(payOffObj) {
 
  
 AmtSplitchange(newobjval){
- this.Mypfdetailcpy.pfStkAmtsplittype = this.selectedAmtSplitType;
- this.Mypfdetailcpy.pfStocklists.forEach((cure,inder) => {
+ this.Mypfdetailcpy.pfstkamtsplittype = this.selectedAmtSplitType;
+ this.Mypfdetailcpy.pfstklist.forEach((cure,inder) => {
 
-  this.Mypfdetailcpy.pfStocklists[inder].pfstAmt = 0;
-  this.Mypfdetailcpy.pfStocklists[inder].pfstPercent = 0;
+  this.Mypfdetailcpy.pfstklist[inder].pfstamt = 0;
+  this.Mypfdetailcpy.pfstklist[inder].pfstpercent = 0;
   const control3 = (<FormGroup>(<FormArray>this.pfForm.controls['pfStocklists']).controls[inder]).controls['pfstAmt'].patchValue(0);   
   const control4 = (<FormGroup>(<FormArray>this.pfForm.controls['pfStocklists']).controls[inder]).controls['pfstPercent'].patchValue(0);     
 
@@ -290,11 +269,11 @@ AmtSplitchange(newobjval){
 }
 
 MFAmtSplitchange(newobjval){
-  this.Mypfdetailcpy.pfmfAmtsplittype = this.selectedMFAmtSplitType;
+  this.Mypfdetailcpy.pfmfamtsplittype = this.selectedMFAmtSplitType;
 
- this.Mypfdetailcpy.pfMFlists.forEach((cure,inder) => {
-    this.Mypfdetailcpy.pfMFlists[inder].pfstAmt = 0;
-    this.Mypfdetailcpy.pfMFlists[inder].pfstPercent = 0;
+ this.Mypfdetailcpy.pfmflist.forEach((cure,inder) => {
+    this.Mypfdetailcpy.pfmflist[inder].pfstamt = 0;
+    this.Mypfdetailcpy.pfmflist[inder].pfmfpercent = 0;
     const control3 = (<FormGroup>(<FormArray>this.pfForm.controls['pfMFlists']).controls[inder]).controls['pfmfAmt'].patchValue(0);
     const control4 = (<FormGroup>(<FormArray>this.pfForm.controls['pfMFlists']).controls[inder]).controls['pfmfPercent'].patchValue(0);        
   });
@@ -305,9 +284,12 @@ MFAmtSplitchange(newobjval){
 addNewStkRow() {
   event.preventDefault(); // ensure this button doesn't try to submit the form
 
-
-    this.Mypfdetailcpy.pfStocklists.push(JSON.parse(JSON.stringify(this.emptyPayOff)));
-    //this.pfForm.controls.payOffs.push(this.createPayOffFormGroup(emptyPayOff)); 
+    
+    if(this.Mypfdetailcpy.pfstklist == null){
+      this.Mypfdetailcpy.pfstklist=[];
+    } 
+    this.Mypfdetailcpy.pfstklist.push(JSON.parse(JSON.stringify(this.emptyPayOff)));
+    
 
        const control = <FormArray>this.pfForm.controls['pfStocklists'];
        console.log(control);
@@ -317,19 +299,18 @@ addNewStkRow() {
 addNewMFRow() {
   event.preventDefault(); // ensure this button doesn't try to submit the form
 
-
-    this.Mypfdetailcpy.pfMFlists.push(JSON.parse(JSON.stringify(this.emptymf)));
-    //this.pfForm.controls.payOffs.push(this.createPayOffFormGroup(emptyPayOff)); 
-
-       const control = <FormArray>this.pfForm.controls['pfMFlists'];
-       console.log(control);
-       control.push(this.initMFItemRows(this.emptymf));
+  if(this.Mypfdetailcpy.pfmflist == null){
+    this.Mypfdetailcpy.pfmflist=[];
+  } 
+    this.Mypfdetailcpy.pfmflist.push(JSON.parse(JSON.stringify(this.emptymf)));
+    const control = <FormArray>this.pfForm.controls['pfMFlists'];
+    control.push(this.initMFItemRows(this.emptymf));
 }
 
 
 
 deleteStkRow(index: number) {
-  this.Mypfdetailcpy.pfStocklists.splice(index, 1);
+  this.Mypfdetailcpy.pfstklist.splice(index, 1);
   const control = <FormArray>this.pfForm.controls['pfStocklists'];
   control.removeAt(index);
  
@@ -337,7 +318,7 @@ deleteStkRow(index: number) {
 
 
 deleteMFRow(index: number) {
-  this.Mypfdetailcpy.pfMFlists.splice(index, 1);
+  this.Mypfdetailcpy.pfmflist.splice(index, 1);
   const control = <FormArray>this.pfForm.controls['pfMFlists'];
   control.removeAt(index);
  
@@ -359,23 +340,27 @@ FormCardpopulate(){
 
   this.Mypfdetailcpy=JSON.parse(JSON.stringify(this.Mypfdetail));
   
-  if(this.Mypfdetail.pfStkAmtsplittype !== null){
-    this.selectedAmtSplitType = this.Mypfdetail.pfStkAmtsplittype;
+  if(this.Mypfdetail.pfstkamtsplittype !== null){
+    this.selectedAmtSplitType = this.Mypfdetail.pfstkamtsplittype;
   }
-  if(this.Mypfdetail.pfmfAmtsplittype !== null){
-    this.selectedMFAmtSplitType = this.Mypfdetail.pfmfAmtsplittype;
+  if(this.Mypfdetail.pfmfamtsplittype !== null){
+    this.selectedMFAmtSplitType = this.Mypfdetail.pfmfamtsplittype;
   }
 
    if (this.Mypfdetailcpy !== null){
 
-      this.Mypfdetailcpy.pfStocklists.forEach( 
+    if(this.Mypfdetailcpy.pfstklist!==null){ 
+      this.Mypfdetailcpy.pfstklist.forEach( 
         (stklstobjor) => {
           var scontrol = <FormArray>this.pfForm.controls['pfStocklists'];
           scontrol.push(this.initStkItemRows(stklstobjor));          
         }        
       );
-  
-      this.Mypfdetailcpy.pfMFlists.forEach( 
+    }
+
+
+    if(this.Mypfdetailcpy.pfmflist!==null){ 
+      this.Mypfdetailcpy.pfmflist.forEach( 
         (mflstobjor) => {
           
           var scontrol = <FormArray>this.pfForm.controls['pfMFlists'];
@@ -384,6 +369,7 @@ FormCardpopulate(){
         }
       );
     }
+  }
 }
 
 cancel_cardedit(i){
@@ -404,6 +390,8 @@ save_cardedit(pfFormfrm){
   this.onEdit=!this.onEdit;
   console.log("natnat");
   console.log(pfFormfrm);
+  this.Mypfdetail=JSON.parse(JSON.stringify(this.Mypfdetailcpy));
+  //this.FormCardpopulate();
   this.cardsave.emit(pfFormfrm);
   
   //To be implemented either with service or with emitter to go back to parent

@@ -1,27 +1,42 @@
+
+
 <mat-toolbar color ="primary">
     <button mat-raised-button color="warn" (click)="addNewPortfolio()" [fxHide] = "onAddmode">Add</button>
     <span>&nbsp;</span>
     <button mat-raised-button color="warn" (click)="CanceladdNewPortfolio()" [fxHide] = "!onAddmode">Cancel</button>
+    <!--
     <span>&nbsp;</span>
-    <button mat-raised-button color="warn" (click)="CanceladdNewPortfolio()" [fxHide] = "!onAddmode">Save</button>
+    <button mat-raised-button color="warn" (click)="cardasaveNewPortfolio()" [fxHide] = "!onAddmode">Save</button>
+    -->
   </mat-toolbar>
   
   
   
   <div fxLayout="row" fxLayoutWrap fxLayoutGap="10px">    
+      
       <div *ngFor="let pfdetail of pfdetails" fxFlex.lt-lg="1 1 100" fxFlex="1 1 49">
-    
+
+        
     <app-portfolio-card [Mypfdetail] = "pfdetail" [OnAdd]= "onAddmode" (cardcancel)="cardacancel($event,index)" (cardsave)="cardasave($event,formval)"> </app-portfolio-card>
 
 </div>
-
+<div *ngIf="!onfetch">
 <div *ngIf="pfdetails.length<1">
   <br>
+  <p>{{message1}}</p>
+  <!--
   <h3>You don't have any portfolio yet</h3>
   <p>Click on Add to start your journey</p>
+  -->
 </div>
-    
-  </div>
+</div>
+
+<div *ngIf="onfetch">
+  <br>
+  <mat-progress-spinner mode="indeterminate" color = "blue"></mat-progress-spinner>
+</div>
+ 
+  
 
   
   
