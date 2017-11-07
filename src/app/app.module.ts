@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 //import { HttpModule }    from '@angular/http';
-
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
 
 
 import { MatSidenavModule } from '@angular/material';
@@ -60,6 +60,8 @@ import { GooglePieChartService } from './googlechartservice/google-pie-chart.ser
 import { ChartComponent } from './chart/chart.component';
 import { PfserviceService } from './natservices/pfservice.service'
 import { SettingspfService } from './natservices/settingspf.service'
+import { NotificationService } from './natservices/notification.service'
+
 
 @NgModule({
   declarations: [
@@ -113,7 +115,7 @@ import { SettingspfService } from './natservices/settingspf.service'
     RouterModule.forRoot(ROUTES ,/*{enableTracing: true }*/)
   ],
   entryComponents: [Dialog1,PfqtypopupComponent],
-  providers: [SetjwtService,GooglePieChartService,SettingspfService],
+  providers: [SetjwtService,GooglePieChartService,SettingspfService,{    provide: HTTP_INTERCEPTORS,useClass: NotificationService, multi: true,}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

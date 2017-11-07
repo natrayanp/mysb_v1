@@ -8,12 +8,8 @@
     <span fxFlex></span>
     <label>&nbsp; Total Portfolios: &nbsp;</label>
     <mat-chip-list>
-    <mat-chip selected="true" style="background-color:white; color:black; font:30px"><strong>{{pfdetails?.length}}</strong></mat-chip>
+    <mat-chip selected="true" style="background-color:white; color:black; font:30px"><strong>{{pfdetails?.length || 0}}</strong></mat-chip>
   </mat-chip-list>
-    <!--
-    <span>&nbsp;</span>
-    <button mat-raised-button color="warn" (click)="cardasaveNewPortfolio()" [fxHide] = "!onAddmode">Save</button>
-    -->
     
     
   </mat-toolbar>

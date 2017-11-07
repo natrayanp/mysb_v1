@@ -49,6 +49,7 @@ export class PortfolioListComponent implements OnInit {
     ]
   };
 
+  test:number;
   //This should come from a service
  //pfdetails=[];
 
@@ -60,6 +61,7 @@ export class PortfolioListComponent implements OnInit {
   ngOnInit() {    
 
     this.fetchpfdata(); 
+    this.test=this.spf.servicepfdata;
   }
 
 
@@ -68,6 +70,9 @@ fetchpfdata(){
   this.spf.getpf().subscribe(
     data =>
           {
+            console.log("success fetch");
+            console.log(data);
+            
             this.pfdetails =data;
             this.onfetch=!this.onfetch;
           },
@@ -78,8 +83,13 @@ fetchpfdata(){
             this.pfdetails=[];
             console.log(error);
                         
+          },
+    () => {
+            
+            console.log("Inside end of fetchpfdata observable");
           }
   );
+ 
 }
 
 
@@ -97,16 +107,23 @@ CanceladdNewPortfolio(){
 }
 
 cardasave(pfformobj){
-  
+
+  //
+  pfformobj.pfportfolioid
+
+  //
+  event.preventDefault();
   console.log("save card");
-  console.log(event);
-  console.log(pfformobj);
-  console.log(JSON.stringify(pfformobj.value));
-  if(pfformobj.pfPortfolioid=="New"){
+  console.log((pfformobj));
+  if(pfformobj.pfportfolioid=="New"){
     console.log("new");
     this.cardasaveNewPortfolio(pfformobj); 
   } else{
     console.log("existing");
+    
+    console.log(this.pfdetails);
+    console.log(pfformobj);
+
     //call update to DB based on portfolio id
   }
 
@@ -115,9 +132,32 @@ cardasave(pfformobj){
 }
 
 cardasaveNewPortfolio(formval){
+  console.log("save NEW card");
+  event.preventDefault();
   this.onAddmode=!this.onAddmode;
-  this.onfetch=!this.onfetch;
-  this.pfdetails.shift(formval);
+  console.log(JSON.stringify(formval));
+  this.spf.savepf(formval).subscribe(
+    data => { 
+              console.log(data);
+              if (data.status == 200){
+                console.log("saved successfully");
+              }
+              this.onfetch=!this.onfetch;
+              this.fetchpfdata();
+            },
+    error=> {
+              console.log("errrererer");
+              console.log(error);
+              this.message1=error.message;
+            },
+    () =>   {
+              console.log("end of savepf observable");
+            }
+
+  )
+  //this.pfdetails.shift(formval);
+  
+  //this.pfdetails.unshift(formval);  
 }
 
 addNewPortfolio(){
@@ -126,5 +166,7 @@ addNewPortfolio(){
    this.pfdetails.unshift(empty_pfdetails_fornew);
    this.onAddmode=!this.onAddmode;
  }
+
+
 
 }

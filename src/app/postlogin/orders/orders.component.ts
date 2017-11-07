@@ -362,7 +362,7 @@ openmypopup() {
 }
 else{
   console.log("inside else");
-  this.snackBar.open("Select Portfolios for this order","close", {duration: 2000,});
+  this.snackBar.open("Select Portfolios for this order","close", {duration: 5000,verticalPosition:"top",horizontalPosition:"center"});
 }
 }
 

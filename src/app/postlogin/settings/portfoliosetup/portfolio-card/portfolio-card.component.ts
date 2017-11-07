@@ -377,7 +377,7 @@ FormCardpopulate(){
 }
 
 cancel_cardedit(i){
-
+  event.preventDefault();
   this.onEdit=!this.onEdit; 
   var scontrol = <FormArray>this.pfForm.controls['pfStocklists'];
   scontrol.controls=[];
@@ -391,12 +391,15 @@ cancel_cardedit(i){
 }
 
 save_cardedit(pfFormfrm){
+ 
   this.onEdit=!this.onEdit;
   console.log("natnat");
   console.log(pfFormfrm);
   this.Mypfdetail=JSON.parse(JSON.stringify(this.Mypfdetailcpy));
   //this.FormCardpopulate();
-  this.cardsave.emit(pfFormfrm);
+  console.log(this.myindex);
+  this.cardsave.emit(this.Mypfdetail);
+
   
   //To be implemented either with service or with emitter to go back to parent
 }
