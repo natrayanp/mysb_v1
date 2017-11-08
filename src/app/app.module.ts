@@ -5,6 +5,8 @@ import { HttpClientModule } from '@angular/common/http';
 //import { HttpModule }    from '@angular/http';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 
+import { NotifymoduleModule } from './commonmodule/notifymodule/notifymodule.module';
+
 
 import { MatSidenavModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material';
@@ -112,7 +114,8 @@ import { NotificationService } from './natservices/notification.service'
       MatDialogModule,
       MatSnackBarModule,
       MatDatepickerModule,MatNativeDateModule,
-    RouterModule.forRoot(ROUTES ,/*{enableTracing: true }*/)
+    RouterModule.forRoot(ROUTES ,/*{enableTracing: true }*/),
+    NotifymoduleModule
   ],
   entryComponents: [Dialog1,PfqtypopupComponent],
   providers: [SetjwtService,GooglePieChartService,SettingspfService,{    provide: HTTP_INTERCEPTORS,useClass: NotificationService, multi: true,}],

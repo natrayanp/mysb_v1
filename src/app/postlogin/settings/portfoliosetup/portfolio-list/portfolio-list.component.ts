@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import { SettingspfService } from '../../../../natservices/settingspf.service'
-
+import { NotificationsService } from '../../../../commonmodule/notifymodule/services/notifications.service';
+                                      
 @Component({
   selector: 'app-portfolio-list',
   templateUrl: './portfolio-list.component.html',
@@ -56,7 +57,7 @@ export class PortfolioListComponent implements OnInit {
  //pfdetails=[{"pfPortfolioid": null,"pfuserid": null,"pfPortfolioname": "Natrayan","pfPurpose": null,"pfBeneUsers": null,"pfStartDt": null,"pfTargetDt": null,"pfTargetIntRate": null,"pfPlannedInvAmt": 10000,"pfInvAmtFeq":"Daily","pfStkAmtsplittype": "Amount","pfmfAmtsplittype":"%","pfStocklists": [{"pfstExchange": "NSE","pfstTradingsymbl": "ITC","pfstLtp": 300,"pfstAmt": 3000,        "pfstPercent": 0,"pfstAllotedAmt": 3000,"pfstTotUnit": 10},{"pfstExchange": "NSE","pfstTradingsymbl":"SBIN","pfstLtp":200,"pfstAmt":1000,"pfstPercent":0,"pfstAllotedAmt":1000,"pfstTotUnit": 2}],"pfMFlists":[{"pfmfFundname": "Birla MNC","pfmfNAV":600,"pfmfAmt":0,"pfmfPercent":50,"pfmfAllotedAmt":5000}]}];;
   pfdetails;
 
-  constructor(private router: Router, private spf :SettingspfService) { }
+  constructor(private router: Router, private spf :SettingspfService,private notifyservice: NotificationsService) { }
 
   ngOnInit() {    
 
@@ -104,6 +105,8 @@ cardacancel(event,index){
 CanceladdNewPortfolio(){  
   this.pfdetails.shift();
   this.onAddmode=!this.onAddmode;  
+  this.notifyservice.info("Cancel Alert","Cancelled New card addition");
+  
 }
 
 cardasave(pfformobj){
