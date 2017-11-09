@@ -33,7 +33,7 @@ import {MatDatepickerModule,MatNativeDateModule} from '@angular/material';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 import { AppComponent } from './app.component';
@@ -60,9 +60,9 @@ import { PortfolioCardComponent } from './postlogin/settings/portfoliosetup/port
 import { PortfolioListComponent } from './postlogin/settings/portfoliosetup/portfolio-list/portfolio-list.component';
 import { GooglePieChartService } from './googlechartservice/google-pie-chart.service';
 import { ChartComponent } from './chart/chart.component';
-import { PfserviceService } from './natservices/pfservice.service'
-import { SettingspfService } from './natservices/settingspf.service'
-import { NotificationService } from './natservices/notification.service'
+import { PfserviceService } from './natservices/pfservice.service';
+import { SettingspfService } from './natservices/settingspf.service';
+import { NatInterceptor } from './natservices/natinterceptor';
 
 
 @NgModule({
@@ -118,7 +118,7 @@ import { NotificationService } from './natservices/notification.service'
     NotifymoduleModule
   ],
   entryComponents: [Dialog1,PfqtypopupComponent],
-  providers: [SetjwtService,GooglePieChartService,SettingspfService,{    provide: HTTP_INTERCEPTORS,useClass: NotificationService, multi: true,}],
+  providers: [SetjwtService,GooglePieChartService,SettingspfService,{    provide: HTTP_INTERCEPTORS,useClass: NatInterceptor, multi: true,}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
