@@ -105,8 +105,12 @@ cardacancel(event,index){
 CanceladdNewPortfolio(){  
   this.pfdetails.shift();
   this.onAddmode=!this.onAddmode;  
-  this.notifyservice.info("Cancel Alert","Cancelled New card addition");
-  
+  this.notifyservice.success("success Alert","success New card addition");
+  this.notifyservice.error("error Alert","error New card addition");
+  this.notifyservice.alert("alert Alert","alert New card addition");
+  this.notifyservice.info("info Alert","Cancelled New card addition");
+  this.notifyservice.warn("warn Alert","Cancelled New card addition");
+  this.notifyservice.bare("bare Alert","Cancelled New card addition");
 }
 
 cardasave(pfformobj){

@@ -43,7 +43,7 @@ import { RouterModule, PreloadAllModules } from '@angular/router';
 import { ROUTES } from './app.routes';
 import { ToolbarComponent } from './home/toolbar/toolbar.component';
 import { LoginComponent } from './home/login/login.component';
-import { Dialog1 } from './home/login/login.component';
+//import { Dialog1 } from './home/login/login.component';
 import { SetjwtService } from './natservices/setjwtservice.service';
 import { LogincheckComponent } from './logincheck/logincheck.component';
 import { PostloginComponent } from './postlogin/postlogin.component';
@@ -63,6 +63,7 @@ import { ChartComponent } from './chart/chart.component';
 import { PfserviceService } from './natservices/pfservice.service';
 import { SettingspfService } from './natservices/settingspf.service';
 import { NatInterceptor } from './natservices/natinterceptor';
+import { Dialog1Component } from './home/login/dialog1/dialog1.component';
 
 
 @NgModule({
@@ -71,7 +72,7 @@ import { NatInterceptor } from './natservices/natinterceptor';
     HomeComponent,
     ToolbarComponent,
     LoginComponent,
-    Dialog1,
+//    Dialog1,
     LogincheckComponent,
     PostloginComponent,
     PostlogintoolbarComponent,
@@ -86,7 +87,8 @@ import { NatInterceptor } from './natservices/natinterceptor';
     PortfolioCardComponent,
     PortfolioListComponent,
     ChartComponent,
-    PfserviceService
+    PfserviceService,
+    Dialog1Component
   ],
   imports: [
       BrowserModule,
@@ -117,7 +119,7 @@ import { NatInterceptor } from './natservices/natinterceptor';
     RouterModule.forRoot(ROUTES ,/*{enableTracing: true }*/),
     NotifymoduleModule
   ],
-  entryComponents: [Dialog1,PfqtypopupComponent],
+  entryComponents: [Dialog1Component,PfqtypopupComponent],
   providers: [SetjwtService,GooglePieChartService,SettingspfService,{    provide: HTTP_INTERCEPTORS,useClass: NatInterceptor, multi: true,}],
   bootstrap: [AppComponent]
 })

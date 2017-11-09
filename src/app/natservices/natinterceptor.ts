@@ -1,15 +1,18 @@
 import {Injectable} from '@angular/core';
 import {HttpEvent, HttpInterceptor, HttpHandler, HttpRequest} from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class NatInterceptor implements HttpInterceptor{
 
-  TknAddSites=["http://127.0.0.1:8001","http://127.0.0.1:8000"];
+  TknAddSites=[];
   tosettkn = false;
+  
 
-
-  constructor() {}
+  constructor() {
+    this.TknAddSites=environment.TknAddSites;
+  }
   
    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 

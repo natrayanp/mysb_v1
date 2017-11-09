@@ -62,10 +62,10 @@
     right: auto;
 }
 
-.simple-notification.error { background: #F44336; }
-.simple-notification.success { background: #8BC34A; }
-.simple-notification.alert { background: #ffdb5b; }
-.simple-notification.info { background: #03A9F4; }
+.simple-notification.error { background: #b70909; }
+.simple-notification.success { background: #056334; }
+.simple-notification.alert { background: #c66300; }
+.simple-notification.info { background: #052963; }
 .simple-notification.warn { background: #ffdb5b; }
 
 .simple-notification .sn-progress-loader {
