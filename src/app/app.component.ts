@@ -14,8 +14,10 @@ export class AppComponent {
       lastOnBottom: false,
       showProgressBar: true,
       pauseOnHover: true,
-      clickIconToClose: true,      
+      clickToClose:true,
+      clickIconToClose:true,    
       maxLength: 10
+      
   }
 
 }

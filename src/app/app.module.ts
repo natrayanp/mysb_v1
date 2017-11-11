@@ -64,6 +64,7 @@ import { PfserviceService } from './natservices/pfservice.service';
 import { SettingspfService } from './natservices/settingspf.service';
 import { NatInterceptor } from './natservices/natinterceptor';
 import { Dialog1Component } from './home/login/dialog1/dialog1.component';
+import { FundallocatComponent } from './postlogin/fundallocat/fundallocat.component';
 
 
 @NgModule({
@@ -88,7 +89,8 @@ import { Dialog1Component } from './home/login/dialog1/dialog1.component';
     PortfolioListComponent,
     ChartComponent,
     PfserviceService,
-    Dialog1Component
+    Dialog1Component,
+    FundallocatComponent
   ],
   imports: [
       BrowserModule,

@@ -13,7 +13,8 @@ import { PortfoliosetupComponent } from './postlogin/settings/portfoliosetup/por
 import { PortfolioCardComponent } from './postlogin/settings/portfoliosetup/portfolio-card/portfolio-card.component';
 import { PortfolioListComponent } from './postlogin/settings/portfoliosetup/portfolio-list/portfolio-list.component';
 import { ChartComponent } from './chart/chart.component';
-import { PfserviceService } from './natservices/pfservice.service'
+import { PfserviceService } from './natservices/pfservice.service';
+import { FundallocatComponent } from './postlogin/fundallocat/fundallocat.component';
 
 export const ROUTES: Routes = [
   
@@ -21,6 +22,7 @@ export const ROUTES: Routes = [
   { path: 'securedpg',  component: PostloginComponent, children: [
     {path: 'orders',  component: OrdersComponent},
     {path: 'dashboard',  component: DashboardComponent},
+    {path: 'fundalloc',  component: FundallocatComponent},
     {path: 'settings',  component: SettingsComponent, children: [
          {path: 'usersetup',  component: UserListComponent},
          {path: 'portfoliosetup',  component: PortfolioListComponent}      

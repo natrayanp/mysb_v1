@@ -146,16 +146,30 @@ cardasaveNewPortfolio(formval){
   this.spf.savepf(formval).subscribe(
     data => { 
               console.log(data);
-              if (data.status == 200){
-                console.log("saved successfully");
-              }
+             if((data.body['natstatus']=='success') ) {
               this.onfetch=!this.onfetch;
               this.fetchpfdata();
+              
+              console.log("saved successfully");
+              this.notifyservice.success("success Alert",data.body['statusdetails']);
+              }
             },
     error=> {
-              console.log("errrererer");
-              console.log(error);
-              this.message1=error.message;
+            if((error.error['natstatus']=='error') ) {
+              this.onfetch=!this.onfetch;
+              //this.fetchpfdata();
+              this.CanceladdNewPortfolio();
+              console.log("saved successfully");
+              this.notifyservice.error("error Alert",error.error['statusdetails']);
+            }
+            if((error.error['natstatus']=='warning') ) {
+              this.onfetch=!this.onfetch;
+              //this.fetchpfdata();
+              this.CanceladdNewPortfolio();
+              console.log("saved successfully");
+              this.notifyservice.alert("Warning Alert",error.error['statusdetails']);
+            }
+            
             },
     () =>   {
               console.log("end of savepf observable");

@@ -1,0 +1,138 @@
+<mat-toolbar color ="primary">
+    <h4> Allocate funds for your portfolio</h4>
+    <span>&nbsp;</span> 
+    
+  </mat-toolbar>
+  <div *ngIf="allocForm.controls.alocpflists.controls.length<1">
+    <p> Don't have any portfolio yet.  Go to "Settings > Portfolio" to create one now</p>
+    
+  </div>
+
+<div *ngIf="allocForm.controls.alocpflists.controls.length>0">
+<form [formGroup]="allocForm" >
+ 
+  <mat-card   style="margin-top:15px">
+      <mat-card-header>
+          <div fxLayout="row" fxLayoutWrap fxLayoutAlign="start center" fxFlex="1 1 100"> 
+        
+          <mat-card-title [fxHide]="onEdit"><h1>{{allocfrdbcpy.alocledgerbal}}</h1></mat-card-title>
+            
+  
+          </div>
+         
+          
+      </mat-card-header>
+      <mat-card-content >
+          <div formArrayName="alocpflists">
+                <div fxFlexLayout="row"  fxLayoutWrap fxLayoutGap="20px">
+                    <label fxFlex><h3>Portfolio Name</h3></label>
+                    <label fxFlex><h3>Allocated Amount</h3></label>
+                    <label fxFlex><h3>Blocked Amount</h3></label>
+                    <label fxFlex><h3>Current Allocation</h3></label>
+                    <label fxFlex><h3>Total Allocated</h3></label>
+                </div>
+                <hr>
+                        <div *ngFor="let alocpflist of allocForm.controls.alocpflists.controls; let i=index"  [formGroupName]="i">
+                          
+  
+                          <div fxFlexLayout="row"  fxLayoutWrap fxLayoutGap="20px">
+                             
+  
+                              
+                            <label fxFlex><p>{{allocfrdbcpy.alocpflists[i].alocpfname}}</p></label>
+                              <!--mat-form-field fxFlex="1 0 80px">
+                                  <input matInput placeholder="Exchange" formControlName= "alocpfname" [readonly]="!onEdit" [(ngModel)]="allocfrdbcpy.alocpflists[i].alocpfname" >
+                              </mat-form-field-->
+  
+                              <mat-form-field fxFlex="1 0 80px" [fxHide]="!onEdit">
+                                  <input matInput placeholder="NAV" formControlName= "alocpfallocated" [readonly]="!onEdit" [(ngModel)]="allocfrdbcpy.alocpflists[i].alocpfallocated">
+                                </mat-form-field>
+  
+                              <mat-form-field fxFlex="1 0 80px" [fxHide]="!onEdit">
+                                  <input matInput type="number" placeholder="Amount" formControlName= "alocpfblocked" [readonly]="!onEdit" [(ngModel)]="allocfrdbcpy.alocpflists[i].alocpfblocked">
+                              </mat-form-field>
+      
+                              <mat-form-field fxFlex="1 0 80px"  [fxHide]="!onEdit">
+                              <input matInput placeholder="Percent" formControlName= "alocpfnewallocated" [readonly]="!onEdit" [(ngModel)]="allocfrdbcpy.alocpflists[i].alocpfnewallocated">
+                              </mat-form-field>
+  
+                              <mat-form-field fxFlex="1 0 80px">
+                                  <input matInput type="number" placeholder="Alloted Amt" formControlName= "alocpftotal" readonly [(ngModel)]="allocfrdbcpy.alocpflists[i].alocpftotal">
+                              </mat-form-field>
+                          
+                           
+                        
+                          </div>
+                          
+                      </div>                    
+                    
+                     
+  
+              
+                                 </div>
+  
+      </mat-card-content>
+      </mat-card>
+      </form>
+    </div>
+
+  <!--
+     
+<table id="rwd-table-large">
+        <thead>
+          <tr>
+            <th>Portfolio Name</th>
+            <th>>Allocated Amount</th>
+            <th>Blocked Amount</th>
+            <th>Current Allocation</th>
+            <th>Total Allocated</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr  *ngFor="let alocpflist of allocfrdbcpy.alocpflists"  >
+            
+            <td>{{alocpflist.alocpfname}}</td>
+            <td>{{alocpflist.alocpfallocated}}</td>
+            <td>{{alocpflist.alocpfblocked"}}</td>
+            <td>{{alocpflist.alocpfnewallocated}}</td>
+            <td>{{alocpflist.alocpftotal}}</td>
+          </tr>
+          
+       
+        </tbody>
+      </table>
+
+
+
+                        
+      <table class="responsive-table">
+            <caption></caption>
+            <thead>
+              <tr>
+                <th scope="col">tradingsymbol</th>
+                <th scope="col">exchange</th>
+                <th scope="col">transaction_type</th>
+                <th scope="col">order_type</th>
+                <th scope="col">quantity</th> 
+                
+              </tr>
+            </thead>
+            <tfoot>
+            </tfoot>
+            <tbody>
+              
+            <tr  *ngFor="let alocpflist of allocForm.controls.alocpflists.controls" >
+                <td scope="row">{{allocfrdbcpy.alocpflists[i].alocpfname}}</td>
+                <td data-title="exchange">{{allocfrdbcpy.alocpflists[i].alocpfallocated}}</td>
+                <td data-title="transaction_type">{{allocfrdbcpy.alocpflists[i].alocpfblocked"}}</td>
+                <td data-title="order_type">{{allocfrdbcpy.alocpflists[i].alocpfnewallocated}}</td>
+                <td data-title="quantity">{{allocfrdbcpy.alocpflists[i].alocpftotal}}</td>
+              
+                  
+               
+              </tr>
+            </tbody>
+          </table>
+        
+      
+        -->
