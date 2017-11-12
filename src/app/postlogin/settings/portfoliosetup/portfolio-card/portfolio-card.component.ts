@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import {Router} from "@angular/router";
+import { NotificationsService } from '../../../../commonmodule/notifymodule/services/notifications.service';
 
 const resolvedPromise = Promise.resolve(null);
 
@@ -60,7 +61,7 @@ export class PortfolioCardComponent implements OnInit
   
   
 //, private ref: ChangeDetectorRef
-  constructor(private pffb: FormBuilder,private router: Router) { 
+  constructor(private pffb: FormBuilder,private router: Router,private notifyservice: NotificationsService) { 
      
 
 }
@@ -384,11 +385,11 @@ cancel_cardedit(i){
   scontrol.controls=[];
   var scontrol = <FormArray>this.pfForm.controls['pfMFlists'];
   scontrol.controls=[];
-   
+  
   this.FormCardpopulate();
 
   this.cardcancel.emit(i);
-
+  
 }
 
 save_cardedit(pfFormfrm){

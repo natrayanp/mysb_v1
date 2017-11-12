@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
+import { AsyncPipe } from '@angular/common';
 import { SettingspfService } from '../../../../natservices/settingspf.service'
 import { NotificationsService } from '../../../../commonmodule/notifymodule/services/notifications.service';
                                       
@@ -13,6 +14,8 @@ export class PortfolioListComponent implements OnInit {
   onfetch=true;
   onAddmode = false;
   message1 = "You don't have any portfolio yet.....Click on Add to start your journey";
+  showcancelalrt= true;
+  dberror:boolean;
 
   empty_pfdetails=  {
     pfportfolioid: null,
@@ -29,7 +32,7 @@ export class PortfolioListComponent implements OnInit {
     pfmfamtsplittype:"%",
     pfsummed:null,
     pfstklist: [
-      {
+     /* {
         pfstexchange: "",
         pfsttradingsymbl: "",
         pfstltp: 0,
@@ -37,16 +40,16 @@ export class PortfolioListComponent implements OnInit {
         pfstpercent: 0,
         pfstallotedamt: 0,
         pfsttotunit: 0
-      }
+      }*/
     ],
     pfmflist:[
-      {
+    /*  {
         pfmffundname: "",
         pfmfnav: 0,
         pfmfamt: 0,
         pfmfpercent: 0,
         pfmfallotedamt: 0
-      }
+      }*/
     ]
   };
 
@@ -98,27 +101,28 @@ cardacancel(event,index){
   this.pfdetails.unshift(this.empty_pfdetails);
   console.log("this.pfdetails");
   console.log(this.pfdetails);
-  this.CanceladdNewPortfolio();
-  this.onAddmode=!this.onAddmode;
+  if (this.showcancelalrt  == true){
+    this.notifyservice.alert("Cancel Changes","Changes made in the portfolio are discarded");    
+  }  
+  this.refereshpf();
+  this.onAddmode=false;
 }
 
 CanceladdNewPortfolio(){  
+  if (this.showcancelalrt  == true){
+    this.notifyservice.alert("Cancel New addition","New portfolio addition cancelled");
+  }
+  this.refereshpf();
+}
+
+refereshpf(){
   this.pfdetails.shift();
-  this.onAddmode=!this.onAddmode;  
-  this.notifyservice.success("success Alert","success New card addition");
-  this.notifyservice.error("error Alert","error New card addition");
-  this.notifyservice.alert("alert Alert","alert New card addition");
-  this.notifyservice.info("info Alert","Cancelled New card addition");
-  this.notifyservice.warn("warn Alert","Cancelled New card addition");
-  this.notifyservice.bare("bare Alert","Cancelled New card addition");
+  console.log("after shitf");
+  this.onAddmode=false;  
 }
 
 cardasave(pfformobj){
 
-  //
-  pfformobj.pfportfolioid
-
-  //
   event.preventDefault();
   console.log("save card");
   console.log((pfformobj));
@@ -127,49 +131,59 @@ cardasave(pfformobj){
     this.cardasaveNewPortfolio(pfformobj); 
   } else{
     console.log("existing");
-    
-    console.log(this.pfdetails);
-    console.log(pfformobj);
+    this.cardasaveNewPortfolio(pfformobj);
+    if (this.dberror==true){
+      console.log("calling cancelnewportfolio");
+      this.cardacancel(event,0);
+    }
 
-    //call update to DB based on portfolio id
   }
 
-  //this.pfdetails.unshift(pfformobj.value);
-  // logic to be added to save it in DB
 }
 
 cardasaveNewPortfolio(formval){
   console.log("save NEW card");
   event.preventDefault();
-  this.onAddmode=!this.onAddmode;
+  this.onAddmode=false;
   console.log(JSON.stringify(formval));
+  this.callsavedbaction(formval);
+  if (this.dberror==true){
+    console.log("calling cancelnewportfolio");
+    this.CanceladdNewPortfolio(); 
+  }
+}
+
+callsavedbaction(formval){
+  this.dberror = true;
   this.spf.savepf(formval).subscribe(
     data => { 
+              console.log("inside data of savepf");
               console.log(data);
              if((data.body['natstatus']=='success') ) {
               this.onfetch=!this.onfetch;
-              this.fetchpfdata();
-              
+              this.fetchpfdata();              
               console.log("saved successfully");
-              this.notifyservice.success("success Alert",data.body['statusdetails']);
+              this.notifyservice.success("Saved successfully",data.body['statusdetails']);
+              this.showcancelalrt=false;
+              this.dberror = false;
               }
+              
             },
     error=> {
-            if((error.error['natstatus']=='error') ) {
-              this.onfetch=!this.onfetch;
-              //this.fetchpfdata();
-              this.CanceladdNewPortfolio();
-              console.log("saved successfully");
-              this.notifyservice.error("error Alert",error.error['statusdetails']);
-            }
-            if((error.error['natstatus']=='warning') ) {
-              this.onfetch=!this.onfetch;
-              //this.fetchpfdata();
-              this.CanceladdNewPortfolio();
-              console.log("saved successfully");
-              this.notifyservice.alert("Warning Alert",error.error['statusdetails']);
-            }
-            
+            console.log("inside error of savepf");
+            console.log(error);
+
+            if((error.error['natstatus']=='error') ) {  
+              console.log("inside error");                         ;
+              this.notifyservice.error("Save failed",error.error['statusdetails']);    
+              console.log("inside error end") ;         
+            }else if((error.error['natstatus']=='warning') ) {
+              this.notifyservice.alert("Save failed",error.error['statusdetails']);
+            }else{
+              this.notifyservice.alert("Save failed",error.error);
+            }            
+            this.showcancelalrt=false;
+            this.dberror = true;
             },
     () =>   {
               console.log("end of savepf observable");

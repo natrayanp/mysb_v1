@@ -20,4 +20,12 @@ export class AppComponent {
       
   }
 
+ created(event){
+   console.log("created");
+ }
+ 
+ destroyed(event){
+  console.log("destroyed");
+ }
+
 }

@@ -19,6 +19,7 @@ export class SettingspfService {
         //.map(res => {return (res);})  
   }
 
+  
   getpf(){
   return this.http.get('http://127.0.0.1:8000/pfdatafetch')
   //.map(data => data);
