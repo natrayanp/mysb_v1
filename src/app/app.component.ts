@@ -10,11 +10,11 @@ export class AppComponent {
   
     public options = {
       position: ["bottom", "right"],
-      //timeOut: 5000,
+      timeOut: 25000,
       lastOnBottom: false,
       showProgressBar: true,
       pauseOnHover: true,
-      clickToClose:true,
+      clickToClose:false,
       clickIconToClose:true,    
       maxLength: 10
       

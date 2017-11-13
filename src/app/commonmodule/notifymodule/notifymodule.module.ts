@@ -4,6 +4,7 @@ import {SimpleNotificationsComponent} from './components/simple-notifications/si
 import {NotificationComponent} from './components/notification/notification.component';
 import {NotificationsService} from './services/notifications.service';
 
+
 export * from './components/notification/notification.component';
 export * from './components/simple-notifications/simple-notifications.component';
 export * from './services/notifications.service';
@@ -22,6 +23,6 @@ export * from './interfaces/options.type';
     NotificationComponent
   ],
   exports: [SimpleNotificationsComponent],
-  providers: [NotificationsService]
+  providers:[NotificationsService]
 })
 export class NotifymoduleModule { }

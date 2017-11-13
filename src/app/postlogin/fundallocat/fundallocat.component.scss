@@ -9,277 +9,102 @@
      border:1px solid lightgrey;
    }
 
-/* Include CSS Normalize */
-
-$primary-color: #008cba;
-$gray-color: #ddd;
-$medium-up: 600px;
-$large-up: 1000px;
-$global-radius: 4px;
-
-
-@mixin heading-font-regular {
-	font-family: 'Helvetica', 'Helvetica Neue', 'Arial', sans-serif;;
-}
-
-
-//SUPER BASIC PAGE STYLING
-*,*:before,*:after{
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-main {
-  padding: 2em;  
-  float: left;
-  width: 100%;
-}
-
-a {
-  color: #222;
-  font-weight: bold;
-  text-decoration: none;
-  border-bottom: 2px solid #222;
-  
-  &:hover {
-    color: $primary-color;
+   
+   body {
+	font-family: "Open Sans", sans-serif;
+	line-height: 1.25;
+	
   }
-}
-///BASIC TABLE STYLING
-table {
-	border-collapse: collapse;
-	width: 100%;
-	float: left;
-   margin: 0 0 2em;
-	thead {
-		border-bottom: 3px solid $primary-color;
-		th {
-			padding: 0.35em 0 .35em;
-       font-weight: 400;
-			text-align: left;
-			@include heading-font-regular;
-			font-size: 1.25em;
-		}
-		
-	}
-
-	tbody {
-		border-bottom: 3px solid $primary-color;
-		tr {
-			border-bottom: 2px solid #ddd;
-       
-			td {
-				padding: .75em 0;
-
-				a {
-					color: $primary-color;
-					text-decoration: none;
-					display: inline-block;
-					margin: 0 .5em 0 0;
-					&:hover, &:active, &:focus {
-						color: darken($primary-color, 10%);
-						border: none;
-					}
-				}
-			}
-		}
-	}
-
-	tfoot {
-		td {
-			padding: 0.35em 0 .35em;
-
-			text-align: left;
-			@include heading-font-regular;
-			font-size: 1.25em;
-		}
-	}
-}
-
-@media screen and (min-width: $large-up) {
   table {
-		width: 100%;
-
-		thead {
-			border-bottom: 3px solid $primary-color;
-			th {
-			}
-			
-		}
-
-		tbody {
-			tr {
-				border-bottom: 1px solid #ddd;
-				td {
-					
-				}
-			}
-		}
-	}
-}
-
-///RWD MIXIN BELOW
-@mixin rwd-first {
-	display: block;
+	border: 1px solid #ccc;
+	border-collapse: collapse;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	table-layout: fixed;
   
-
-  tbody {
-    border: none;
+	
   }
-		tbody, th, td, tr, tfoot {
-			display: block; 
-		}
-
-		thead {
-			display: none;
-		}
-		tr {
-      float: left;
-      width: 100%;
-      margin: 0 0 1em;
-       border: 1px solid $gray-color;
-			box-shadow: 0px 2px 5px 0px $gray-color;
-			border-radius: $global-radius;
-			border-top: 5px solid $primary-color;
-
-			td {
-				padding: .5em .5em .5em 50%;
-				float:left;
-       		width: 100%;
-				&:before {
-					width: 100%;
-					display: block;
-					float: left;
-					padding: .5em .5em .5em 0;
-					clear: both;
-					margin: -.5em 0 0 -100%;
-					@include heading-font-regular;
-					font-size: 1.125em;
-
-				}
-			}
-		}
-
-		tr:nth-of-type(even) {
-			//background: $gray-color;
-			td {
-				
-				&:before {
-					
-				}
-			}
-		}
-}
-
-@mixin rwd-second {
-	display: table;
-	border: none;
-
-  tbody {
-    border-bottom: 3px solid $primary-color;
+  table caption {
+	font-size: 1.5em;
+	margin: .5em 0 .75em;
+   
   }
-	th, td {
-		display: table-cell; 
+  table tr {
+	background: #f8f8f8;
+	padding: .35em;
+	border: 1px solid rgba(29,150,178,1);
+	border-width: 1px ;
+	
+  }
+	 tr:nth-child(even) { background-color: rgba(94,93,82,.1);}
+	 tr:nth-child(odd) {background: #FFF}
+  
+  
+  table th,
+  table td {
+	
+	padding: .625em;
+	text-align: left;
+	
+	
+  }
+  table th {
+	font-size: .85em;
+	letter-spacing: .1em;
+	text-transform: uppercase;
+	background-color: rgba(29,150,178,1);
+	border: 1px solid rgba(29,150,178,1);
+	color: white;
+  }
+  
+  @media screen and (max-width: 600px) {
+	table {
+	  border: 0;
+  
+	  
 	}
-
-	tr {
-		display: table-row;
-		border: none;
-		border-bottom: 1px solid #eee;
-    float: none;
-    margin: 0;
-		box-shadow: none;
-
-		td {
-			padding: .75em 0 0.75em .25em;
-      float: none;
-      width: auto;
-
-			&:before {
-				padding: 0 !important;
-			}
-		}
+	table caption {
+	  font-size: 1.3em;
 	}
-
-	thead {
-		display: table-header-group;
+	table thead {
+	  border: none;
+	  clip: rect(0 0 0 0);
+	  height: 1px;
+	  margin: -1px;
+	  overflow: hidden;
+	  padding: 0;
+	  position: absolute;
+	  width: 1px;
+	  background-color: rgba(29,150,178,1);
 	}
-
-	tbody,tfoot {
-		display: table-row-group;
+	 tr:nth-child(even) {background-color: rgba(94,93,82,.1);}
+	 tr:nth-child(odd) {background: #FFF}
+	table tr {
+	  border-bottom: 3px solid #ddd;
+	  display: block;
+	  margin-bottom: .625em;
+	  background: #8A2BE2;
+	  -webkit-box-shadow: 5px 5px 15px rgba(0,0,0,0.4);
+	  -moz-box-shadow: 5px 5px 15px rgba(0,0,0,0.4);
 	}
-
-	tr:nth-of-type(even) {
-		background:none;
-		td {
-			
-			&:before {
-				
-			}
-		}
+	table td {
+	  border-bottom: 1px solid #ddd;
+	  display: block;
+	  font-size: .8em;
+	  text-align: right;
 	}
-}
-
-%responive-tables {
-	@include rwd-first;
-
-	@media screen and (min-width: $medium-up) { 
-		@include rwd-second;
-		
+	table td:before {
+	  /*
+	  * aria-label has no advantage, it won't be read inside a table
+	  content: attr(aria-label);
+	  */
+	  content: attr(data-label);
+	  float: left;
+	  font-weight: bold;
+	  text-transform: uppercase;
 	}
-}
-
-%responive-tables-large {
-	@include rwd-first;
-
-	@media screen and (min-width: $large-up) { 
-		@include rwd-second;
-		
+	table td:last-child {
+	  border-bottom: 0;
 	}
-}
-
-@mixin responive-tables($headings...) {
-	$list: $headings;
-
-	@each $list-headings in $list {
-		$i: index($list, $list-headings);
-		tbody tr td:nth-of-type(#{$i}):before { 
-			content: $list-headings; 
-		}
-		
-		@media screen and (min-width: $medium-up) { 
-			tbody tr td:nth-of-type(#{$i}):before { 
-				content: ''; 
-			}
-		}
-
-	}
-}
-
-@mixin responive-tables-large($headings...) {
-	$list: $headings;
-
-	@each $list-headings in $list {
-		$i: index($list, $list-headings);
-		tbody tr td:nth-of-type(#{$i}):before { 
-			content: $list-headings; 
-		}
-		
-		@media screen and (min-width: $large-up) { 
-			tbody tr td:nth-of-type(#{$i}):before { 
-				content: ''; 
-			}
-		}
-
-	}
-}
-
-#rwd-table {
-	@extend %responive-tables;
-	@include responive-tables('Heading Col 1', 'Heading Col 2', 'Heading Col 3');
-}
-
-#rwd-table-large {
-	@extend %responive-tables-large;
-	@include responive-tables-large('Heading Col 1', 'Heading Col 2', 'Heading Col 3','Heading Col 4');
-}
+  }

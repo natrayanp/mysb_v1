@@ -29,6 +29,8 @@ import {MatProgressSpinnerModule} from '@angular/material';
 import {MatDialogModule} from '@angular/material';
 import {MatSnackBarModule} from '@angular/material';
 import {MatDatepickerModule,MatNativeDateModule} from '@angular/material';
+import {MatPaginatorModule} from '@angular/material';
+import {MatTableModule} from '@angular/material';
 
 
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -116,10 +118,12 @@ import { FundallocatComponent } from './postlogin/fundallocat/fundallocat.compon
       MatTabsModule,
       MatProgressSpinnerModule,
       MatDialogModule,
-      MatSnackBarModule,
+      MatSnackBarModule,      
       MatDatepickerModule,MatNativeDateModule,
+      MatPaginatorModule,
+      MatTableModule,
     RouterModule.forRoot(ROUTES ,/*{enableTracing: true }*/),
-    NotifymoduleModule
+    NotifymoduleModule    
   ],
   entryComponents: [Dialog1Component,PfqtypopupComponent],
   providers: [SetjwtService,GooglePieChartService,SettingspfService,{    provide: HTTP_INTERCEPTORS,useClass: NatInterceptor, multi: true,}],

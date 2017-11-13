@@ -1,4 +1,53 @@
-<mat-toolbar color ="primary">
+<div class="example-header" fxLayout="row">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+  </div>
+  
+  <div class="example-container mat-elevation-z8">
+  
+    <mat-table [dataSource]="dataSource" matSort>
+  
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+        <mat-cell *matCellDef="let row" data-label="id"> {{row.id}} </mat-cell>
+      </ng-container>
+  
+      <!-- Progress Column -->
+      <ng-container matColumnDef="progress">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Progress </mat-header-cell>
+        <mat-cell *matCellDef="let row" data-label="progress"> {{row.progress}}% </mat-cell>
+      </ng-container>
+  
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+        <mat-cell *matCellDef="let row" data-label="name"> {{row.name}} </mat-cell>
+      </ng-container>
+  
+      <!-- Color Column -->
+      <ng-container matColumnDef="color">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Color </mat-header-cell>
+        <mat-cell *matCellDef="let row" [style.color]="row.color" data-label="color"> {{row.color}} </mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;">
+      </mat-row>
+    </mat-table>
+  
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  </div>
+  
+  
+
+
+
+
+
+
+<!--mat-toolbar color ="primary">
     <h4> Allocate funds for your portfolio</h4>
     <span>&nbsp;</span> 
     
@@ -43,7 +92,7 @@
                               <!--mat-form-field fxFlex="1 0 80px">
                                   <input matInput placeholder="Exchange" formControlName= "alocpfname" [readonly]="!onEdit" [(ngModel)]="allocfrdbcpy.alocpflists[i].alocpfname" >
                               </mat-form-field-->
-  
+  <!--
                               <mat-form-field fxFlex="1 0 80px" [fxHide]="!onEdit">
                                   <input matInput placeholder="NAV" formControlName= "alocpfallocated" [readonly]="!onEdit" [(ngModel)]="allocfrdbcpy.alocpflists[i].alocpfallocated">
                                 </mat-form-field>
@@ -136,3 +185,44 @@
         
       
         -->
+<!--
+
+        <table>
+          <caption>Statement Summary</caption>
+          <thead>
+            <tr>
+              <th scope="col">Account</th>
+              <th scope="col">Due Date</th>
+              <th scope="col">Amount</th>
+              <th scope="col">Period</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-label="Account">Visa - 3412</td>
+              <td data-label="Due Date">04/01/2016</td>
+              <td data-label="Amount">$1,190</td>
+              <td data-label="Period">03/01/2016 - 03/31/2016</td>
+            </tr>
+            <tr>
+              <td scope="row" data-label="Account">Visa - 6076</td>
+              <td data-label="Due Date">03/01/2016</td>
+              <td data-label="Amount">$2,443</td>
+              <td data-label="Period">02/01/2016 - 02/29/2016</td>
+            </tr>
+            <tr>
+              <td scope="row" data-label="Account">Corporate AMEX</td>
+              <td data-label="Due Date">03/01/2016</td>
+              <td data-label="Amount"><input></td>
+              <td data-label="Period">02/01/2016 - 02/29/2016</td>
+            </tr>
+            <tr>
+              <td scope="row" data-label="Acount">Visa - 3412</td>
+              <td data-label="Due Date">02/01/2016</td>
+              <td data-label="Amount">$842</td>
+              <td data-label="Period">01/01/2016 - 01/31/2016</td>
+            </tr>
+          </tbody>
+        </table>
+
+      -->
