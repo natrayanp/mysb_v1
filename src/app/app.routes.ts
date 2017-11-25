@@ -5,6 +5,7 @@ import { LogincheckComponent } from './logincheck/logincheck.component';
 import { LoginComponent } from './home/login/login.component';
 import { PostloginComponent } from './postlogin/postlogin.component';
 import { OrdersComponent } from './postlogin/orders/orders.component';
+import { OrderComponent } from './postlogin/order/order.component';
 import { DashboardComponent } from './postlogin/dashboard/dashboard.component';
 import { UserCardComponent } from './postlogin/settings/userssetup/user-card/user-card.component';
 import { UserListComponent } from './postlogin/settings/userssetup/user-list/user-list.component';
@@ -20,7 +21,8 @@ export const ROUTES: Routes = [
   
   { path: 'home',  component: HomeComponent},
   { path: 'securedpg',  component: PostloginComponent, children: [
-    {path: 'orders',  component: OrdersComponent},
+   // {path: 'orders',  component: OrdersComponent},
+    {path: 'orders',  component: OrderComponent},    
     {path: 'dashboard',  component: DashboardComponent},
     {path: 'fundalloc',  component: FundallocatComponent},
     {path: 'settings',  component: SettingsComponent, children: [

@@ -17,6 +17,7 @@ export class PortfolioCardComponent implements OnInit
   
   summed: number;
   balanceleft:number = 0;
+
   mfsummed:number;
   stksummed:number;
   today = new Date();
@@ -102,6 +103,10 @@ export class PortfolioCardComponent implements OnInit
   console.log(this.Mypfdetail);
   console.log("this.myindex");
   console.log(this.myindex);
+       
+  this.Mypfdetail.pfplannedinvamt =0;
+  this.Mypfdetail.pfsummed =0;
+  this.balanceleft=0;
     if (this.Mypfdetail == null || this.Mypfdetail.pfportfolioname == null )
     {
       this.onEdit=true;
@@ -112,8 +117,7 @@ export class PortfolioCardComponent implements OnInit
     if(this.Mypfdetail.pfmfAmtsplittype !== null){
       this.selectedMFAmtSplitType = this.Mypfdetail.pfmfamtsplittype;
     }
-    
-    
+ 
 
     this.pfForm = this.pffb.group({ 
       pfPortfolioid:[null],
@@ -138,6 +142,17 @@ export class PortfolioCardComponent implements OnInit
 
   console.log("check mypfdetailscopy");
   console.log(JSON.stringify(this.Mypfdetailcpy));
+
+  this.pfForm.get('pfPlannedInvAmt').valueChanges.subscribe(values => {
+    resolvedPromise.then(() => {
+      console.log("inside planned investment amonu");
+      console.log(this.balanceleft);
+      console.log(this.Mypfdetailcpy.pfplannedinvamt);
+      console.log(this.Mypfdetail.pfsummed);
+      this.balanceleft= this.Mypfdetailcpy.pfplannedinvamt - this.Mypfdetailcpy.pfsummed ;
+  })
+  });
+
 
      this.pfForm.get('pfStocklists').valueChanges.subscribe(values => {
      resolvedPromise.then(() => {

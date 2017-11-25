@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+//import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-fundallocat',
@@ -136,7 +136,7 @@ deleteNewPFRow(index: number) {
 }*/
 
 
-
+/*
 
 name = 'Angular 5';
 options={
@@ -151,18 +151,18 @@ constructor( ) {
   for (let i = 1; i <= 100; i++) { users.push(createNewUser(i)); }
 
   // Assign the data to the data source for the table to render
-  this.dataSource = new MatTableDataSource(users);
+ // this.dataSource = new MatTableDataSource(users);
 }
 
  ngAfterViewInit() {
   this.dataSource.paginator = this.paginator;
   this.dataSource.sort = this.sort;
 }
-
+*/
 ngOnInit(){
 
 }
-
+/*
 displayedColumns = ['id', 'name', 'progress', 'color'];
 dataSource: MatTableDataSource<UserData>;
 
@@ -187,6 +187,7 @@ editbut(){
 
 
 /** Builds and returns a new User. */
+/*
 function createNewUser(id: number): UserData {
 const name =
     NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
@@ -201,6 +202,7 @@ return {
 }
 
 /** Constants used to fill up our data base. */
+/*
 const COLORS = ['maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple',
 'fuchsia', 'lime', 'teal', 'aqua', 'blue', 'navy', 'black', 'gray'];
 const NAMES = ['Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack',
@@ -212,5 +214,6 @@ id: string;
 name: string;
 progress: string;
 color: string;
+*/
 }
 

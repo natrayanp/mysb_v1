@@ -16,21 +16,21 @@ import { MatInputModule } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material';
 import { MatAutocompleteModule } from '@angular/material';
 import { MatCard } from '@angular/material';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import {MatSlideToggleModule} from '@angular/material';
-import {MatStepperModule} from '@angular/material';
-import {MatExpansionModule} from '@angular/material';
-import {MatRadioModule} from '@angular/material';
-import {MatSelectModule} from '@angular/material';
-import {MatChipsModule} from '@angular/material';
-import {MatIconModule, MatIconRegistry} from '@angular/material';
-import {MatTabsModule} from '@angular/material';
-import {MatProgressSpinnerModule} from '@angular/material';
-import {MatDialogModule} from '@angular/material';
-import {MatSnackBarModule} from '@angular/material';
-import {MatDatepickerModule,MatNativeDateModule} from '@angular/material';
-import {MatPaginatorModule} from '@angular/material';
-import {MatTableModule} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatSlideToggleModule } from '@angular/material';
+import { MatStepperModule } from '@angular/material';
+import { MatExpansionModule } from '@angular/material';
+import { MatRadioModule } from '@angular/material';
+import { MatSelectModule } from '@angular/material';
+import { MatChipsModule } from '@angular/material';
+import { MatIconModule, MatIconRegistry } from '@angular/material';
+import { MatTabsModule } from '@angular/material';
+import { MatProgressSpinnerModule } from '@angular/material';
+import { MatDialogModule } from '@angular/material';
+import { MatSnackBarModule } from '@angular/material';
+import { MatDatepickerModule,MatNativeDateModule } from '@angular/material';
+import { MatPaginatorModule } from '@angular/material';
+import { MatTableModule } from '@angular/material';
 
 
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -67,7 +67,8 @@ import { SettingspfService } from './natservices/settingspf.service';
 import { NatInterceptor } from './natservices/natinterceptor';
 import { Dialog1Component } from './home/login/dialog1/dialog1.component';
 import { FundallocatComponent } from './postlogin/fundallocat/fundallocat.component';
-
+import { OrderComponent } from './postlogin/order/order.component';
+import { OrderdbservService } from "./natservices/orderdbserv.service";
 
 @NgModule({
   declarations: [
@@ -92,7 +93,8 @@ import { FundallocatComponent } from './postlogin/fundallocat/fundallocat.compon
     ChartComponent,
     PfserviceService,
     Dialog1Component,
-    FundallocatComponent
+    FundallocatComponent,
+    OrderComponent
   ],
   imports: [
       BrowserModule,
@@ -126,7 +128,7 @@ import { FundallocatComponent } from './postlogin/fundallocat/fundallocat.compon
     NotifymoduleModule    
   ],
   entryComponents: [Dialog1Component,PfqtypopupComponent],
-  providers: [SetjwtService,GooglePieChartService,SettingspfService,{    provide: HTTP_INTERCEPTORS,useClass: NatInterceptor, multi: true,}],
+  providers: [SetjwtService,GooglePieChartService,SettingspfService,OrderdbservService,{provide: HTTP_INTERCEPTORS,useClass: NatInterceptor, multi: true,}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

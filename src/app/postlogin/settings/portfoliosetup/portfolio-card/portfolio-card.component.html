@@ -224,9 +224,9 @@
 
                     <!--mat-toolbar ><span>MyToolBar</span-->
 
-                    <div fxLayout="row" fxLayoutWrap fxLayoutAlign="end center" style="line-height: 0.5em;">
+                    <div fxLayout="row" fxLayoutWrap fxLayoutAlign="end center" style="line-height: 0.5em;"  *ngIf="pfForm.controls.pfStocklists.controls.length > 0">
 
-                        <div fxFlex>
+                        <div fxFlex >
                             <label>Unallocated Amount:</label>
                             <p>
                                 <label>
@@ -323,7 +323,7 @@
                     <br>
                 </span>
             </div>
-            <div fxFlexLayout="row" fxLayoutAlign="center center">
+            <div fxFlexLayout="row" fxLayoutAlign="center center"  >
                 <mat-expansion-panel fxFlex="1 1 auto">
                     <mat-expansion-panel-header>
                         <mat-panel-title fxFlexAlign="center" style="color:rgb(74, 23, 190)">
@@ -336,7 +336,7 @@
 
                     <!--mat-toolbar ><span>MyToolBar</span-->
 
-                    <div fxLayout="row" fxLayoutWrap>
+                    <div fxLayout="row" fxLayoutWrap *ngIf="pfForm.controls.pfMFlists.controls.length > 0">
 
                         <div fxFlex>
                             <label>Unallocated Amount:</label>

@@ -1,4 +1,38 @@
 
+
+<mat-toolbar color ="primary" >
+    <button mat-raised-button color="warn" (click)="addNewPortfolio()" [fxHide] = "onAddmode"><strong>Add Portfolio</strong></button>
+    <span>&nbsp;</span>
+    <button mat-raised-button color="warn" (click)="CanceladdNewPortfolio()" [fxHide] = "!onAddmode">Cancel</button>
+    <span>&nbsp;</span>
+    <span fxFlex></span>
+    <label>&nbsp; Total Portfolios: &nbsp;</label>
+    <mat-chip-list>
+    <mat-chip selected="true" style="background-color:white; color:black; font:30px"><strong>{{pfdetails?.length || 0}}</strong></mat-chip>
+  </mat-chip-list>
+    
+    
+  </mat-toolbar>
+
+
+<mat-expansion-panel *ngFor ="let pf of pfs" >
+    <mat-expansion-panel-header>
+    <mat-panel-title style="background-color: YELLOW">
+        <mat-form-field >
+            <mat-select multiple="{{true}}" placeholder="Portfolio" [(ngModel)]="selectedpfs"  (ngModelChange)="onChangeObj($event)">
+                <mat-option *ngFor="let portfolio of portfolios" [value]="portfolio">
+                      {{portfolio}}
+                      </mat-option>
+                    
+              </mat-select>
+            </mat-form-field>
+    </mat-panel-title>
+    <!--mat-panel-description>
+    Type your name and age
+    </mat-panel-description-->
+    </mat-expansion-panel-header>
+</mat-expansion-panel>
+
 <form [formGroup]="rForm" (ngSubmit)="addStocklist(rForm.value)">
 <mat-card fxLayout.lt-lg="column" fxLayoutWrap>  
 <div fxFlex = "1 0 65" style="border:1px solid lightgray;">

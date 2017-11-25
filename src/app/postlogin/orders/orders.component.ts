@@ -133,7 +133,6 @@ export class OrdersComponent implements OnInit {
     console.log("Portfolio wise : "+JSON.stringify(this.myjsonporttran));
     console.log("to submit : "+JSON.stringify(this.myjsontosubmit));
 
-
   this.rForm.reset();
   this.gorderid = this.gorderid+1;
 
@@ -180,8 +179,11 @@ addstockwise(){
     console.log(JSON.stringify(this.myjsontran));
   }
 
-  addportwise(){
   /*Code for stock wise ENDS*/
+
+
+  addportwise(){
+  
  
           
     //Code for portfolio wise START
