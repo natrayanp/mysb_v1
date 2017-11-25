@@ -33,7 +33,7 @@
           
 
         </div>
-        <div fxFlex="100%" style="background: yellow">
+        <div fxFlex="100%" style="background: yellow;" >
 
             <mat-expansion-panel fxFlex="1 1 auto" *ngIf="orpflist.controls.orStocklists.length>0" [expanded]="isallexpanded">
                 <mat-expansion-panel-header>
@@ -45,17 +45,18 @@
                     </mat-panel-description>
                 </mat-expansion-panel-header>
             <div formArrayName="orStocklists" >
-                <div  *ngFor="let orStocklist of orpflist.controls.orStocklists.controls; let j = index" style="border:1px green solid; border-radius:10px;margin-left:-5px;">
+                <div  *ngFor="let orStocklist of orpflist.controls.orStocklists.controls; let j = index" class="mybox">
 
-                    <div [formGroupName]="j">
+                    <div [formGroupName]="j" [ngClass]="(orStocklist.controls.orsttransaction_type.value == 'Buy')?'buyclr':(orStocklist.controls.orsttransaction_type.value == 'Sell')?'sellclr':''">
                         <div >
 
                       <mat-form-field >
-                          <mat-select  placeholder="Tran"  (change)="onChangeObj($event)" formControlName="orsttransaction_type" ([ngModel])="orStocklist.orsttransaction_type">
+                          <!--mat-select  placeholder="Tran"  (change)="onChangeObj($event)" formControlName="orsttransaction_type" ([ngModel])="orStocklist.orsttransaction_type">
                             <mat-option  *ngFor="let pfnamecpy of pfnamecpys" [value]="pfnamecpy">
                               {{ pfnamecpy }}
                             </mat-option>                    
-                          </mat-select>
+                          </mat-select-->
+                          <input matInput placeholder="Tran" formControlName="orsttransaction_type" ([ngModel])="orStocklist.orsttransaction_type">
                         </mat-form-field>
 
                         <mat-form-field >
