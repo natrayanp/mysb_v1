@@ -1,13 +1,19 @@
 
-<form [formGroup]="orForm" >
+<!--form [formGroup]="orForm" -->
 <mat-toolbar color ="primary" >
+        <a routerLink="/securedpg/orders/pfwise" routerLinkActive="active">PF wise order placement</a>
+        <a routerLink="/securedpg/orders/stwise" routerLinkActive="active">Stockwise order placement</a>
+<!--
   <button mat-raised-button color="warn" (click)="addonepf()" ><strong>Add Portfolio</strong></button>
   <span>&nbsp;</span>
   <button mat-raised-button color="warn" (click)="CanceladdNewPortfolio()" [fxHide] = "!onAddmode">Cancel</button>
   <span>&nbsp;</span>
   <span fxFlex></span>
   <label>&nbsp; Total Portfolios: &nbsp;</label>
+-->
 </mat-toolbar>
+<router-outlet></router-outlet>
+<!--
 <h4>Add all your stocks and mutual fund buy lists</h4>
 
 
@@ -56,6 +62,7 @@
                               {{ pfnamecpy }}
                             </mat-option>                    
                           </mat-select-->
+        <!--
                           <input matInput placeholder="Tran" formControlName="orsttransaction_type" ([ngModel])="orStocklist.orsttransaction_type">
                         </mat-form-field>
 
@@ -91,7 +98,7 @@
 
                          <button mat-icon-button (click)="showadvancedf(i,j)" ><mat-icon>arrow_drop_down</mat-icon>Advanced Options</button>
                           <!--button class="btt" (click)="showadvancedf(i,j)" ><mat-icon>arrow_drop_down</mat-icon>Advanced Options</button-->
-
+<!--
                       </div>
 
                     <div class="triangle-isosceles" [fxShow]="orStocklist.controls.orshowhide.value == 'true'">
@@ -193,3 +200,5 @@
 
 
 <pre>{{ orForm.value | json }}</pre>
+
+-->

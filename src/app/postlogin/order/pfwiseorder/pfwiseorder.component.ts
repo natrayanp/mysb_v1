@@ -1,16 +1,13 @@
 import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import { OrderdbservService } from "../../natservices/orderdbserv.service";
+import { OrderdbservService } from "../../../natservices/orderdbserv.service";
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-order',
-  templateUrl: './order.component.html',
-  styleUrls: ['./order.component.scss']
+  selector: 'app-pfwiseorder',
+  templateUrl: './pfwiseorder.component.html',
+  styleUrls: ['./pfwiseorder.component.scss']
 })
-export class OrderComponent implements OnInit {
-  ngOnInit() {}
-}
-  /*
+export class PfwiseorderComponent implements OnInit {
   public orForm : FormGroup;
   constructor(private myordsr: OrderdbservService, private orfb: FormBuilder) { }
   pfnamecpys:any;
@@ -124,7 +121,7 @@ deleteMFRow(i,k) {
   console.log(control1);
   console.log("control1 end");
   control1.push(this.initorStocklists());
-  control2.push(this.initorMFlists());
+  control2.push(this.initorMFlists());*/
  }
 
 
@@ -172,4 +169,4 @@ deleteMFRow(i,k) {
 
 
 //https://embed.plnkr.co/1qx5A6S9k9DM1FbXctvN/
-//https://scotch.io/tutorials/how-to-implement-conditional-validation-in-angular-2-model-driven-forms*/
+//https://scotch.io/tutorials/how-to-implement-conditional-validation-in-angular-2-model-driven-forms

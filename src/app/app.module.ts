@@ -69,6 +69,9 @@ import { Dialog1Component } from './home/login/dialog1/dialog1.component';
 import { FundallocatComponent } from './postlogin/fundallocat/fundallocat.component';
 import { OrderComponent } from './postlogin/order/order.component';
 import { OrderdbservService } from "./natservices/orderdbserv.service";
+import { PfwiseorderComponent } from './postlogin/order/pfwiseorder/pfwiseorder.component';
+import { StkwiseorderComponent } from './postlogin/order/stkwiseorder/stkwiseorder.component';
+import { OrderfinalComponent } from './postlogin/order/orderfinal/orderfinal.component';
 
 @NgModule({
   declarations: [
@@ -94,7 +97,10 @@ import { OrderdbservService } from "./natservices/orderdbserv.service";
     PfserviceService,
     Dialog1Component,
     FundallocatComponent,
-    OrderComponent
+    OrderComponent,
+    PfwiseorderComponent,
+    StkwiseorderComponent,
+    OrderfinalComponent
   ],
   imports: [
       BrowserModule,

@@ -1,0 +1,206 @@
+
+<form [formGroup]="stkForm" >
+  <mat-toolbar color ="primary" >
+    <button mat-raised-button color="warn" (click)="addonestklst()" ><strong>Add Stocks</strong></button>
+    <span>&nbsp;</span>
+    <button mat-raised-button color="warn" (click)="CanceladdNewPortfolio()" [fxHide] = "!onAddmode">Cancel</button>
+    <span>&nbsp;</span>
+    <span fxFlex></span>
+    <label>&nbsp; Total Portfolios: &nbsp;</label>
+  </mat-toolbar>
+  <h4>Add all your stocks and mutual fund buy lists</h4>
+  
+  
+  
+  <div formArrayName="stkstklists">
+  <div [formGroupName]="i" *ngFor="let stkstklist of stkForm.controls.stkstklists.controls; let i = index">
+      <div fxFlexLayout = "row" fxLayoutWrap >
+        <div fxFlex="100%" style="background: #ECEFF1">
+
+            <mat-form-field >
+                <mat-select  placeholder="Exchange"   formControlName="stkexchange">
+                  <mat-option  *ngFor="let exchangename of exchangenames" [value]="exchangename">
+                    {{ exchangename }}
+                  </mat-option>                    
+                </mat-select>
+              </mat-form-field>
+
+            <mat-form-field >
+              <mat-select  placeholder="Stock"  (change)="onChangeObj($event)" formControlName="stkstock">
+                <mat-option  *ngFor="let pfnamecpy of pfnamecpys" [value]="pfnamecpy">
+                  {{ pfnamecpy }}
+                </mat-option>                    
+              </mat-select>
+            </mat-form-field>
+  
+  
+            <a [routerLink]="" (click)="addonestklst(i)"  *ngIf="stkstklist.controls.stkStocklists.length<1">  Add Stocks</a>
+            <a [routerLink]="" (click)="removeonestklist(i)"  *ngIf="stkstklist.controls.stkStocklists.length>0">  Remove Stocks</a>
+            <a [routerLink]="" (click)="addonemflist(i)"   *ngIf="stkstklist.controls.stkMFlists.length<1">  Add MF</a>
+            <a [routerLink]="" (click)="removeonemflist(i)"   *ngIf="stkstklist.controls.stkMFlists.length>0">  Remove MF</a>
+            <a [routerLink]="" (click)="expandall()"   *ngIf="(stkstklist.controls.stkMFlists.length>0 || stkstklist.controls.stkStocklists.length>0) && !isallexpanded">Expand All</a>
+            <a [routerLink]="" (click)="expandall()"   *ngIf="(stkstklist.controls.stkMFlists.length>0 || stkstklist.controls.stkStocklists.length>0) && isallexpanded">Collapse All</a>
+            
+  
+          </div>
+          <div fxFlex="100%" style="background: yellow;" >
+  
+              <mat-expansion-panel fxFlex="1 1 auto" *ngIf="stkstklist.controls.stkStocklists.length>0" [expanded]="isallexpanded">
+                  <mat-expansion-panel-header>
+                      <mat-panel-title fxFlexAlign="center" style="color:rgb(74, 23, 190)">
+                          <h3>Stock Fund List</h3>
+                      </mat-panel-title>
+                      <mat-panel-description fxFlexAlign="center">
+                          Funds Planned
+                      </mat-panel-description>
+                  </mat-expansion-panel-header>
+              <div formArrayName="stkStocklists" >
+                  <div  *ngFor="let stkStocklist of stkstklist.controls.stkStocklists.controls; let j = index" class="mybox">
+  
+                      <div [formGroupName]="j" [ngClass]="(stkStocklist.controls.orsttransaction_type.value == 'Buy')?'buyclr':(stkStocklist.controls.orsttransaction_type.value == 'Sell')?'sellclr':''">
+                          <div >
+  
+                        <mat-form-field >
+                            <!--mat-select  placeholder="Tran"  (change)="onChangeObj($event)" formControlName="orsttransaction_type" ([ngModel])="stkStocklist.orsttransaction_type">
+                              <mat-option  *ngFor="let pfnamecpy of pfnamecpys" [value]="pfnamecpy">
+                                {{ pfnamecpy }}
+                              </mat-option>                    
+                            </mat-select-->
+                            <input matInput placeholder="Tran" formControlName="orsttransaction_type" ([ngModel])="stkStocklist.orsttransaction_type">
+                          </mat-form-field>
+  
+                          <mat-form-field >
+                              <input matInput placeholder="Exchange" formControlName="orstexchange" ([ngModel])="stkStocklist.orstexchange">
+                          </mat-form-field>
+  
+                          <mat-form-field >
+                              <input matInput placeholder="Symbol" formControlName="orsttradingsymbol" [matAutocomplete]="auto" ([ngModel])="stkStocklist.orsttradingsymbol">
+                          </mat-form-field>
+                           
+                           <mat-autocomplete #auto="matAutocomplete">
+                              <mat-option *ngFor="let option of options" [value]="option">
+                                 {{ option }}
+                              </mat-option>
+                           </mat-autocomplete>
+  
+                           <mat-form-field >
+                              <input matInput placeholder="quantiy" formControlName="orstquantity" [matAutocomplete]="auto" ([ngModel])="stkStocklist.orstquantity">
+                          </mat-form-field>
+                        
+                           <mat-form-field >
+                              <input matInput placeholder="Type" formControlName="orstorder_type" [matAutocomplete]="auto1" ([ngModel])="stkStocklist.orsttradingsymbol">
+                          </mat-form-field>
+                          <mat-autocomplete #auto1="matAutocomplete">
+                              <mat-option *ngFor="let option of options" [value]="option">
+                                 {{ option }}
+                              </mat-option>
+                           </mat-autocomplete>
+  
+                           <button mat-icon-button (click)="deleteStkRow(i,j)"><mat-icon>cancel</mat-icon></button>
+  
+  
+                           <button mat-icon-button (click)="showadvancedf(i,j)" ><mat-icon>arrow_drop_down</mat-icon>Advanced Options</button>
+                            <!--button class="btt" (click)="showadvancedf(i,j)" ><mat-icon>arrow_drop_down</mat-icon>Advanced Options</button-->
+  
+                        </div>
+  
+                      <div class="triangle-isosceles" [fxShow]="stkStocklist.controls.orshowhide.value == 'true'">
+                          <mat-form-field >
+                              <input matInput placeholder="Price" formControlName="orstprice" ([ngModel])="stkStocklist.orstprice" >
+                          </mat-form-field>
+  
+                          <mat-form-field fxHide>
+                              <input matInput  placeholder="show or hide" formControlName="orshowhide" ([ngModel])="stkStocklist.orshowhide">
+                          </mat-form-field>
+  
+                          <mat-form-field >
+                              <input matInput placeholder="TriggerPrice" formControlName="orsttrigger_price" ([ngModel])="stkStocklist.orsttrigger_price">
+                          </mat-form-field>
+  
+  
+                          <mat-form-field >
+                              <input matInput placeholder="disclosed qty" formControlName="orstdisclosed_quantity" ([ngModel])="stkStocklist.orstdisclosed_quantity">
+                          </mat-form-field>
+  
+                          <mat-form-field >
+                              <input matInput placeholder="Validity" formControlName="orstvalidity" ([ngModel])="stkStocklist.orstvalidity">
+                          </mat-form-field>
+  
+                          <mat-form-field [fxHide]="true" >
+                              <input matInput placeholder="readonly" formControlName="orstreadonly" [value]="false">
+                          </mat-form-field>
+  
+                          <mat-form-field >
+                              <input matInput placeholder="Stoploss" formControlName="orstoploss" ([ngModel])="stkStocklist.orstoploss">
+                          </mat-form-field>
+  
+                          <mat-form-field >
+                              <input matInput placeholder="Squaroff" formControlName="orsquareoff" ([ngModel])="stkStocklist.orsquareoff">
+                          </mat-form-field>
+  
+                          <mat-form-field >
+                              <input matInput placeholder="Trailing Stoploss" formControlName="ortrailing_stoploss" ([ngModel])="stkStocklist.ortrailing_stoploss">
+                          </mat-form-field>
+  
+                          <mat-form-field [fxHide]="true" >
+                              <input matInput placeholder="Orderid" formControlName="orstorderid" ([ngModel])="stkStocklist.orstorderid">
+                          </mat-form-field>
+                          
+                      </div>
+                     
+                  </div>
+                 
+                  </div>
+             
+          
+              </div>
+              <button mat-icon-button (click)="addonestklist(i)"><mat-icon>add_circle</mat-icon></button>
+          </mat-expansion-panel>
+   
+          </div>
+          <div fxFlex="100%" style="background: blue">
+  
+  
+                  <mat-expansion-panel fxFlex="1 1 auto" *ngIf="stkstklist.controls.stkMFlists.length>0" [expanded]="isallexpanded">
+                          <mat-expansion-panel-header>
+                              <mat-panel-title fxFlexAlign="center" style="color:rgb(74, 23, 190)">
+                                  <h3>Mutual Fund List</h3>
+                              </mat-panel-title>
+                              <mat-panel-description fxFlexAlign="center">
+                                  Funds Planned
+                              </mat-panel-description>
+                          </mat-expansion-panel-header>
+          
+          <div formArrayName="stkMFlists">
+              <div [formGroupName]="k" *ngFor="let stkMFlist of stkstklist.controls.stkMFlists.controls; let k = index">
+  
+                
+                      <mat-form-field >
+                          <input matInput placeholder="FundName" formControlName="ormffundname" ([ngModel])="stkMFlist.ormffundname">
+                      </mat-form-field>
+  
+                      <mat-form-field >
+                              <input matInput placeholder="Order Amt" formControlName="ormforderamt" ([ngModel])="stkMFlist.ormforderamt">
+                      </mat-form-field>
+                  
+                      <button mat-icon-button (click)="deleteMFRow(i,k)"><mat-icon>cancel</mat-icon></button>
+                     
+                    
+          </div>
+        </div>
+        <button mat-icon-button (click)="addonemflist(i)"><mat-icon>add_circle</mat-icon></button>
+      </mat-expansion-panel>
+  
+  
+    </div>
+  
+  
+  </div>
+  
+  </div> 
+  </div> 
+
+  
+  </form>
+
+  <pre>{{ stkForm.value | json }}</pre>

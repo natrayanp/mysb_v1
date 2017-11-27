@@ -16,13 +16,20 @@ import { PortfolioListComponent } from './postlogin/settings/portfoliosetup/port
 import { ChartComponent } from './chart/chart.component';
 import { PfserviceService } from './natservices/pfservice.service';
 import { FundallocatComponent } from './postlogin/fundallocat/fundallocat.component';
+import { PfwiseorderComponent } from './postlogin/order/pfwiseorder/pfwiseorder.component';
+import { StkwiseorderComponent } from './postlogin/order/stkwiseorder/stkwiseorder.component';
+import { OrderfinalComponent } from './postlogin/order/orderfinal/orderfinal.component';
 
 export const ROUTES: Routes = [
   
   { path: 'home',  component: HomeComponent},
   { path: 'securedpg',  component: PostloginComponent, children: [
    // {path: 'orders',  component: OrdersComponent},
-    {path: 'orders',  component: OrderComponent},    
+    {path: 'orders',  component: OrderComponent, children: [
+      {path: 'pfwise',  component: PfwiseorderComponent},
+      {path: 'stwise',  component: StkwiseorderComponent},
+      {path: 'finalorder',  component: OrderfinalComponent}
+    ]},    
     {path: 'dashboard',  component: DashboardComponent},
     {path: 'fundalloc',  component: FundallocatComponent},
     {path: 'settings',  component: SettingsComponent, children: [
