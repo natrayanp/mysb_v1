@@ -5,5 +5,13 @@
 
 export const environment = {
   production: false,
-  TknAddSites: ["http://127.0.0.1:8001","http://127.0.0.1:8000"]
+  TknAddSites: ["http://127.0.0.1:8001","http://127.0.0.1:8000"],
+  //Fund Allocation screen
+  FundAllocapiUrl: "http://127.0.0.1:8000",
+  FundAllocfetch: "getfundaloc",
+  FundAllocSave:"savefundaloc",
+  bsecustUrl:"http://127.0.0.1:8000",
+  bseCustcreate:"custcreation",
+  bsemandatetUrl:"http://127.0.0.1:8000",
+  bseMandataecreate:"mandatecreation"
 };

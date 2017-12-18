@@ -1,187 +1,99 @@
-<div class="example-header" fxLayout="row">
-    <mat-form-field>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-    </mat-form-field>
-  </div>
+
+
+
+<mat-toolbar color ="primary" >
+  <button mat-raised-button color="warn" (click)="addNewAllocAmt()" ><strong>Confirm</strong></button>
+  <span>&nbsp;</span>
+  <button mat-raised-button color="warn" (click)="setzero()" ><strong>Reset</strong></button>
+  <span>&nbsp;</span>
+  <span fxFlex></span>
+  <label>&nbsp; Ledger Balance:</label>
+  <mat-chip-list>
+    <mat-chip selected="true" style="background-color:white; color:black; font:30px"><strong>{{natrayans.alocledgerbal || 0}}</strong></mat-chip>
+  </mat-chip-list>
+  <span>&nbsp;</span>
+  <label>Unallocated: </label>
+  <mat-chip-list>
+    <mat-chip selected="true" style="background-color:white; color:black; font:30px"><strong>{{unallocated || 0}}</strong></mat-chip>
+  </mat-chip-list>
   
-  <div class="example-container mat-elevation-z8">
   
-    <mat-table [dataSource]="dataSource" matSort>
-  
-      <!-- ID Column -->
-      <ng-container matColumnDef="id">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-        <mat-cell *matCellDef="let row" data-label="id"> {{row.id}} </mat-cell>
-      </ng-container>
-  
+</mat-toolbar>
+
+
+
+<div class="example-header">
+<mat-form-field>
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+</mat-form-field>
+</div>
+
+<div class="example-container mat-elevation-z8">
+
+<mat-table [dataSource]="dataSource" matSort>
+
+  <!-- ID Column -->
+  <ng-container matColumnDef="Portfolioname">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Portfolioname </mat-header-cell>
+    <mat-cell *matCellDef="let element" data-label="Portfolioname"> {{element.pfportfolioname}} </mat-cell>
+  </ng-container>
+
+  <!-- pending current cycle Column -->
+  <ng-container matColumnDef="pendingcurrent" >
+    <mat-header-cell *matHeaderCellDef mat-sort-header style="color:lightblue"> Pending Current </mat-header-cell>
+    <mat-cell *matCellDef="let element" data-label="Pending Current" style="color:lightblue"> pendng </mat-cell>
+  </ng-container>
+
+      <!-- pending past cycle Column -->
+  <ng-container matColumnDef="pendingpast">
+    <mat-header-cell *matHeaderCellDef mat-sort-header style="color:lightblue"> Pending Past </mat-header-cell>
+    <mat-cell *matCellDef="let element" data-label="Pending Past" style="color:lightblue"> pendng </mat-cell>
+  </ng-container>
+
+
+
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="allocatedamt">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Allocated Amt </mat-header-cell>
+    <mat-cell *matCellDef="let element" data-label="Allocated Amt"> {{element.alocpfallocated}} </mat-cell>
+  </ng-container>
+
+  <!-- Color Column -->
+  <ng-container matColumnDef="blockedamt">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Amount used today </mat-header-cell>
+    <mat-cell *matCellDef="let element" data-label="Amount used today"> {{element.alocpfusedtoday}} </mat-cell>
+  </ng-container>
+
+
       <!-- Progress Column -->
-      <ng-container matColumnDef="progress">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Progress </mat-header-cell>
-        <mat-cell *matCellDef="let row" data-label="progress"> {{row.progress}}% </mat-cell>
-      </ng-container>
-  
-      <!-- Name Column -->
-      <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-        <mat-cell *matCellDef="let row" data-label="name"> {{row.name}} </mat-cell>
-      </ng-container>
-  
-      <!-- Color Column -->
-      <ng-container matColumnDef="color">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Color </mat-header-cell>
-        <mat-cell *matCellDef="let row" [style.color]="row.color" data-label="color"> {{row.color}} </mat-cell>
-      </ng-container>
-  
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;">
-      </mat-row>
-    </mat-table>
-  
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-  </div>
-  
-  
+  <ng-container matColumnDef="newallocation">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> New Allocation </mat-header-cell>
+    <mat-cell *matCellDef="let element" data-label="New Allocation" class=".align-right"> 
+        <mat-form-field class="example-full-width" >
+          <input matInput type="number" [(ngModel)]="element.alocpfnewallocated" (keyup)="dos(element)" (change)="doSomething()">
+        </mat-form-field>        
+      </mat-cell>      
+  </ng-container>
+
+      <!-- Total Column -->
+  <ng-container matColumnDef="totalamt">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Total </mat-header-cell>
+    <mat-cell *matCellDef="let element"  data-label="Total"> 
+      {{element.alocpftotal}}      
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;">
+  </mat-row>
+</mat-table>
+
+<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>
 
 
 
-
-
-
-<!--mat-toolbar color ="primary">
-    <h4> Allocate funds for your portfolio</h4>
-    <span>&nbsp;</span> 
-    
-  </mat-toolbar>
-  <div *ngIf="allocForm.controls.alocpflists.controls.length<1">
-    <p> Don't have any portfolio yet.  Go to "Settings > Portfolio" to create one now</p>
-    
-  </div>
-
-<div *ngIf="allocForm.controls.alocpflists.controls.length>0">
-<form [formGroup]="allocForm" >
- 
-  <mat-card   style="margin-top:15px">
-      <mat-card-header>
-          <div fxLayout="row" fxLayoutWrap fxLayoutAlign="start center" fxFlex="1 1 100"> 
-        
-          <mat-card-title [fxHide]="onEdit"><h1>{{allocfrdbcpy.alocledgerbal}}</h1></mat-card-title>
-            
-  
-          </div>
-         
-          
-      </mat-card-header>
-      <mat-card-content >
-          <div formArrayName="alocpflists">
-                <div fxFlexLayout="row"  fxLayoutWrap fxLayoutGap="20px">
-                    <label fxFlex><h3>Portfolio Name</h3></label>
-                    <label fxFlex><h3>Allocated Amount</h3></label>
-                    <label fxFlex><h3>Blocked Amount</h3></label>
-                    <label fxFlex><h3>Current Allocation</h3></label>
-                    <label fxFlex><h3>Total Allocated</h3></label>
-                </div>
-                <hr>
-                        <div *ngFor="let alocpflist of allocForm.controls.alocpflists.controls; let i=index"  [formGroupName]="i">
-                          
-  
-                          <div fxFlexLayout="row"  fxLayoutWrap fxLayoutGap="20px">
-                             
-  
-                              
-                            <label fxFlex><p>{{allocfrdbcpy.alocpflists[i].alocpfname}}</p></label>
-                              <!--mat-form-field fxFlex="1 0 80px">
-                                  <input matInput placeholder="Exchange" formControlName= "alocpfname" [readonly]="!onEdit" [(ngModel)]="allocfrdbcpy.alocpflists[i].alocpfname" >
-                              </mat-form-field-->
-  <!--
-                              <mat-form-field fxFlex="1 0 80px" [fxHide]="!onEdit">
-                                  <input matInput placeholder="NAV" formControlName= "alocpfallocated" [readonly]="!onEdit" [(ngModel)]="allocfrdbcpy.alocpflists[i].alocpfallocated">
-                                </mat-form-field>
-  
-                              <mat-form-field fxFlex="1 0 80px" [fxHide]="!onEdit">
-                                  <input matInput type="number" placeholder="Amount" formControlName= "alocpfblocked" [readonly]="!onEdit" [(ngModel)]="allocfrdbcpy.alocpflists[i].alocpfblocked">
-                              </mat-form-field>
-      
-                              <mat-form-field fxFlex="1 0 80px"  [fxHide]="!onEdit">
-                              <input matInput placeholder="Percent" formControlName= "alocpfnewallocated" [readonly]="!onEdit" [(ngModel)]="allocfrdbcpy.alocpflists[i].alocpfnewallocated">
-                              </mat-form-field>
-  
-                              <mat-form-field fxFlex="1 0 80px">
-                                  <input matInput type="number" placeholder="Alloted Amt" formControlName= "alocpftotal" readonly [(ngModel)]="allocfrdbcpy.alocpflists[i].alocpftotal">
-                              </mat-form-field>
-                          
-                           
-                        
-                          </div>
-                          
-                      </div>                    
-                    
-                     
-  
-              
-                                 </div>
-  
-      </mat-card-content>
-      </mat-card>
-      </form>
-    </div>
-
-  <!--
-     
-<table id="rwd-table-large">
-        <thead>
-          <tr>
-            <th>Portfolio Name</th>
-            <th>>Allocated Amount</th>
-            <th>Blocked Amount</th>
-            <th>Current Allocation</th>
-            <th>Total Allocated</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr  *ngFor="let alocpflist of allocfrdbcpy.alocpflists"  >
-            
-            <td>{{alocpflist.alocpfname}}</td>
-            <td>{{alocpflist.alocpfallocated}}</td>
-            <td>{{alocpflist.alocpfblocked"}}</td>
-            <td>{{alocpflist.alocpfnewallocated}}</td>
-            <td>{{alocpflist.alocpftotal}}</td>
-          </tr>
-          
-       
-        </tbody>
-      </table>
-
-
-
-                        
-      <table class="responsive-table">
-            <caption></caption>
-            <thead>
-              <tr>
-                <th scope="col">tradingsymbol</th>
-                <th scope="col">exchange</th>
-                <th scope="col">transaction_type</th>
-                <th scope="col">order_type</th>
-                <th scope="col">quantity</th> 
-                
-              </tr>
-            </thead>
-            <tfoot>
-            </tfoot>
-            <tbody>
-              
-            <tr  *ngFor="let alocpflist of allocForm.controls.alocpflists.controls" >
-                <td scope="row">{{allocfrdbcpy.alocpflists[i].alocpfname}}</td>
-                <td data-title="exchange">{{allocfrdbcpy.alocpflists[i].alocpfallocated}}</td>
-                <td data-title="transaction_type">{{allocfrdbcpy.alocpflists[i].alocpfblocked"}}</td>
-                <td data-title="order_type">{{allocfrdbcpy.alocpflists[i].alocpfnewallocated}}</td>
-                <td data-title="quantity">{{allocfrdbcpy.alocpflists[i].alocpftotal}}</td>
-              
-                  
-               
-              </tr>
-            </tbody>
-          </table>
-        
-      
-        -->
+<div fxLayout="column">
+  <pre>{{natrayans | json}}</pre>
+</div>

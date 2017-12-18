@@ -1,47 +1,15 @@
-<br>
+
 <form [formGroup]="orForm" >
-
-
-
-        <div fxLayout="row" fxLayoutWrap fxLayoutAlign ="center center">
-            <div fxFlex="1 0 40%" fxFlex.md="1 0 70%"fxFlex.lt-md="100%">
-                <mat-form-field fxFlex="100%">
-                    <mat-select  placeholder="Portfolio" [(value)]="selectedpfs"  (ngModelChange)="onChangeObj($event)">
-                        <mat-option *ngFor="let portfolio of portfolios" [value]="portfolio" >
-                                {{portfolio}}
-                        </mat-option>                                    
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            
-            <div>
-                <span fxFlex="0 0 20px" fxFlex.lt-md="0px"></span>
-            </div>
-
-            <div fxFlex="1 0 auto" style="background-color: white">
-                <button mat-raised-button color="accent" (click)="addonepf()">add</button>
-            </div>            
-        </div>
-        <p><strong>All Your transaction list below</strong></p>
-        
-        <div formArrayName="orpflists">
-                <div [formGroupName]="i" *ngFor="let orpflist of orForm.controls.orpflists.controls; let i = index">
-                    <div fxFlexLayout = "row" fxLayoutWrap >
-                        <mat-card fxFlex>
-
-                            <mat-card-content>
-                                <div fxFlex >
-                                    <p>{{orpflist.controls.orportfolio.value}}</p>
-                                </div>
-                                <hr><hr>
-                            </mat-card-content>
-
-                        </mat-card>
-                    </div>
-                </div>
-        </div>
-
-
+  <mat-toolbar color ="primary" >
+    <button mat-raised-button color="warn" (click)="addonepf()" ><strong>Add Portfolio</strong></button>
+    <span>&nbsp;</span>
+    <button mat-raised-button color="warn" (click)="CanceladdNewPortfolio()" [fxHide] = "!onAddmode">Cancel</button>
+    <span>&nbsp;</span>
+    <span fxFlex></span>
+    <label>&nbsp; Total Portfolios: &nbsp;</label>
+  </mat-toolbar>
+  <h4>Add all your stocks and mutual fund buy lists</h4>
+  
   
   <div formArrayName="orpflists">
   <div [formGroupName]="i" *ngFor="let orpflist of orForm.controls.orpflists.controls; let i = index">

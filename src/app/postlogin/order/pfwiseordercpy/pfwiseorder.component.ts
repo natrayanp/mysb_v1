@@ -13,8 +13,7 @@ export class PfwiseorderComponent implements OnInit {
   pfnamecpys:any;
   showadvanced = false;
   isallexpanded=true;
-  portfolios: string[]=['Natrayans','Nirudhis','Ananthis','Nidha','Jayakodi','Palaniappan','Arun'];
-  selectedpfs:string[];
+  
 
   ngOnInit() {
     this.fetchpfdata();
@@ -83,7 +82,7 @@ somemsg(){
 addonepf(){
   const control = <FormArray>this.orForm.controls['orpflists'];
   console.log(control);
-  control.push(this.initorpflists(this.selectedpfs));
+  control.push(this.initorpflists());
 }
 
 addonestklist(index){
@@ -127,9 +126,9 @@ deleteMFRow(i,k) {
 
 
 
-  initorpflists(pfname) {
+  initorpflists() {
     return new FormGroup({
-      orportfolio:new FormControl(pfname,Validators.required),
+      orportfolio:new FormControl(null,Validators.required),
       orStocklists:new FormArray([]),
       orMFlists:new FormArray([])  
     });

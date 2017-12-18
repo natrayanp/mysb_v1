@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import { AsyncPipe } from '@angular/common';
-import { SettingspfService } from '../../../../natservices/settingspf.service'
+import { SettingspfService } from '../../../../natservices/settingspf.service';
 import { NotificationsService } from '../../../../commonmodule/notifymodule/services/notifications.service';
                                       
 @Component({
