@@ -13,9 +13,9 @@ export class SetjwtService {
   
     login(natkey) {
       
-      return this.http.post('http://127.0.0.1:8000/natkeys', JSON.stringify({ natkey: natkey }))
+      return this.http.post('http://127.0.0.1:8000/natkeys', { natkey: natkey })
       //this.setjwtserviceservice.login(this.name,this.password)
-          .map(res => {return (res);})                    
+         // .map(res => {return (res);})                    
     
   }
   

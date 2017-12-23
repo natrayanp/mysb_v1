@@ -19,6 +19,7 @@ import { FundallocatComponent } from './postlogin/fundallocat/fundallocat.compon
 import { PfwiseorderComponent } from './postlogin/order/pfwiseorder/pfwiseorder.component';
 import { StkwiseorderComponent } from './postlogin/order/stkwiseorder/stkwiseorder.component';
 import { OrderfinalComponent } from './postlogin/order/orderfinal/orderfinal.component';
+import { SignupComponent } from './home/signup/signup.component';
 
 export const ROUTES: Routes = [
   
@@ -39,6 +40,7 @@ export const ROUTES: Routes = [
   ]},  
   {path: 'authchk', component: LogincheckComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'signup', component: SignupComponent},
   {path: 'chart', component: ChartComponent},
   {path: 'data', component: PfserviceService},
   

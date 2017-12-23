@@ -40,6 +40,16 @@ dbaction(screen,functionality,data){
         var apiurl=environment.bsemandatetUrl + "/" + environment.bseMandataecreate;
         return this.http.get(apiurl);
       }
+      case "SetJwt":
+      {
+        var apiurl=environment.SetJwtapiUrl + "/" + environment.SetJwtapiSave;
+        return this.http.post(apiurl,data,{observe: 'response'});
+      }
+      case "RecordSignup":
+      {
+        var apiurl=environment.RecordSignupapiUrl + "/" + environment.RecordSignupapiSave;
+        return this.http.post(apiurl,data,{observe: 'response'});
+      }      
   }
 }
 

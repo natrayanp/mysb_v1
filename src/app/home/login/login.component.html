@@ -1,22 +1,108 @@
 <app-toolbar></app-toolbar> 
-<div fxLayout="column"  fxLayoutWrap fxLayoutAlign="center center" >
-<mat-card style.gt-sm=" width:50%">
-  
-  <div fxLayout="row" fxLayout.lt-md="column" >
-  <div  fxLayout="column" fxFlex="1 0 auto" fxLayoutAlign="center center">
-    <h2>Zerodha Login</h2>
-    <button mat-raised-button (click)="openpop()" > KiteLogin </button>    
-  </div>
 
-  <div  fxFlex="1 0 auto" style="background-color: green">
-      <div  fxLayout="column" fxFlex="1 0 auto" fxLayoutAlign="center center">
-          <h2>Family access Login</h2>
-          <button mat-raised-button > Familyaccess </button>    
-        </div>
-  </div>
+
+
+
+<div fxLayout="column"  fxLayoutWrap fxLayoutAlign="center center">
+<div>
 
 </div>
-<div fxLayout="row" fxLayout.lt-md="column">
+  <!--
+<div class="container">
+  <div>
+  <p>{{message}}</p>
+</div>
+</div>
+-->
+<mat-card [ngStyle]="{'width':'50%'}" [ngStyle.lt-lg]="{'width':'100%'}"  [ngStyle.lt-xl]="{'width':'65%'}" fxAlign = "center" >
+ 
+  <mat-card-title>
+    <h2>Login</h2>
+  </mat-card-title>
+  <notification-message></notification-message>
+  
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center center"style="margin-top:0px">
+      
+      <div >
+        
+          <form class="example-form"  [formGroup]="userpasswdlgForm"> 
+          <div  fxLayout="column" fxFlex="1 0 auto" fxLayoutGap="30px" fxLayoutAlign="center center" fxFlex="0 1 auto">
+            
+                  <mat-form-field class="example-full-width" >
+                    <input matInput placeholder="Email" formControlName="email" fxFlex>
+                  <mat-error *ngIf="userpasswdlgForm.controls['email'].hasError('pattern')">
+                    email is not valid
+                  </mat-error>
+                  <mat-error *ngIf="userpasswdlgForm.controls['email'].hasError('required')">
+                    email is Mandatory
+                  </mat-error>
+                </mat-form-field>
+                 
+                
+                  <mat-form-field class="example-full-width" >
+                    <input matInput type="password" placeholder="Password" formControlName="password" fxFlex="0 1 auto">
+
+                    <mat-error *ngIf="userpasswdlgForm.controls['password'].hasError('pattern')">
+                      Length must be min 8 max 10, starting with A-Z or a-z and with at least one number, one uppercase, lowercase letter and one special character from !@#%&amp;
+                    </mat-error>
+                    <mat-error *ngIf="userpasswdlgForm.controls['password'].hasError('required')">
+                      Password cannot be blank
+                    </mat-error>
+
+                  </mat-form-field>
+                  
+                  <br>
+                              
+              <button mat-raised-button [disabled]="userpasswdlgForm.invalid" (click)="emaillogin()" id="userpassloginbtn" style="height:50px;width:400px;font-size:20px;" color="primary" fxFlex="0 1 auto"> <strong>Login</strong></button>    
+
+            </div>
+          </form>
+      </div>
+<div fxFlex="auto" style="text-align:center" >
+    <p ></p>
+    <button mat-fab style="color:green" [disabled]="true"  [ngStyle.lt-md]="{'margin-top':'50px'}"><strong>OR</strong></button>
+ 
+</div>
+  <div  fxLayout="column" fxFlex="1 0 auto" fxLayoutAlign="center center" style="height:400px">
+
+
+
+   <div fxLayout="column" fxLayoutGap="40px" >
+      <!--google-signin fxflex
+      [clientId]="myClientId"
+      [width]="myWidth"
+      [theme]="myTheme"
+      [scope]="myScope"
+      [longTitle]="myLongTitle"
+      (googleSignInSuccess)="onGoogleSignInSuccess($event)">
+    </google-signin>
+    <span fxFlex="30px">&nbsp;</span>
+
+    <app-fbsignin fxflex
+     (FBSignInSuccess)="onFBSignInSuccess($event)">
+  </app-fbsignin-->
+
+    <button mat-raised-button (click)="signInWithGoogle()" id="googleloginbtn" style="height:50px;width:400px;font-size:20px; color:white; background-color:#3369E8"  ><strong>Login with Google </strong></button>   
+    
+    <button mat-raised-button (click)="signInWithFacebook()" id="fbloginbtn" style="height:50px;width:400px;font-size:20px;color:white; background-color:#3B5388"> <strong>Login with facebook </strong></button>   
+
+    <button mat-raised-button (click)="signInWithTwitter()" id="twitterloginbtn" style="height:50px;width:400px;font-size:20px;color:white; background-color:#3699ED"> <strong>Login with Twitter </strong></button>   
+
+    </div>
+    <br>
+  </div>
+
+
+
+</div>
+<div fxLayout="row" fxLayoutAlign="center center">
+  <span style="line-height:60px"></span>
+
+<h2>New User?  <a type="button" routerLink="/signup" routerLinkActive="active">Signup</a></h2>
+
+</div>
+
+<!--div fxLayout="row" fxLayout.lt-md="column">
   <div  fxFlex="2 0 100%" style="background-color: blue">
       <div  fxLayout="column" fxFlex="1 0 auto" fxLayoutAlign="center center">
           <h2>New User?  Register Now</h2>
@@ -27,8 +113,17 @@
       </div>
 
   </div>
-</div>
+</div-->
 </mat-card>
 </div>
+<button (click)="logout()">logout</button>
+<button (click)="print()">print</button>
+<!--
+<div class="alert alert-heading close"><p >djdjdj</p> </div>
+<button (click)="logout()">logout</button>
+<button (click)="print()">print</button>
+-->
+
+
 
 

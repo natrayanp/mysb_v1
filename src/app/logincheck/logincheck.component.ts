@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
-import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/map';
+import { FirebaseApp } from 'angularfire2';
+import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase';
 
 import { SetjwtService } from '../natservices/setjwtservice.service';
 
@@ -15,10 +18,13 @@ export class LogincheckComponent implements OnInit {
   data:any;
   natkey:any;
   
-  constructor(private router: Router, private route: ActivatedRoute, private setjwtservice: SetjwtService) { }
+  constructor(private router: Router, private route: ActivatedRoute,public app: AngularFireAuth, private setjwtservice: SetjwtService) {
+    
+   }
 
   ngOnInit() {
     this.natkey=this.route.snapshot.queryParamMap.get("natkey");
+    console.log("iam inside auth");
     if(localStorage.getItem("natjwt") === null){
         this.getUsers(this.natkey);       
       }else{

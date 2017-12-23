@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 
 import { NotifymoduleModule } from './commonmodule/notifymodule/notifymodule.module';
-
+import { environment } from '../environments/environment';
 
 import { MatSidenavModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material';
@@ -73,7 +73,17 @@ import { DbservicesService } from "./natservices/dbservices.service";
 import { PfwiseorderComponent } from './postlogin/order/pfwiseorder/pfwiseorder.component';
 import { StkwiseorderComponent } from './postlogin/order/stkwiseorder/stkwiseorder.component';
 import { OrderfinalComponent } from './postlogin/order/orderfinal/orderfinal.component';
+import { GoogleSignInComponentComponent } from './home/login/google-sign-in-component/google-sign-in-component.component';
+import { FbsigninComponent } from './home/login/fbsignin/fbsignin.component';
 
+
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { SignupComponent } from './home/signup/signup.component';
+import { AuthService } from './natservices/auth.service';
+import { NotifyService } from './natservices/notify.service';
+import { NotificationMessageComponent } from './commonmodule/notification-message/notification-message.component';
 
 
 @NgModule({
@@ -103,7 +113,11 @@ import { OrderfinalComponent } from './postlogin/order/orderfinal/orderfinal.com
     OrderComponent,
     PfwiseorderComponent,
     StkwiseorderComponent,
-    OrderfinalComponent
+    OrderfinalComponent,
+    GoogleSignInComponentComponent,
+    FbsigninComponent,
+    SignupComponent,
+    NotificationMessageComponent
   ],
   imports: [
       BrowserModule,
@@ -133,11 +147,22 @@ import { OrderfinalComponent } from './postlogin/order/orderfinal/orderfinal.com
       MatDatepickerModule,MatNativeDateModule,
       MatPaginatorModule,
       MatTableModule,
-    RouterModule.forRoot(ROUTES ,/*{enableTracing: true }*/),
-    NotifymoduleModule    
+    RouterModule.forRoot(ROUTES /*,{enableTracing: true }*/),
+    NotifymoduleModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule    
   ],
   entryComponents: [Dialog1Component,PfqtypopupComponent],
-  providers: [SetjwtService,GooglePieChartService,SettingspfService,OrderdbservService,DbservicesService,{provide: HTTP_INTERCEPTORS,useClass: NatInterceptor, multi: true,}],
+  providers: [SetjwtService,
+              GooglePieChartService,
+              SettingspfService,
+              OrderdbservService,
+              DbservicesService,
+              {provide: HTTP_INTERCEPTORS,useClass: NatInterceptor, multi: true,},
+              AuthService, 
+              NotifyService
+              ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

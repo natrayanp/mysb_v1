@@ -1,0 +1,191 @@
+<app-toolbar></app-toolbar> 
+
+
+
+
+<div fxLayout="column"  fxLayoutWrap fxLayoutAlign="center center">
+
+  <!--
+<div class="container">
+  <div>
+  <p>{{message}}</p>
+</div>
+</div>
+-->
+<mat-card [ngStyle]="{'width':'50%'}" [ngStyle.lt-lg]="{'width':'100%'}"  [ngStyle.lt-xl]="{'width':'65%'}" fxAlign = "center" >
+    <mat-card-title>
+        <h2>Signup</h2>
+      </mat-card-title>  
+      <notification-message></notification-message>
+  <h2>Your Details</h2>
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center center"style="margin-top:0px">
+      
+        
+            
+            <form ngClass="example-form1" [ngClass.lt-md]="{'example-form1':false,'example-form':true}" [formGroup]="signupForm">
+            <div  fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="30px" fxLayoutAlign="center center"  >
+              
+                    <mat-form-field class="example-full-width1" >
+                      <input matInput placeholder="Name" fxFlex formControlName="name">
+                      <mat-error *ngIf="signupForm.controls['name'].hasError('required')">
+                        Name is required.
+                      </mat-error>
+                      <mat-error *ngIf="signupForm.controls['name'].hasError('pattern')">
+                        Name cannot have number or special characters. Min of 3 and Max of 70.
+                      </mat-error>
+                      <mat-error *ngIf="signupForm.controls['name'].hasError('maxlength')">
+                          Length cannot be more than 70
+                        </mat-error>
+                    </mat-form-field>
+
+                   
+                    <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Adhaar#"  formControlName="adhaar" fxFlex>
+                        <mat-error *ngIf="signupForm.controls['adhaar'].hasError('required')">
+                          Adhaar number is required
+                        </mat-error>
+                        <mat-error *ngIf="signupForm.controls['adhaar'].hasError('pattern')">
+                          Adhaar number cannot have alphabhets or special characters. Length should be 12
+                        </mat-error>
+                        <mat-error *ngIf="signupForm.controls['adhaar'].hasError('maxlength')">
+                          Length should be 12
+                        </mat-error>
+                      </mat-form-field>
+
+                      
+                      
+                    <mat-form-field class="example-full-width" >
+                      <input matInput placeholder="PAN#" formControlName="pan" fxFlex="0 1 auto">
+                      <mat-error *ngIf="signupForm.controls['pan'].hasError('required')">
+                        PAN is required
+                      </mat-error>
+                      <mat-error *ngIf="signupForm.controls['pan'].hasError('pattern')">
+                        Invalid PAN
+                      </mat-error>
+                      <mat-error *ngIf="signupForm.controls['pan'].hasError('maxlength')">
+                        Enter a valid PAN
+                      </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="example-full-width" >
+                        <span matPrefix>+91 &nbsp;</span>
+                        <input matInput placeholder="Mobile#" formControlName="mobile" fxFlex="0 1 auto">
+                        <mat-error *ngIf="signupForm.controls['mobile'].hasError('maxlength')">
+                          Enter a valid mobile
+                        </mat-error>
+                        <mat-error *ngIf="signupForm.controls['mobile'].hasError('required')">
+                          Mobile number is required
+                        </mat-error>
+                        <mat-error *ngIf="signupForm.controls['mobile'].hasError('pattern')">
+                          mobile number cannot have alphabets and special characters. Lenght should be 10
+                        </mat-error>
+                      </mat-form-field>
+
+  
+              </div>
+            </form>
+        </div>
+
+
+  <br>
+  <br>
+  <h2  *ngIf="signupForm.valid" style="margin:50px 0 -30px 0">Register your prefered login option</h2>
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center center"style="margin-top:0px" *ngIf="signupForm.valid">
+      
+      <div >
+        
+          <form class="example-form"  [formGroup]="userpasswdForm">
+          <div  fxLayout="column" fxFlex="1 0 auto" fxLayoutGap="30px" fxLayoutAlign="center center" fxFlex="0 1 auto">
+            
+                  <mat-form-field class="example-full-width" >
+                    <input matInput placeholder="Email" formControlName="email" fxFlex>
+                 
+                  <mat-error *ngIf="userpasswdForm.controls['email'].hasError('pattern')">
+                    email is not valid
+                  </mat-error>
+                  <mat-error *ngIf="userpasswdForm.controls['email'].hasError('required')">
+                    email is required
+                  </mat-error>
+                </mat-form-field>
+                
+                  <mat-form-field class="example-full-width" >
+                    <input matInput type="password" placeholder="Password" formControlName="password" fxFlex="0 1 auto">
+                    <mat-error *ngIf="userpasswdForm.controls['password'].hasError('pattern')">
+                      Length must be min 8 max 10, starting with A-Z or a-z and with at least one number, one uppercase, lowercase letter and one special character from !@#%&amp;
+                    </mat-error>
+                    <mat-error *ngIf="userpasswdForm.controls['password'].hasError('required')">
+                      Password cannot be blank
+                    </mat-error>
+   
+                  </mat-form-field>
+
+                  <br>
+                              
+              <button mat-raised-button (click)="emaillogin()" [disabled]="userpasswdForm.invalid"  style="height:50px;width:400px;font-size:20px;" color="primary" fxFlex="0 1 auto"> <strong>Signup</strong></button>    
+
+            </div>
+          </form>
+      </div>
+<div fxFlex="auto" style="text-align:center" >
+    <p ></p>
+    <button mat-fab style="color:green" [disabled]="true"  [ngStyle.lt-md]="{'margin-top':'50px'}"><strong>OR</strong></button>
+ 
+</div>
+  <div  fxLayout="column" fxFlex="1 0 auto" fxLayoutAlign="center center" style="height:400px">
+
+
+
+   <div fxLayout="column" fxLayoutGap="40px" >
+      <!--google-signin fxflex
+      [clientId]="myClientId"
+      [width]="myWidth"
+      [theme]="myTheme"
+      [scope]="myScope"
+      [longTitle]="myLongTitle"
+      (googleSignInSuccess)="onGoogleSignInSuccess($event)">
+    </google-signin>
+    <span fxFlex="30px">&nbsp;</span>
+
+    <app-fbsignin fxflex
+     (FBSignInSuccess)="onFBSignInSuccess($event)">
+  </app-fbsignin-->
+
+    <button mat-raised-button (click)="signInWithGoogle()" id="googleloginbtn" style="height:50px;width:400px;font-size:20px; color:white; background-color:#3369E8"  ><strong>Signup with Google </strong></button>   
+    
+    <button mat-raised-button (click)="signInWithFacebook()" id="fbloginbtn" style="height:50px;width:400px;font-size:20px;color:white; background-color:#3B5388"> <strong>Signup with facebook </strong></button>   
+
+    <button mat-raised-button (click)="signInWithTwitter()" id="twitterloginbtn" style="height:50px;width:400px;font-size:20px;color:white; background-color:#3699ED"> <strong>Signup with Twitter </strong></button>   
+
+    </div>
+    <br>
+  </div>
+
+
+
+</div>
+<div fxLayout="row" fxLayoutAlign="center center">
+  <span style="line-height:60px"></span>
+
+<h3>Back to <a type="button" routerLink="/login" routerLinkActive="active">login</a></h3>
+
+</div>
+
+<!--div fxLayout="row" fxLayout.lt-md="column">
+  <div  fxFlex="2 0 100%" style="background-color: blue">
+      <div  fxLayout="column" fxFlex="1 0 auto" fxLayoutAlign="center center">
+          <h2>New User?  Register Now</h2>
+          <div  fxLayout="row" fxFlex="1 0 auto" fxLayoutAlign="center center">
+          <p fxFlex>name</p>
+          <p fxFlex>Phonenumber</p>
+          </div>
+      </div>
+
+  </div>
+</div-->
+</mat-card>
+</div>
+<!--
+<div class="alert alert-heading close"><p >djdjdj</p> </div>
+<button (click)="logout()">logout</button>
+<button (click)="print()">print</button>
+-->

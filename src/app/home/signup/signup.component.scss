@@ -1,0 +1,112 @@
+
+.ng-valid[required], .ng-valid.required  {
+    border-left: 5px solid #42A948; /* green */
+  }
+
+.natklas {
+    //background-color: #3F51B5;
+    line-height: 40px;
+    text-align: center;
+    //color: white;
+    //margin-top:80px;
+    
+    //padding-top: -25px;
+    //border-color: mat-color($candy-app-accent, A400);
+  }
+
+  mat-card{
+    margin-top:130px;
+    width:100%;
+}
+
+
+
+mat-raised-button{
+    font-size:48px !important;
+    height: 80px !important;
+    width:148px !important;
+    line-height:48px !important;
+    display: block !important;
+}
+
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 50%;
+    text-align: center;
+  }
+  
+  .example-form1{
+    min-width: 150px;
+    max-width: 1500px;
+    width: 100%;
+    text-align: left;
+    
+  }
+
+  .example-full-width {
+    width: 100%;
+  }
+
+  .example-full-width1{
+    width: 100%;
+  }
+
+.header{
+    background-color: lightblue;
+        height: 90px;
+        line-height: 90px;
+        text-align: center;
+       // margin:-25px -24px 0 -24px;
+}
+
+
+.container {
+    display: block;
+    width: 348px;
+    overflow: hidden;
+    white-space: wrap;
+    padding: 5px;
+    margin-top:80px;
+    position:relative;
+    color: black;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    background-color: lightgrey;
+    border: 1px solid #fbeed5;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    width:40%;
+}
+
+.container div {
+    position: relative;
+    display: inline-block;
+}
+
+
+.alert {
+    position:relative;
+    padding: 5px;
+    margin-top:80px;
+    //margin-bottom: 18px;
+    color: black;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    background-color: lightgrey;
+    border: 1px solid #fbeed5;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    width:40%;
+    }
+    
+    .alert-heading {
+    color: inherit;
+    }
+    
+    .alert .close {
+    position: relative;
+    top: 60px;
+    right: -21px;
+    line-height: 80px;
+    }
