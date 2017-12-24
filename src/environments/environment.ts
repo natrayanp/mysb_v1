@@ -25,5 +25,7 @@ export const environment = {
     messagingSenderId: "474890725243"
   },
   RecordSignupapiUrl:"http://127.0.0.1:8000",
-  RecordSignupapiSave:"signup"
+  RecordSignupapiSave:"signup",
+  IFSCfetchapiUrl:"http://127.0.0.1:8000",
+  IFSCapifetch:"bankdet"
 };

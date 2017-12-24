@@ -31,6 +31,9 @@ import { MatSnackBarModule } from '@angular/material';
 import { MatDatepickerModule,MatNativeDateModule } from '@angular/material';
 import { MatPaginatorModule } from '@angular/material';
 import { MatTableModule } from '@angular/material';
+import { MatButtonToggleModule } from '@angular/material';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+
 
 
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -84,6 +87,7 @@ import { SignupComponent } from './home/signup/signup.component';
 import { AuthService } from './natservices/auth.service';
 import { NotifyService } from './natservices/notify.service';
 import { NotificationMessageComponent } from './commonmodule/notification-message/notification-message.component';
+import { BsestarmfregistrationComponent } from './postlogin/settings/bsestarmfregistration/bsestarmfregistration.component';
 
 
 @NgModule({
@@ -117,7 +121,8 @@ import { NotificationMessageComponent } from './commonmodule/notification-messag
     GoogleSignInComponentComponent,
     FbsigninComponent,
     SignupComponent,
-    NotificationMessageComponent
+    NotificationMessageComponent,
+    BsestarmfregistrationComponent
   ],
   imports: [
       BrowserModule,
@@ -147,6 +152,8 @@ import { NotificationMessageComponent } from './commonmodule/notification-messag
       MatDatepickerModule,MatNativeDateModule,
       MatPaginatorModule,
       MatTableModule,
+      MatButtonToggleModule,
+      MatCheckboxModule,
     RouterModule.forRoot(ROUTES /*,{enableTracing: true }*/),
     NotifymoduleModule,
     AngularFireModule.initializeApp(environment.firebase),

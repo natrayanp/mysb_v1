@@ -49,7 +49,12 @@ dbaction(screen,functionality,data){
       {
         var apiurl=environment.RecordSignupapiUrl + "/" + environment.RecordSignupapiSave;
         return this.http.post(apiurl,data,{observe: 'response'});
-      }      
+      }
+      case "IFSCfetch":
+      {
+        var apiurl=environment.IFSCfetchapiUrl + "/" + environment.IFSCapifetch;
+        return this.http.post(apiurl,data,{observe: 'response'});
+      }
   }
 }
 

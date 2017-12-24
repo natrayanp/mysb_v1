@@ -20,6 +20,7 @@ import { PfwiseorderComponent } from './postlogin/order/pfwiseorder/pfwiseorder.
 import { StkwiseorderComponent } from './postlogin/order/stkwiseorder/stkwiseorder.component';
 import { OrderfinalComponent } from './postlogin/order/orderfinal/orderfinal.component';
 import { SignupComponent } from './home/signup/signup.component';
+import { BsestarmfregistrationComponent } from './postlogin/settings/bsestarmfregistration/bsestarmfregistration.component';
 
 export const ROUTES: Routes = [
   
@@ -35,7 +36,8 @@ export const ROUTES: Routes = [
     {path: 'fundalloc',  component: FundallocatComponent},
     {path: 'settings',  component: SettingsComponent, children: [
          {path: 'usersetup',  component: UserListComponent},
-         {path: 'portfoliosetup',  component: PortfolioListComponent}      
+         {path: 'portfoliosetup',  component: PortfolioListComponent},
+         {path: 'mfreg',  component: BsestarmfregistrationComponent}      
     ]},     
   ]},  
   {path: 'authchk', component: LogincheckComponent},
