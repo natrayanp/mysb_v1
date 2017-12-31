@@ -1,0 +1,52 @@
+
+/* The alert message box */
+.alert {
+    //position: sticky;
+    padding: 20px;
+   // background-color: #f44336; /* Red */
+   // color: white;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    font-size: 20px;
+    
+}
+
+/* The close button */
+.closebtn {
+    margin-left: 15px;
+    color: red;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* When moving the mouse over the close button */
+.closebtn:hover {
+    color: black;
+}
+
+.is-danger{
+    background-color: #EDDBDA;
+    //color:#96443D;
+    color:red;
+    //border-color:#96443D;
+    border:2px solid red;
+//9c4e48
+}
+
+
+.is-success{
+    background-color: #DFEDD5;
+    color:#43693B;
+    border-color:#43693B;
+}
+
+.is-info{
+    background-color: #D7EAF5;
+    color:#376684;
+    border-color:#376684;
+}
+

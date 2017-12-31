@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../natservices/auth.service';
 import { NotifyService } from '../../natservices/notify.service';
-import {NotificationMessageComponent} from '../../commonmodule/notification-message/notification-message.component'
+import { NotificationComponent } from '../../commonmodule/notificationmodule/notification/notification.component'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { error } from 'selenium-webdriver';
@@ -131,7 +131,7 @@ import { DbservicesService } from '../../natservices/dbservices.service';
   mymessage="Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content. Whenever you need to, be sure to use margin utilities to keep things nice and tidy."
 
 print(){
-    this.notify.update(this.mymessage, 'success');
+    this.notify.update(this.mymessage, 'success','alert');
 }
   /// Shared
   private afterSignIn(status): void {
@@ -141,7 +141,7 @@ print(){
             break;
         }
         case "error":{
-             this.notify.update('There is some error!!!'+ this.auth.error.message, 'error');
+             this.notify.update('There is some error!!!'+ this.auth.error.message, 'error','alert');
         }
     }
     // Do after login stuff here, such router redirects, toast messages, etc.
@@ -164,9 +164,9 @@ getUsers(natkey) {
       console.log("inside success dbservice");
       console.log(error);
       if (error.hasOwnProperty('error')){
-        this.notify.update('Error!!!'+ error.error.statusdetails, 'error');
+        this.notify.update('Error!!!'+ error.error.statusdetails, 'error','alert');
       }else{
-        this.notify.update('Error!!!'+ error.statusText, 'error');
+        this.notify.update('Error!!!'+ error.statusText, 'error','alert');
       }
         }
           );

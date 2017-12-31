@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../natservices/auth.service';
 import { NotifyService } from '../../natservices/notify.service';
-import {NotificationMessageComponent} from '../../commonmodule/notification-message/notification-message.component'
+import { NotificationComponent } from '../../commonmodule/notificationmodule/notification/notification.component'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { error } from 'selenium-webdriver';
@@ -12,6 +12,7 @@ import { SetjwtService } from '../../natservices/setjwtservice.service';
 //import { Dialog1Component} from './dialog1/dialog1.component';
 import { DbservicesService } from '../../natservices/dbservices.service';
 import { Signup } from '../../natdatamodel/natdatamodel'
+
 
 @Component({
   selector: 'app-signup',
@@ -150,7 +151,7 @@ this.auth.signOut("nonavigation");
 
 
 print(){
-this.notify.update('Welcome to Firestarter!!!', 'success');
+this.notify.update('Welcome to Firestarter!!!', 'success','alert');
 }
 /// Shared
 private afterSignIn(status): void {
@@ -160,7 +161,7 @@ switch(status){
         break;
     }
     case "error":{
-         this.notify.update('There is some error!!!'+ this.auth.error.message, 'error');
+         this.notify.update('There is some error!!!'+ this.auth.error.message, 'error','alert');
     }
 }
 // Do after login stuff here, such router redirects, toast messages, etc.
@@ -179,10 +180,10 @@ data =>{
         console.log(body);
 
         if(body.hasOwnProperty('natstatus') && body.hasOwnProperty('statusdetails')){          
-          this.notify.update(body.statusdetails,body.natstatus);
+          this.notify.update(body.statusdetails,body.natstatus,'alert');
         }
         else{
-         this.notify.update("action successful",'success');
+         this.notify.update("action successful",'success','alert');
         }
         this.signupForm.reset();
         this.userpasswdForm.reset();   
@@ -194,12 +195,12 @@ error =>{
   console.log(error);
   if (error.hasOwnProperty('error')){
     if(error.error.hasOwnProperty('statusdetails')){
-      this.notify.update('Error!!!'+ error.error.statusdetails, 'error');
+      this.notify.update('Error!!!'+ error.error.statusdetails, 'error','alert');
     }else{
-      this.notify.update('Error!!!'+ error.statusText, 'error');
+      this.notify.update('Error!!!'+ error.statusText, 'error','alert');
     }
   }else{
-    this.notify.update('Error!!!'+ error.statusText, 'error');
+    this.notify.update('Error!!!'+ error.statusText, 'error','alert');
   }
   this.auth.signOut("nonavigation");
     }

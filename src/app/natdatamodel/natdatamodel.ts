@@ -22,22 +22,29 @@ export class Signup {
     {code:"08",valuestr:"Others"}
     ];
 
+      /* FATCA OCCUPATION TYPE
+      S - Service; B - Business, O- Others; X - NotCategorized
+      Included it against the code as below
+      */
+
     public static FATCA_OCCUPATION_CODE=[
-      {code:"01",valuestr:"Business"},
-      {code:"02",valuestr:"Services"},
-      {code:"03",valuestr:"Professional"},
-      {code:"04",valuestr:"Agriculture"},
-      {code:"05",valuestr:"Retired"},
-      {code:"06",valuestr:"Housewife"},
-      {code:"07",valuestr:"Student"},
-      {code:"08",valuestr:"Others"},
-      {code:"09",valuestr:"Doctor"},
-      {code:"41",valuestr:"Private Sector Service"},
-      {code:"42",valuestr:"Public Sector Service"},
-      {code:"43",valuestr:"Forex Dealer"},
-      {code:"44",valuestr:"Government Service"},
-      {code:"99",valuestr:"Unknown/Not Applicable"}
+      {code:"01",valuestr:"Business"},               //B
+      {code:"02",valuestr:"Services"},               //S
+      {code:"03",valuestr:"Professional"},           //S
+      {code:"04",valuestr:"Agriculture"},            //S
+      {code:"05",valuestr:"Retired"},                //O
+      {code:"06",valuestr:"Housewife"},              //O
+      {code:"07",valuestr:"Student"},                //O
+      {code:"08",valuestr:"Others"},                 //O
+      {code:"09",valuestr:"Doctor"},                 //S
+      {code:"41",valuestr:"Private Sector Service"}, //S
+      {code:"42",valuestr:"Public Sector Service"},  //S
+      {code:"43",valuestr:"Forex Dealer"},           //B
+      {code:"44",valuestr:"Government Service"},     //S
+      {code:"99",valuestr:"Unknown/Not Applicable"}  //O
       ];
+
+
       
       public static STATE=["Andaman & Nicobar","Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chattisgarh","Chandigarh","Dadra and Nagar","Daman & Diu","Delhi","Haveli","Goa","Gujarat","Himachal Pradesh","Haryana","Jharkhand","Jammu & Kashmir","Karnataka","Kerala","Lakshadweep","Maharashtra","Meghalaya","Manipur","Madhya Pradesh","Mizoram","Nagaland","Orissa","Punjab","Pondicherry","Rajasthan","Sikkim","Tamil Nadu","Tripura","Uttarakhand","Uttar Pradesh","West Bengal","Others"];
   
@@ -61,8 +68,75 @@ export class Signup {
         {code:"G1",valuestr:"US GIIN"},
         {code:"E1",valuestr:"Global Entity Identification Number"}
       ];
-      
-    }
+
+
+
+}
+
+
+export class regisuccfatcadetail{
+      //createdetailfrm
+      clientname: string; 
+      clientpan: string;
+      clientcode:string;
+      clientgender:string;
+      clientdob:Date;
+      clientemail:string;
+      clientmobile:number;
+      clientcommode:string;
+      clientholding:string;
+      clientpepflg:string;
+      clientisnri:boolean;
+      clienttaxstatusres: string;
+      clienttaxstatusnri: string;
+      clientocupation:string;
+      clientocutyp:string;
+      clienthasnominee:boolean;
+      clientnomineename:string;
+      clientnomineerel:string;
+      clientnomineedob:Date;
+      clientnomineeaddres:string;
+      clientfndhldtype:string;
+      //createclientaddfrm
+      clientaddress1:string;
+      clientaddress2:string;
+      clientaddress3:string;
+      clientcity: string;
+      clientstate:string;
+      clientcountry: string;
+      clientpincode: number;
+      clientforinadd1:string;
+      clientforinadd2:string;
+      clientforinadd3:string;
+      clientforcity:string;
+      clientforstate: string;
+      clientforcountry:string;
+      clientforpin:number;
+      //createclientbankfrm
+      clientactype:string;
+      clientacnumb :number;
+      clientmicrno:string;
+      clientifsc:string;
+      //createclientfatcafrm
+      clientsrcwealth:string;
+      clientincslb :string;
+      clientpobir:string;
+      clientcobir:string;
+      clienttaxrescntry1:string;
+      clienttaxid1: string;
+      clienttaxidtype1:string;
+      clienttaxrescntry2:string;
+      clienttaxid2:string;
+      clienttaxidtype2:string;
+      clienttaxrescntry3:string;
+      clienttaxid3:string;
+      clienttaxidtype3:string;
+      clienttaxrescntry4:string;
+      clienttaxid4:string;
+      clienttaxidtype4:string;
+}
+
+
 
     export class bankifscdetail{
       bank: string; 

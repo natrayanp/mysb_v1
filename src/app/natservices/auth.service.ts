@@ -83,7 +83,7 @@
     anonymousLogin() {
       return this.afAuth.auth.signInAnonymously()
         .then((user) => {
-          this.notify.update('Welcome to Firestarter!!!', 'success');
+          this.notify.update('Welcome to Firestarter!!!', 'success','alert');
           console.log(user);          
           return(user);
           
@@ -100,7 +100,7 @@
     emailSignUp(email: string, password: string) {
       return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
         .then((user) => {
-          this.notify.update('Welcome to Firestarter!!!', 'success');
+          this.notify.update('Welcome to Firestarter!!!', 'success','alert');
           console.log(user);
           return(user);
           //return this.updateUserData(user); // if using firestore
@@ -111,7 +111,7 @@
     emailLogin(email: string, password: string) {
       return this.afAuth.auth.signInWithEmailAndPassword(email, password)
         .then((user) => {
-          this.notify.update('Welcome to Firestarter!!!', 'success');
+          this.notify.update('Welcome to Firestarter!!!', 'success','alert');
           console.log(user);
           return(user);
           //return this.updateUserData(user); // if using firestore
@@ -124,7 +124,7 @@
       const fbAuth = firebase.auth();
   
       return fbAuth.sendPasswordResetEmail(email)
-        .then(() => this.notify.update('Password update email sent', 'info'))
+        .then(() => this.notify.update('Password update email sent', 'info','alert'))
         .catch((error) => this.handleError(error));
     }
   

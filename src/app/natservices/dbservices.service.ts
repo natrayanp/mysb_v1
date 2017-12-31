@@ -55,8 +55,21 @@ dbaction(screen,functionality,data){
         var apiurl=environment.IFSCfetchapiUrl + "/" + environment.IFSCapifetch;
         return this.http.post(apiurl,data,{observe: 'response'});
       }
+      case "notififetch":
+      {
+          var apiurl=environment.notifiapiUrl + "/" + environment.notififetch;
+          return this.http.get(apiurl,{params: data,observe: 'response'});
+      }
+      case "registfetch":
+      {
+        var apiurl=environment.registapiUrl + "/" + environment.registfetch;
+        return this.http.get(apiurl,{observe: 'response'});
+      }
   }
 }
 
 
-}
+}}
+
+
+  

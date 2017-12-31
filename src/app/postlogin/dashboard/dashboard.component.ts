@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { DbservicesService } from '../../natservices/dbservices.service';
+import { NotifyService } from '../../natservices/notify.service';
+import { NotificationComponent } from '../../commonmodule/notificationmodule/notification/notification.component'
 
 @Component({
   selector: 'app-dashboard',
@@ -7,12 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() {     
-    this.parseJwt(localStorage.getItem("natjwt"));
+  lazldid:string='';
+
+  constructor(private dbserivce :DbservicesService,
+              private notify: NotifyService) {     
+                            this.parseJwt(localStorage.getItem("natjwt"));
     
-  }
+            }
 
   ngOnInit() {
+    this.notificationfetch();
   }
   uid:any;
   parseJwt (token) {
@@ -30,4 +37,36 @@ export class DashboardComponent implements OnInit {
     
     //return JSON.parse();
 };
+
+
+
+notificationfetch() {
+  var data={lazldid:this.lazldid,module:'dashboard'};
+  console.log("data is"+JSON.stringify(data));
+  this.dbserivce.dbaction('notifi','fetch',data).subscribe(
+  data =>{
+          console.log("inside success dbservice");
+          var data1=data.body['data'];
+          console.log(data1);
+          console.log(data.body['lazyloadid']);
+          this.lazldid=data.body['lazyloadid'];
+          if(data1 != null){
+            data1.forEach(element => {
+              this.notify.update(element.nfumessage, 'success',element.nfumsgtype);
+            });
+            
+          }
+          //this.lazldid=data.lazldid;
+        },
+  error =>{
+          console.log("inside error dbservice");
+          console.log(error);
+      }
+        );
+
+}
+
+retrylazyid(){
+  this.notificationfetch();
+}
 }

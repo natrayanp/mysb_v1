@@ -27,5 +27,9 @@ export const environment = {
   RecordSignupapiUrl:"http://127.0.0.1:8000",
   RecordSignupapiSave:"signup",
   IFSCfetchapiUrl:"http://127.0.0.1:8000",
-  IFSCapifetch:"bankdet"
+  IFSCapifetch:"bankdet",
+  notifiapiUrl :"http://127.0.0.1:8001",
+  notififetch:"notification",
+  registapiUrl:"http://127.0.0.1:8000",
+  registfetch:"registdetfetch"
 };

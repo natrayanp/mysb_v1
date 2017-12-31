@@ -1,0 +1,9 @@
+<div *ngIf="notify.msg | async as msg" class="alert"
+  [ngClass]="{ 
+    'is-danger': msg.style == 'error',
+    'is-success': msg.style == 'success',
+    'is-info': msg.style == 'info'
+  }">
+  <span class="closebtn" (click)="notify.clear()">&times;</span>  
+  {{ msg.content }}
+</div>

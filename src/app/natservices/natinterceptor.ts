@@ -21,7 +21,7 @@ export class NatInterceptor implements HttpInterceptor{
     this.tosettkn = false;
     this.TknAddSites.forEach(
         element => { if(req.url.startsWith(element)){
-                      this.tosettkn=false;                      
+                      this.tosettkn=true;                      
                     } 
                     });
     

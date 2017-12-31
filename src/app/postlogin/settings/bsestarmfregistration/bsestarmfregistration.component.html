@@ -4,7 +4,7 @@
 <span fxFlex>Register your details</span>
 <div >
 <button mat-raised-button fxFlexAlign.lt-sm="start" color="accent"><strong>Save for Later</strong></button>
-<button  mat-raised-button fxFlexAlign.lt-sm="end" color="accent"><strong>Submit</strong></button>
+<button  mat-raised-button fxFlexAlign.lt-sm="end" color="accent" style="color:white" [disabled]="!(clientdetails.valid && clientaddress.valid && clientbank.valid && clientfatca.valid)"><strong>Submit</strong></button>
 </div>
 </div>
 <!--/mat-toolbar-->
@@ -19,7 +19,7 @@
          
           <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="30px" fxLayoutAlign="center center">
               <mat-form-field class="example-full-width" fxFlex="60%" >
-                  <input matInput placeholder="Name"  formControlName="clientname">
+                  <input matInput placeholder="Name"  formControlName="clientname" readonly>
                 </mat-form-field>
                 <span fxFlex></span>
                 <!--
@@ -28,17 +28,17 @@
                   </mat-form-field>
                   -->
                 <mat-form-field class="example-full-width" fxFlex >
-                    <input matInput placeholder="PAN" formControlName="clientpan">
+                    <input matInput placeholder="PAN" formControlName="clientpan" readonly>
                   </mat-form-field>
                 
           
           </div>
           <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="30px" fxLayoutAlign="center center">
               <mat-form-field class="example-full-width" fxFlex >
-                  <input matInput placeholder="email"  formControlName="clientemail">
+                  <input matInput placeholder="email"  formControlName="clientemail" readonly>
                 </mat-form-field>
                 <mat-form-field class="example-full-width" fxFlex >
-                    <input matInput placeholder="Mobile"  formControlName="clientmobile">
+                    <input matInput placeholder="Mobile"  formControlName="clientmobile" readonly>
                   </mat-form-field>
 
                   <!--Client communication mode default to E- Electronic
@@ -96,7 +96,7 @@
               <mat-checkbox fxFlex class="example-full-width" formControlName="clientisnri" (change)="tooglenri($event)">NRI</mat-checkbox>
 
               <mat-radio-group fxFlex class="example-full-width" formControlName="clienttaxstatusres" *ngIf="!nristatus">
-                  <mat-radio-button value="true" [disabled]="true"  [checked]="!nristatus">Individual</mat-radio-button>
+                  <mat-radio-button [checked]="!nristatus">Individual</mat-radio-button>
 
                 </mat-radio-group>
 
@@ -420,6 +420,21 @@
             <input matInput placeholder="Tax ID" formControlName="clienttaxid4">
           </mat-form-field>                    
     </div>
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="30px" fxLayoutAlign="start center">
+        
+          <mat-form-field class="example-full-width" fxFlex>
+            <input matInput placeholder="Place Of Birth" formControlName="clientpobir">
+          </mat-form-field>      
+          <mat-form-field fxFlex class="example-full-width" >
+              <mat-select placeholder="Country Of Birth" formControlName="clientcobir">
+                <mat-option *ngFor="let country of fcountrys" [value]="country">
+                  {{ country }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <span fxFlex></span>
+            <span fxFlex></span>            
+    </div>
 
 
 
@@ -473,3 +488,7 @@
 
 
               -->
+<pre>{{clientdetails.value | json}}</pre>
+<pre>{{clientaddress.value | json}}</pre>
+<pre>{{clientbank.value | json}}</pre>
+<pre>{{clientfatca.value | json}}</pre>

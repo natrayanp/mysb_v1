@@ -1,7 +1,7 @@
 
 import { Component, ViewEncapsulation } from '@angular/core';
 
-import { NotifyService } from '../../natservices/notify.service';
+import { NotifyService } from '../../../natservices/notify.service';
 
 @Component({
   selector: 'notification-message',
@@ -11,6 +11,6 @@ import { NotifyService } from '../../natservices/notify.service';
 })
 export class NotificationMessageComponent {
 
-  constructor(public notify: NotifyService) {console.log(notify.msg); }
+  constructor(public notify: NotifyService) {console.log(notify.bannermsg); }
 
 }

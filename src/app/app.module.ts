@@ -86,8 +86,10 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { SignupComponent } from './home/signup/signup.component';
 import { AuthService } from './natservices/auth.service';
 import { NotifyService } from './natservices/notify.service';
-import { NotificationMessageComponent } from './commonmodule/notification-message/notification-message.component';
 import { BsestarmfregistrationComponent } from './postlogin/settings/bsestarmfregistration/bsestarmfregistration.component';
+import { BannerComponent } from './commonmodule/notificationmodule/banner/banner.component';
+import { AlertsComponent } from './commonmodule/notificationmodule/alerts/alerts.component';
+import { NotificationComponent } from './commonmodule/notificationmodule/notification/notification.component';
 
 
 @NgModule({
@@ -121,8 +123,10 @@ import { BsestarmfregistrationComponent } from './postlogin/settings/bsestarmfre
     GoogleSignInComponentComponent,
     FbsigninComponent,
     SignupComponent,
-    NotificationMessageComponent,
-    BsestarmfregistrationComponent
+    BsestarmfregistrationComponent,
+    BannerComponent,
+    AlertsComponent,
+    NotificationComponent
   ],
   imports: [
       BrowserModule,

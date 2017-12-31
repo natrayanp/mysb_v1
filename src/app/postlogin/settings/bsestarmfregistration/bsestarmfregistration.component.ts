@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { Registration,bankifscdetail } from '../../../natdatamodel/natdatamodel';
+import { Registration,bankifscdetail,regisuccfatcadetail } from '../../../natdatamodel/natdatamodel';
 import { DbservicesService } from '../../../natservices/dbservices.service';
 
 @Component({
@@ -9,7 +9,8 @@ import { DbservicesService } from '../../../natservices/dbservices.service';
   styleUrls: ['./bsestarmfregistration.component.scss']
 })
 export class BsestarmfregistrationComponent implements OnInit {
-
+  
+  regdet:regisuccfatcadetail = new(regisuccfatcadetail);
   isLinear = false;
   clientdetails: FormGroup;
   clientaddress: FormGroup;
@@ -29,6 +30,7 @@ export class BsestarmfregistrationComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private dbserivce :DbservicesService)
     {
+    this.getregistrationdetails();
     this.occupationcodes = Registration.OCCUPATION_CODE;
     this.fatcaoccucd = Registration.FATCA_OCCUPATION_CODE;
     this.states=Registration.STATE;
@@ -37,15 +39,15 @@ export class BsestarmfregistrationComponent implements OnInit {
     this.fcountrys=Registration.FATCA_COUNTRY;
     this.fidtypes=Registration.FATCA_IDTYPE;
     this.ifscdet=new(bankifscdetail);
-    //https://www.rbi.org.in/scripts/neft.aspx IFSCODE to be downloaded and loaded in DB
-
-    
-    
+    //https://www.rbi.org.in/scripts/neft.aspx IFSCODE to be downloaded and loaded in DB  
 
   }
 
   ngOnInit() {
     
+   
+
+
     this.createdetailfrm();
     this.createclientaddfrm();
     this.createclientbankfrm();
@@ -58,24 +60,24 @@ export class BsestarmfregistrationComponent implements OnInit {
 
       });
 
-
+      
   }
 
-  myname="anu";
+  
   createdetailfrm(){
     this.clientdetails = this.fb.group({
-      clientname: [{value: this.myname, disabled: true}, Validators.required],
-      clientpan : [{value: this.myname, disabled: true}, Validators.required],
-      clientcode: [{value: this.myname, disabled: true}, Validators.required],
+      clientname: [this.regdet.clientname, Validators.required],
+      clientpan : ['', Validators.required],
+      clientcode: ['', Validators.required],
       clientgender: ['', Validators.required],
       clientdob: ['', Validators.required],
-      clientemail: [{value: this.myname, disabled: true}, Validators.required],
-      clientmobile: [{value: this.myname, disabled: true}, Validators.required],
+      clientemail: ['', Validators.required],
+      clientmobile: ['', Validators.required],
       clientcommode: ['', Validators.required],
       clientholding: ['SI', Validators.required], //default to single and hide from users
       clientpepflg: ['', Validators.required],
       clientisnri:[''],
-      clienttaxstatusres: ['', Validators.required],
+      clienttaxstatusres: [true, Validators.required],
       clienttaxstatusnri: ['', Validators.required],
       clientocupation: ['', Validators.required],
       clientocutyp: ['', Validators.required],
@@ -95,7 +97,7 @@ export class BsestarmfregistrationComponent implements OnInit {
       clientaddress3: ['', Validators.maxLength(40)],
       clientcity: ['', Validators.required],
       clientstate: ['', Validators.required],
-      clientcountry: [{value: 'India', disabled: true}, Validators.required],
+      clientcountry: [{value: 'India'}, Validators.required],
       clientpincode: ['', Validators.required],
       clientforinadd1: ['', Validators.compose([Validators.required,Validators.maxLength(40)])],
       clientforinadd2:['', Validators.maxLength(40)],
@@ -120,6 +122,8 @@ export class BsestarmfregistrationComponent implements OnInit {
     this.clientfatca = this.fb.group({
       clientsrcwealth: ['', Validators.required],
       clientincslb : ['', Validators.required],
+      clientpobir: ['', Validators.required],
+      clientcobir: ['', Validators.required],
       clienttaxrescntry1: ['', Validators.required],
       clienttaxid1: ['', Validators.required],
       clienttaxidtype1: ['', Validators.required],
@@ -140,13 +144,28 @@ export class BsestarmfregistrationComponent implements OnInit {
     this.hasnominee=event.checked;
   }
 
+
   tooglenri(event){
     console.log(event);
     this.nristatus=event.checked;
+    this.clientdetails.controls['clienttaxstatusres'].setValue (!this.nristatus);
+    this.clientdetails.controls['clienttaxstatusnri'].setValue ('');
   }
 
-
-  
+  getregistrationdetails(){
+     console.log("insdier getregistrationdetails");
+    this.dbserivce.dbaction('regist','fetch','').subscribe(
+      data =>{
+                  console.log("data is taken");
+                  console.log(data);
+                  this.regdet=<regisuccfatcadetail>data['body'];
+                  this.assignvalue();
+              },
+     error => {
+                  console.log(error);
+                }
+              );  
+  }
     
 
 
@@ -189,5 +208,68 @@ export class BsestarmfregistrationComponent implements OnInit {
       )};
   }
 
-
+  assignvalue(){
+    console.log("inside assignvalue");
+    console.log(this.regdet.clientname);
+    this.clientdetails.controls.clientname.setValue(this.regdet.clientname);
+  this.clientdetails.controls.clientpan.setValue(this.regdet.clientpan);
+  this.clientdetails.controls.clientcode.setValue(this.regdet.clientcode);
+  this.clientdetails.controls.clientgender.setValue(this.regdet.clientgender);
+  this.clientdetails.controls.clientdob.setValue(this.regdet.clientdob);
+  this.clientdetails.controls.clientemail.setValue(this.regdet.clientemail);
+  this.clientdetails.controls.clientmobile.setValue(this.regdet.clientmobile);
+  this.clientdetails.controls.clientcommode.setValue(this.regdet.clientcommode);
+  this.clientdetails.controls.clientholding.setValue(this.regdet.clientholding);
+  this.clientdetails.controls.clientpepflg.setValue(this.regdet.clientpepflg);
+  this.clientdetails.controls.clientisnri.setValue(this.regdet.clientisnri);
+  this.clientdetails.controls.clienttaxstatusres.setValue(this.regdet.clienttaxstatusres);
+  this.clientdetails.controls.clienttaxstatusnri.setValue(this.regdet.clienttaxstatusnri);
+  this.clientdetails.controls.clientocupation.setValue(this.regdet.clientocupation);
+  this.clientdetails.controls.clientocutyp.setValue(this.regdet.clientocutyp);
+  this.clientdetails.controls.clienthasnominee.setValue(this.regdet.clienthasnominee);
+  this.clientdetails.controls.clientnomineename.setValue(this.regdet.clientnomineename);
+  this.clientdetails.controls.clientnomineerel.setValue(this.regdet.clientnomineerel);
+  this.clientdetails.controls.clientnomineedob.setValue(this.regdet.clientnomineedob);
+  this.clientdetails.controls.clientnomineeaddres.setValue(this.regdet.clientnomineeaddres);
+  this.clientdetails.controls.clientfndhldtype.setValue(this.regdet.clientfndhldtype);
+  
+  this.clientaddress.controls.clientaddress1.setValue(this.regdet.clientaddress1);
+  this.clientaddress.controls.clientaddress2.setValue(this.regdet.clientaddress2);
+  this.clientaddress.controls.clientaddress3.setValue(this.regdet.clientaddress3);
+  this.clientaddress.controls.clientcity.setValue(this.regdet.clientcity);
+  this.clientaddress.controls.clientstate.setValue(this.regdet.clientstate);
+  this.clientaddress.controls.clientcountry.setValue(this.regdet.clientcountry);
+  this.clientaddress.controls.clientpincode.setValue(this.regdet.clientpincode);
+  this.clientaddress.controls.clientforinadd1.setValue(this.regdet.clientforinadd1);
+  this.clientaddress.controls.clientforinadd2.setValue(this.regdet.clientforinadd2);
+  this.clientaddress.controls.clientforinadd3.setValue(this.regdet.clientforinadd3);
+  this.clientaddress.controls.clientforcity.setValue(this.regdet.clientforcity);
+  this.clientaddress.controls.clientforstate.setValue(this.regdet.clientforstate);
+  this.clientaddress.controls.clientforcountry.setValue(this.regdet.clientforcountry);
+  this.clientaddress.controls.clientforpin.setValue(this.regdet.clientforpin);
+  
+  this.clientbank.controls.clientactype.setValue(this.regdet.clientactype);
+  this.clientbank.controls.clientacnumb.setValue(this.regdet.clientacnumb);
+  this.clientbank.controls.clientmicrno.setValue(this.regdet.clientmicrno);
+  this.clientbank.controls.clientifsc.setValue(this.regdet.clientifsc);
+  
+  this.clientfatca.controls.clientsrcwealth.setValue(this.regdet.clientsrcwealth);
+  this.clientfatca.controls.clientincslb.setValue(this.regdet.clientincslb);
+  this.clientfatca.controls.clientpobir.setValue(this.regdet.clientpobir);
+  this.clientfatca.controls.clientcobir.setValue(this.regdet.clientcobir);
+  this.clientfatca.controls.clienttaxrescntry1.setValue(this.regdet.clienttaxrescntry1);
+  this.clientfatca.controls.clienttaxid1.setValue(this.regdet.clienttaxid1);
+  this.clientfatca.controls.clienttaxidtype1.setValue(this.regdet.clienttaxidtype1);
+  this.clientfatca.controls.clienttaxrescntry2.setValue(this.regdet.clienttaxrescntry2);
+  this.clientfatca.controls.clienttaxid2.setValue(this.regdet.clienttaxid2);
+  this.clientfatca.controls.clienttaxidtype2.setValue(this.regdet.clienttaxidtype2);
+  this.clientfatca.controls.clienttaxrescntry3.setValue(this.regdet.clienttaxrescntry3);
+  this.clientfatca.controls.clienttaxid3.setValue(this.regdet.clienttaxid3);
+  this.clientfatca.controls.clienttaxidtype3.setValue(this.regdet.clienttaxidtype3);
+  this.clientfatca.controls.clienttaxrescntry4.setValue(this.regdet.clienttaxrescntry4);
+  this.clientfatca.controls.clienttaxid4.setValue(this.regdet.clienttaxid4);
+  this.clientfatca.controls.clienttaxidtype4.setValue(this.regdet.clienttaxidtype4);
+  
+  
+  }
 }
