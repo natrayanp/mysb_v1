@@ -2,6 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { Registration,bankifscdetail,regisuccfatcadetail } from '../../../natdatamodel/natdatamodel';
 import { DbservicesService } from '../../../natservices/dbservices.service';
+import { FileuploadService } from '../../../natservices/fileupload.service';
+import {
+  HttpClient,
+  HttpRequest,
+  HttpEvent,
+  HttpEventType,
+  HttpResponse
+} from '@angular/common/http';
 
 @Component({
   selector: 'app-bsestarmfregistration',
@@ -26,9 +34,18 @@ export class BsestarmfregistrationComponent implements OnInit {
   nominrels:string[];
   fidtypes:any;
   ifscdet:bankifscdetail;
+  fileName:string= "Select a File";
+  filelist: FileList;
+  file:File;
+  showprogressbar:boolean=false;
+  percentDone:number;
+  filevalerror=true;
+  filvaldiationmsg: string = "";
+  
 
   constructor(private fb: FormBuilder,
-              private dbserivce :DbservicesService)
+              private dbserivce :DbservicesService,
+              private ups:FileuploadService)
     {
     this.getregistrationdetails();
     this.occupationcodes = Registration.OCCUPATION_CODE;
@@ -45,9 +62,6 @@ export class BsestarmfregistrationComponent implements OnInit {
 
   ngOnInit() {
     
-   
-
-
     this.createdetailfrm();
     this.createclientaddfrm();
     this.createclientbankfrm();
@@ -73,20 +87,20 @@ export class BsestarmfregistrationComponent implements OnInit {
       clientdob: ['', Validators.required],
       clientemail: ['', Validators.required],
       clientmobile: ['', Validators.required],
-      clientcommode: ['', Validators.required],
-      clientholding: ['SI', Validators.required], //default to single and hide from users
-      clientpepflg: ['', Validators.required],
+      clientcommode: [''],
+      clientholding: ['SI'], //default to single and hide from users
+      clientpepflg: [''],
       clientisnri:[''],
-      clienttaxstatusres: [true, Validators.required],
-      clienttaxstatusnri: ['', Validators.required],
+      clienttaxstatusres: [true],
+      clienttaxstatusnri: [''],
       clientocupation: ['', Validators.required],
-      clientocutyp: ['', Validators.required],
-      clienthasnominee: ['', Validators.required],
-      clientnomineename: ['', Validators.required],
-      clientnomineerel: ['', Validators.required],
-      clientnomineedob: ['', Validators.required],
-      clientnomineeaddres: ['', Validators.required],
-      clientfndhldtype: ['physical', Validators.required],//default to single and hide from users
+      clientocutyp: [''],
+      clienthasnominee: [false],
+      clientnomineename: [''],
+      clientnomineerel: [''],
+      clientnomineedob: [''],
+      clientnomineeaddres: [''],
+      clientfndhldtype: ['physical'],//default to single and hide from users
     });
   }
 
@@ -272,4 +286,78 @@ export class BsestarmfregistrationComponent implements OnInit {
   
   
   }
+
+  onFileInput(event){
+    this.filelist=event.target.files;
+    this.file= this.filelist[0];
+     this.fileName= this.file.name;
+     this.selectFile(event);
+   }
+
+   selectFile(event) {
+     console.log(this.filevalerror);
+    //this.uploadFile(event.target.files);
+    console.log("insdie selectfile");
+    console.log(event.target.files);
+    this.filelist=event.target.files;
+
+     if (this.filelist.length == 0) {
+      this.filevalerror=true;
+      this.filvaldiationmsg="No file selected!";
+      console.log("No file selected!");
+      }else{
+        this.file=this.filelist[0];
+          if(this.file.type != 'application/tiff'){
+            this.filevalerror=true;
+            this.filvaldiationmsg="Only TIFF files are allowed";
+              console.log("Only TIFF files are allowed");
+          }else if(this.file.size > 1000000){
+              this.filevalerror=true;
+              this.filvaldiationmsg="File size more than 1 MB not allowed";
+                console.log("File size more than 1 MB not allowed")
+          }else{
+            this.filevalerror=false;
+          }
+      }
+
+    this.filelist=null;
+
+    console.log(this.file.name);
+    console.log(this.file.size);
+    console.log(this.file.type);
+    console.log('---------');
+    console.log(this.filevalerror);
+    console.log(this.filvaldiationmsg)
+    console.log('---------');
+ }
+      
+  
+
+ uploadFile() {  
+    this.showprogressbar=true;
+    console.log(this.file);
+    this.ups.uploadFile('https://file.io/2ojE41', this.file)
+      .subscribe(
+        event => {
+          if (event.type == HttpEventType.UploadProgress) {
+            this.percentDone = Math.round(100 * event.loaded / event.total);
+            console.log(`File is ${this.percentDone}% loaded.`);
+          } else if (event instanceof HttpResponse) {
+            console.log('File is completely loaded!');
+            this.showprogressbar=false;
+
+          }
+        },
+        (err) => {
+          console.log("Upload Error:", err);
+        }, () => {
+          console.log("Upload done");
+        }
+      )
+  }
+
+  myfunc(){
+    console.log("natrayan myfunc");
+  }
+
 }

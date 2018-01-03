@@ -22,6 +22,7 @@ import { OrderfinalComponent } from './postlogin/order/orderfinal/orderfinal.com
 import { SignupComponent } from './home/signup/signup.component';
 import { BsestarmfregistrationComponent } from './postlogin/settings/bsestarmfregistration/bsestarmfregistration.component';
 
+
 export const ROUTES: Routes = [
   
   { path: 'home',  component: HomeComponent},

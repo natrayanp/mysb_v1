@@ -96,7 +96,7 @@
               <mat-checkbox fxFlex class="example-full-width" formControlName="clientisnri" (change)="tooglenri($event)">NRI</mat-checkbox>
 
               <mat-radio-group fxFlex class="example-full-width" formControlName="clienttaxstatusres" *ngIf="!nristatus">
-                  <mat-radio-button [checked]="!nristatus">Individual</mat-radio-button>
+                  <mat-radio-button [checked]="!nristatus">Resident Individual</mat-radio-button>
 
                 </mat-radio-group>
 
@@ -168,13 +168,20 @@
         <div >
 
             <span fxFlex></span>
-            <button mat-raised-button color="primary" matStepperNext >Next</button>
+            <button mat-raised-button color="primary" matStepperNext (click)="myfunc()" [disabled]="!(clientdetails.valid)">Next</button>
+            
+        </div>
+        <div>
+            <span fxFlex></span>
+            <p style="color:green">*Auto saved on navigating to next page</p>
+          
         </div>
             <div> <!-- HiddenFile -->
 
               <!-- HiddenFile for holding type always Physical-->
               <mat-form-field class="example-full-width" fxFlex fxHide="true" class="example-full-width" >
                   <input matInput placeholder="HOLDING" formControlName="clientfndhldtype">
+                  
                 </mat-form-field>
 
               
@@ -452,18 +459,72 @@
         </form>
     </mat-step>
 
-    <!--mat-step >
+    <mat-step >
         <form  >
           <ng-template matStepLabel>Document upload</ng-template>
           <mat-card>
           <div fxLayout="column" fxLayoutGap="50px" >
            
-            <div fxLayout="row" fxLayoutGap="30px">
-
-              //http://www.advancesharp.com/blog/1218/angular-4-upload-files-with-data-and-web-api-by-drag-drop
-              https://www.youtube.com/watch?v=FI7bzIuPous                               
-            </div>
+            <div fxLayout="row" fxLayoutGap="30px" >
+              <div fxFlex>
+            <h4 >Upload your AOF</h4>
           </div>
+          <div fxFlex ="30%">
+            <button mat-mini-fab color="accent" (click)="fileInput.click()">
+              <mat-icon>attach_file</mat-icon> 
+                <input #fileInput type="file" (change)="onFileInput($event)" style="display:none;" />
+            </button>        
+            <mat-form-field>
+              <input matInput type="text" [value]="fileName" disabled>
+              <mat-hint *ngIf="filevalerror">{{filvaldiationmsg}}</mat-hint>
+            </mat-form-field>
+            </div>
+            <span fxFlex></span>
+            <div fxFlex>  
+            <button mat-raised-button color="accent" (click)="uploadFile()">
+                <mat-icon>file_upload</mat-icon> 
+                UploadFile                  
+              </button>
+            </div>
+              <!--http://www.advancesharp.com/blog/1218/angular-4-upload-files-with-data-and-web-api-by-drag-drop
+              https://www.youtube.com/watch?v=FI7bzIuPous     -->                          
+            </div>
+
+
+            <hr>
+
+            <div fxLayout="row" fxLayoutGap="30px" >
+                <div fxFlex>
+              <h4 >Cancelled Cheque</h4>
+            </div>
+            <div fxFlex ="30%">
+              <button mat-mini-fab color="accent" (click)="fileInput.click()">
+                <mat-icon>attach_file</mat-icon> 
+                  <input #fileInput type="file" (change)="onFileInput($event)" style="display:none;" />
+              </button>        
+              <mat-form-field>
+                <input matInput type="text" [value]="fileName" disabled>
+                <mat-hint *ngIf="filevalerror">{{filvaldiationmsg}}</mat-hint>
+              </mat-form-field>
+              </div>
+              <span fxFlex></span>
+              <div fxFlex>  
+              <button mat-raised-button color="accent" (click)="uploadFile()">
+                  <mat-icon>file_upload</mat-icon> 
+                  UploadFile                  
+                </button>
+              </div>
+                <!--http://www.advancesharp.com/blog/1218/angular-4-upload-files-with-data-and-web-api-by-drag-drop
+                https://www.youtube.com/watch?v=FI7bzIuPous     -->                          
+              </div>
+
+              <hr>
+
+
+          </div>
+          <br>
+          <br>
+          <br>
         </mat-card>
         <br>
         <br>
@@ -473,7 +534,7 @@
            
           </div>
         </form>
-    </mat-step-->
+    </mat-step>
 
   </mat-horizontal-stepper>
 </mat-card>

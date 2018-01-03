@@ -46,10 +46,10 @@ notificationfetch() {
   this.dbserivce.dbaction('notifi','fetch',data).subscribe(
   data =>{
           console.log("inside success dbservice");
-          var data1=data.body['data'];
+          var data1=data['body']['data'];
           console.log(data1);
-          console.log(data.body['lazyloadid']);
-          this.lazldid=data.body['lazyloadid'];
+         // console.log(data.body['lazyloadid']);
+          this.lazldid=data1['lazyloadid'];
           if(data1 != null){
             data1.forEach(element => {
               this.notify.update(element.nfumessage, 'success',element.nfumsgtype);

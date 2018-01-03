@@ -80,6 +80,7 @@ import { GoogleSignInComponentComponent } from './home/login/google-sign-in-comp
 import { FbsigninComponent } from './home/login/fbsignin/fbsignin.component';
 
 
+
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -90,6 +91,9 @@ import { BsestarmfregistrationComponent } from './postlogin/settings/bsestarmfre
 import { BannerComponent } from './commonmodule/notificationmodule/banner/banner.component';
 import { AlertsComponent } from './commonmodule/notificationmodule/alerts/alerts.component';
 import { NotificationComponent } from './commonmodule/notificationmodule/notification/notification.component';
+import { FileuploadComponent } from './fileupload/fileupload.component';
+import { FileuploadService } from './natservices/fileupload.service';
+
 
 
 @NgModule({
@@ -162,7 +166,7 @@ import { NotificationComponent } from './commonmodule/notificationmodule/notific
     NotifymoduleModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
-    AngularFireAuthModule    
+    AngularFireAuthModule
   ],
   entryComponents: [Dialog1Component,PfqtypopupComponent],
   providers: [SetjwtService,
@@ -172,7 +176,8 @@ import { NotificationComponent } from './commonmodule/notificationmodule/notific
               DbservicesService,
               {provide: HTTP_INTERCEPTORS,useClass: NatInterceptor, multi: true,},
               AuthService, 
-              NotifyService
+              NotifyService,
+              FileuploadService
               ],
   bootstrap: [AppComponent]
 })

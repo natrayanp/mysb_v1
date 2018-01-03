@@ -69,7 +69,7 @@ dbaction(screen,functionality,data){
 }
 
 
-}}
+}
 
 
   
