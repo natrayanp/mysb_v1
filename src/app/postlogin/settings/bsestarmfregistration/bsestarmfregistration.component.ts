@@ -41,6 +41,8 @@ export class BsestarmfregistrationComponent implements OnInit {
   percentDone:number;
   filevalerror=true;
   filvaldiationmsg: string = "";
+  incslbs: any;
+  srcwlths:any;
   
 
   constructor(private fb: FormBuilder,
@@ -53,7 +55,9 @@ export class BsestarmfregistrationComponent implements OnInit {
     this.states=Registration.STATE;
     this.countrys=Registration.COUNTRY;
     this.nominrels=Registration.NOMINEE_RELATIONSHIP;
-    this.fcountrys=Registration.FATCA_COUNTRY;
+    this.incslbs = Registration.FATCA_INCOME_SLAB;
+    this.srcwlths = Registration.FATCA_SOURCE_OF_WEALTH;
+    //this.fcountrys=Registration.FATCA_COUNTRY;
     this.fidtypes=Registration.FATCA_IDTYPE;
     this.ifscdet=new(bankifscdetail);
     //https://www.rbi.org.in/scripts/neft.aspx IFSCODE to be downloaded and loaded in DB  
@@ -99,7 +103,7 @@ export class BsestarmfregistrationComponent implements OnInit {
       clientnomineename: [''],
       clientnomineerel: [''],
       clientnomineedob: [''],
-      clientnomineeaddres: [''],
+      clientnomineeaddres: ['',Validators.maxLength(40)],
       clientfndhldtype: ['physical'],//default to single and hide from users
     });
   }
@@ -359,5 +363,62 @@ export class BsestarmfregistrationComponent implements OnInit {
   myfunc(){
     console.log("natrayan myfunc");
   }
+
+
+
+
+  saveformdata(){
+    console.log("insdier save registration form");
+    this.dbserivce.dbaction('registfrm','detailsave',JSON.stringify(this.regdet)).subscribe(
+      data =>{
+                  console.log("data is updated successfully");
+                  console.log(data);
+                  //this.regdet=<regisuccfatcadetail>data['body'];
+                  //this.assignvalue();
+              },
+     error => {
+                  console.log(error);
+                }
+              );  
+
+/*
+    this.dbserivce.dbaction('registfrm','addsave',this.clientaddress.value).subscribe(
+      data =>{
+                  console.log("data is taken");
+                  console.log(data);
+                  this.regdet=<regisuccfatcadetail>data['body'];
+                  this.assignvalue();
+              },
+      error => {
+                  console.log(error);
+                }
+              );  
+
+    this.dbserivce.dbaction('registfrm','banksave',this.clientbank.value).subscribe(
+      data =>{
+                  console.log("data is taken");
+                  console.log(data);
+                  this.regdet=<regisuccfatcadetail>data['body'];
+                  this.assignvalue();
+              },
+      error => {
+                  console.log(error);
+                }
+              );  
+  
+  this.dbserivce.dbaction('registfrm','fatcasave',this.clientfatca.value).subscribe(
+    data =>{
+                console.log("data is taken");
+                console.log(data);
+                this.regdet=<regisuccfatcadetail>data['body'];
+                this.assignvalue();
+            },
+    error => {
+                console.log(error);
+              }
+            );  
+*/
+
+            }
 
 }

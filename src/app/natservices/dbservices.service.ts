@@ -18,6 +18,7 @@ export class DbservicesService {
 
 dbaction(screen,functionality,data){
   console.log("inside dbaction");
+  console.log(screen+functionality);
   switch (screen+functionality) {
     case "FundAllocFetch":
       {
@@ -62,12 +63,45 @@ dbaction(screen,functionality,data){
       }
       case "registfetch":
       {
+        console.log('inside reistfetc');
         var apiurl=environment.registapiUrl + "/" + environment.registfetch;
-        return this.http.get(apiurl,{observe: 'response'});
+        return this.getmethod(apiurl,{observe: 'response'});
       }
+      case "registfrmdetailsave":
+      {
+        console.log('inside regisdetlfrmsave');
+        var apiurl=environment.registfrmapiUrl + "/" + environment.detailsfrmsave;
+        return this.postmethod(apiurl,data,{observe: 'response'});
+      }
+    /*  case "registfrmdetailsave":
+      {
+        var apiurl=environment.registfrmapiUrl + "/" + environment.detailsfrmsave;
+        this.postmethod(apiurl,data,{observe: 'response'});
+      }
+      case "registfrmdetailsave":
+      {
+        var apiurl=environment.registfrmapiUrl + "/" + environment.detailsfrmsave;
+        this.postmethod(apiurl,data,{observe: 'response'});
+      }
+      case "registfrmdetailsave":
+      {
+        var apiurl=environment.registfrmapiUrl + "/" + environment.detailsfrmsave;
+        this.postmethod(apiurl,data,{observe: 'response'});
+      }*/
   }
+
+
+
 }
 
+postmethod(apiurl,data,param){
+  console.log(typeof(data));
+  return this.http.post(apiurl,data,param);
+}
+
+getmethod(apiurl,param){
+  return this.http.get(apiurl,param);
+}
 
 }
 
