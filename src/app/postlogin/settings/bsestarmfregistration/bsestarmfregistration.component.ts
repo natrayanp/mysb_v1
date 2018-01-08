@@ -421,4 +421,20 @@ export class BsestarmfregistrationComponent implements OnInit {
 
             }
 
+  submitregistobse(){    
+    this.dbserivce.dbaction('registfrm','submit',JSON.stringify(this.regdet)).subscribe(
+      data =>{
+                  console.log("data is updated successfully");
+                  console.log(data);
+                  //this.regdet=<regisuccfatcadetail>data['body'];
+                  //this.assignvalue();
+              },
+     error => {
+                  console.log(error);
+                }
+              );  
+
+    
+  }
+
 }

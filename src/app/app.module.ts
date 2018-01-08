@@ -68,7 +68,6 @@ import { ChartComponent } from './chart/chart.component';
 import { PfserviceService } from './natservices/pfservice.service';
 import { SettingspfService } from './natservices/settingspf.service';
 import { NatInterceptor } from './natservices/natinterceptor';
-import { Dialog1Component } from './home/login/dialog1/dialog1.component';
 import { FundallocatComponent } from './postlogin/fundallocat/fundallocat.component';
 import { OrderComponent } from './postlogin/order/order.component';
 import { OrderdbservService } from "./natservices/orderdbserv.service";
@@ -76,8 +75,7 @@ import { DbservicesService } from "./natservices/dbservices.service";
 import { PfwiseorderComponent } from './postlogin/order/pfwiseorder/pfwiseorder.component';
 import { StkwiseorderComponent } from './postlogin/order/stkwiseorder/stkwiseorder.component';
 import { OrderfinalComponent } from './postlogin/order/orderfinal/orderfinal.component';
-import { GoogleSignInComponentComponent } from './home/login/google-sign-in-component/google-sign-in-component.component';
-import { FbsigninComponent } from './home/login/fbsignin/fbsignin.component';
+
 
 
 
@@ -93,6 +91,7 @@ import { AlertsComponent } from './commonmodule/notificationmodule/alerts/alerts
 import { NotificationComponent } from './commonmodule/notificationmodule/notification/notification.component';
 import { FileuploadComponent } from './fileupload/fileupload.component';
 import { FileuploadService } from './natservices/fileupload.service';
+import { ForgotpassComponent } from './home/forgotpass/forgotpass.component';
 
 
 
@@ -118,19 +117,17 @@ import { FileuploadService } from './natservices/fileupload.service';
     PortfolioListComponent,
     ChartComponent,
     PfserviceService,
-    Dialog1Component,
     FundallocatComponent,
     OrderComponent,
     PfwiseorderComponent,
     StkwiseorderComponent,
     OrderfinalComponent,
-    GoogleSignInComponentComponent,
-    FbsigninComponent,
     SignupComponent,
     BsestarmfregistrationComponent,
     BannerComponent,
     AlertsComponent,
-    NotificationComponent
+    NotificationComponent,
+    ForgotpassComponent
   ],
   imports: [
       BrowserModule,
@@ -168,7 +165,7 @@ import { FileuploadService } from './natservices/fileupload.service';
     AngularFireDatabaseModule,
     AngularFireAuthModule
   ],
-  entryComponents: [Dialog1Component,PfqtypopupComponent],
+  entryComponents: [PfqtypopupComponent],
   providers: [SetjwtService,
               GooglePieChartService,
               SettingspfService,

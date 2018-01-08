@@ -9,7 +9,6 @@ import { error } from 'selenium-webdriver';
 
 import { SetjwtService } from '../../natservices/setjwtservice.service';
 //import {MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import { Dialog1Component} from './dialog1/dialog1.component';
 import { DbservicesService } from '../../natservices/dbservices.service';
 
 

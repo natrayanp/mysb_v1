@@ -88,6 +88,13 @@ dbaction(screen,functionality,data){
         var apiurl=environment.registfrmapiUrl + "/" + environment.detailsfrmsave;
         this.postmethod(apiurl,data,{observe: 'response'});
       }*/
+      case "registfrmsubmit":
+      {
+        console.log('inside registfrmsubmit');
+        var apiurl=environment.registfrmapiUrl + "/" + environment.regisfrmsubmit;
+        return this.postmethod(apiurl,data,{observe: 'response'});
+      }
+
   }
 
 

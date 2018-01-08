@@ -33,10 +33,11 @@ export const environment = {
   registapiUrl:"http://127.0.0.1:8000",
   registfetch:"registdetfetch",
   registfrmapiUrl:"http://127.0.0.1:8000",
-  detailsfrmsave:"dtlfrmsave"
+  detailsfrmsave:"dtlfrmsave",
  /* detailsfrmsave:"/dtlfrmsave"
   detailsfrmsave:"/dtlfrmsave"
   detailsfrmsave:"/dtlfrmsave"
   detailsfrmsave:"/dtlfrmsave"*/
+  regisfrmsubmit:"regisandfatcsubmit"  
 
 };

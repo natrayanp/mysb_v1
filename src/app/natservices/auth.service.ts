@@ -124,9 +124,11 @@
       const fbAuth = firebase.auth();
   
       return fbAuth.sendPasswordResetEmail(email)
-        .then(() => this.notify.update('Password update email sent', 'info','alert'))
+        .then(() => this.notify.update('Password reset link sent to your email', 'info','alert'))
         .catch((error) => this.handleError(error));
     }
+
+
   
     signOut(postaction) {
       this.afAuth.auth.signOut().then(() => {

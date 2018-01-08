@@ -3,7 +3,8 @@
   <span fxFlex>Register your details</span>
   <div >
   <button mat-raised-button fxFlexAlign.lt-sm="start" color="accent" (click)="saveformdata()"><strong>Save for Later</strong></button>
-  <button  mat-raised-button fxFlexAlign.lt-sm="end" color="accent" style="color:white" [disabled]="!(clientdetails.valid && clientaddress.valid && clientbank.valid && clientfatca.valid)"><strong>Submit</strong></button>
+  <!--button  mat-raised-button fxFlexAlign.lt-sm="end" color="accent" (click)="submitregistobse()" style="color:white" [disabled]="!(clientdetails.valid && clientaddress.valid && clientbank.valid && clientfatca.valid)"><strong>Submit</strong></button-->
+  <button  mat-raised-button fxFlexAlign.lt-sm="end" color="accent" (click)="submitregistobse()" style="color:white"><strong>Submit</strong></button>
   </div>
   </div>
   <!--/mat-toolbar-->

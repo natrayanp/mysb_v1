@@ -21,7 +21,7 @@ import { StkwiseorderComponent } from './postlogin/order/stkwiseorder/stkwiseord
 import { OrderfinalComponent } from './postlogin/order/orderfinal/orderfinal.component';
 import { SignupComponent } from './home/signup/signup.component';
 import { BsestarmfregistrationComponent } from './postlogin/settings/bsestarmfregistration/bsestarmfregistration.component';
-
+import { ForgotpassComponent } from './home/forgotpass/forgotpass.component';
 
 export const ROUTES: Routes = [
   
@@ -43,6 +43,7 @@ export const ROUTES: Routes = [
   ]},  
   {path: 'authchk', component: LogincheckComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'forgot', component: ForgotpassComponent},
   {path: 'signup', component: SignupComponent},
   {path: 'chart', component: ChartComponent},
   {path: 'data', component: PfserviceService},

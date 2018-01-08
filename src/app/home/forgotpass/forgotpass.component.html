@@ -1,0 +1,108 @@
+<p>
+  forgotpass works!
+</p>
+<app-toolbar></app-toolbar> 
+
+
+
+
+<div fxLayout="column"  fxLayoutWrap fxLayoutAlign="center center">
+<div>
+
+</div>
+
+<mat-card [ngStyle]="{'width':'50%'}" [ngStyle.lt-lg]="{'width':'100%'}"  [ngStyle.lt-xl]="{'width':'65%'}" fxAlign = "center" >
+ 
+  <mat-card-title>
+    <h2>Forgot Password</h2>
+  </mat-card-title>
+  <alerts></alerts>
+  
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center center" style="margin-top:0px">
+      
+      <div >
+        
+          <form class="example-form"  [formGroup]="userpasswdreForm"> 
+          <div  fxLayout="column" fxFlex="1 0 auto" fxLayoutGap="30px" fxLayoutAlign="center center" fxFlex="0 1 auto">
+            
+                  <mat-form-field class="example-full-width" >
+                    <input matInput placeholder="Email" formControlName="email" fxFlex>
+                  <mat-error *ngIf="userpasswdreForm.controls['email'].hasError('pattern')">
+                    email is not valid
+                  </mat-error>
+                  <mat-error *ngIf="userpasswdreForm.controls['email'].hasError('required')">
+                    email is Mandatory
+                  </mat-error>
+                </mat-form-field>
+                
+                <!--div fxLayout="row" >
+                  <mat-checkbox (change)="tooglehvcode($event)">I have verification code</mat-checkbox>
+                  <span fxFlex></span>
+                </div>
+                <mat-form-field class="example-full-width" *ngIf="hvcode">
+                <input matInput type="password" placeholder="New Password" formControlName="newpassword" fxFlex="0 1 auto">
+
+                <mat-error *ngIf="userpasswdreForm.controls['newpassword'].hasError('pattern')">
+                  Length must be min 8 max 10, starting with A-Z or a-z and with at least one number, one uppercase, lowercase letter and one special character from !@#%&amp;
+                </mat-error>
+                <mat-error *ngIf="userpasswdreForm.controls['newpassword'].hasError('required')">
+                  Password cannot be blank
+                </mat-error>
+
+              </mat-form-field>
+
+              <mat-form-field class="example-full-width" *ngIf="hvcode">
+                <input matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword" fxFlex="0 1 auto" (change)="verifypass($event)">
+
+                <mat-error *ngIf="userpasswdreForm.controls['confirmPassword'].hasError('pattern')">
+                  Length must be min 8 max 10, starting with A-Z or a-z and with at least one number, one uppercase, lowercase letter and one special character from !@#%&amp;
+                </mat-error>
+                <mat-error *ngIf="userpasswdreForm.controls['confirmPassword'].hasError('required')">
+                  Password cannot be blank
+                </mat-error>
+                <mat-hint *ngIf="passnomatch">
+                 password don't match
+                </mat-hint>
+
+              </mat-form-field>
+
+              <mat-form-field class="example-full-width" *ngIf="hvcode">
+                <input matInput placeholder="Verification Code" formControlName="vericode" fxFlex="0 1 auto">
+              </mat-form-field!-->
+
+                  <br>
+                              
+              <button mat-raised-button [disabled]="userpasswdreForm.controls['email'].invalid" (click)="emailpasswordreset()" id="userpassresetbtn" style="height:50px;width:400px;font-size:20px;" color="primary" fxFlex="0 1 auto" *ngIf="!hvcode"> <strong>Reset Password</strong></button>    
+              <!--button mat-raised-button [disabled]="userpasswdreForm.invalid || passnomatch" (click)="confirmpasswordreset()" id="userpassloginbtn" style="height:50px;width:400px;font-size:20px;" color="primary" fxFlex="0 1 auto" *ngIf="hvcode"> <strong>verify new Password</strong></button-->    
+              <br>
+              <h3>Back to <a type="button" routerLink="/login" routerLinkActive="active">login</a></h3>
+             
+            </div>
+          </form>
+      </div>
+      </div>
+<!--div fxLayout="row" fxLayout.lt-md="column">
+  <div  fxFlex="2 0 100%" style="background-color: blue">
+      <div  fxLayout="column" fxFlex="1 0 auto" fxLayoutAlign="center center">
+          <h2>New User?  Register Now</h2>
+          <div  fxLayout="row" fxFlex="1 0 auto" fxLayoutAlign="center center">
+          <p fxFlex>name</p>
+          <p fxFlex>Phonenumber</p>
+          </div>
+      </div>
+
+  </div>
+</div-->
+</mat-card>
+</div>
+<button (click)="logout()">logout</button>
+<button (click)="print()">print</button>
+<!--
+<div class="alert alert-heading close"><p >djdjdj</p> </div>
+<button (click)="logout()">logout</button>
+<button (click)="print()">print</button>
+-->
+
+
+
+
