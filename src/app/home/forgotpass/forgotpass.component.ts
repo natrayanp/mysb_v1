@@ -64,6 +64,6 @@ export class ForgotpassComponent implements OnInit {
 
 
   }
-}
+
 
 
