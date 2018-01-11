@@ -11,6 +11,9 @@ import {
   HttpResponse
 } from '@angular/common/http';
 
+import { NotifyService } from '../../../natservices/notify.service';
+import { NotificationComponent } from '../../../commonmodule/notificationmodule/notification/notification.component'
+
 @Component({
   selector: 'app-bsestarmfregistration',
   templateUrl: './bsestarmfregistration.component.html',
@@ -47,7 +50,8 @@ export class BsestarmfregistrationComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private dbserivce :DbservicesService,
-              private ups:FileuploadService)
+              private ups:FileuploadService,
+              private notify: NotifyService)
     {
     this.getregistrationdetails();
     this.occupationcodes = Registration.OCCUPATION_CODE;
@@ -378,6 +382,7 @@ export class BsestarmfregistrationComponent implements OnInit {
               },
      error => {
                   console.log(error);
+                  
                 }
               );  
 
@@ -424,13 +429,16 @@ export class BsestarmfregistrationComponent implements OnInit {
   submitregistobse(){    
     this.dbserivce.dbaction('registfrm','submit',JSON.stringify(this.regdet)).subscribe(
       data =>{
-                  console.log("data is updated successfully");
-                  console.log(data);
+                  var mydata = data['body'];
+                  //Navigate to success screen
                   //this.regdet=<regisuccfatcadetail>data['body'];
                   //this.assignvalue();
               },
      error => {
                   console.log(error);
+                  var erdata = error['body'];
+                  this.notify.clearalertmsg();
+                  this.notify.update(erdata.statusdetails, 'error','alert');
                 }
               );  
 

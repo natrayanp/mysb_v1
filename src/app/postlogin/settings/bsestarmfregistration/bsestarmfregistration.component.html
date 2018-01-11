@@ -10,6 +10,7 @@
   <!--/mat-toolbar-->
   <mat-card>
   <mat-horizontal-stepper [linear]="isLinear">
+      <alerts></alerts>
       <mat-step [stepControl]="clientdetails">
         <form [formGroup]="clientdetails" >
           <ng-template matStepLabel>Your Details</ng-template>
