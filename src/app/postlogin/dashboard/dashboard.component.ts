@@ -11,6 +11,7 @@ import { NotificationComponent } from '../../commonmodule/notificationmodule/not
 export class DashboardComponent implements OnInit {
 
   lazldid:string='';
+  showspinner=true;
 
   constructor(private dbserivce :DbservicesService,
               private notify: NotifyService) {     
@@ -46,13 +47,17 @@ notificationfetch() {
   this.dbserivce.dbaction('notifi','fetch',data).subscribe(
   data =>{
           console.log("inside success dbservice");
+          this.showspinner=false;
           var data1=data['body']['data'];
           console.log(data1);
+          this.notify.clearnotifcation();
          // console.log(data.body['lazyloadid']);
           this.lazldid=data1['lazyloadid'];
           if(data1 != null){
             data1.forEach(element => {
-              this.notify.update(element.nfumessage, 'success',element.nfumsgtype);
+              console.log(element);
+              console.log(element['nfumessage']);
+              this.notify.update(element['nfumessage'], 'success',element['nfumsgtype']);
             });
             
           }

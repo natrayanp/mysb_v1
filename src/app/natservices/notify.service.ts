@@ -57,7 +57,11 @@
     }
   
     clearnotifcation() {
-      this._notimsgSource.next(null);
+
+      //this._notimsgSource.next(null);
+  
+      this.notimsg1=[];
+      this._notimsgSource.next(this.notimsg1);
     }
 
     clearalertmsg(){
