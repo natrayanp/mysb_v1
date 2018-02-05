@@ -1,0 +1,66 @@
+
+<form>
+  <mat-card>
+     <div fxLayout="column" fxLayoutGap="50px" >
+      
+       <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="30px" >
+         <div fxFlex>
+
+   <mat-form-field>       
+   <mat-select placeholder="File">
+     <mat-option *ngFor="let upfile of upfiles" [value]="upfile">
+       {{ upfile }}
+     </mat-option>
+   </mat-select>
+ </mat-form-field>
+
+     </div>
+     <div fxFlex ="30%">
+       <button mat-mini-fab color="accent" (click)="fileInput.click()">
+         <mat-icon>attach_file</mat-icon> 
+           <input #fileInput type="file" (change)="onFileInput($event)" style="display:none;" />
+       </button>        
+       <mat-form-field>
+         <input matInput type="text" [value]="fileName" disabled>
+         <mat-hint *ngIf="filevalerror">{{filvaldiationmsg}}</mat-hint>
+       </mat-form-field>
+       </div>
+       <span fxFlex></span>
+       <div fxFlex>  
+       <button mat-raised-button color="accent" (click)="uploadFile()">
+           <mat-icon>file_upload</mat-icon> 
+           UploadFile                  
+         </button>
+       </div>
+         <!--http://www.advancesharp.com/blog/1218/angular-4-upload-files-with-data-and-web-api-by-drag-drop
+         https://www.youtube.com/watch?v=FI7bzIuPous     -->                          
+       </div>   
+
+
+
+     </div>
+
+ <hr style="background-color:red"/> 
+<div fxFlexLayout = "row">
+<div *ngFor="let item of tableData">
+   <mat-card class="example-card">
+     <mat-card-header>
+       <div mat-card-avatar class="example-header-image"></div>
+       <mat-card-title>{{item.fileName}}</mat-card-title>
+       
+     </mat-card-header>
+     
+     <img mat-card-image src={{item.fullPath}} alt={{item.fileName}}>
+     <mat-card-content>
+
+     </mat-card-content>
+     <mat-card-actions>
+       <button mat-button>Remove</button>            
+     </mat-card-actions>
+   </mat-card>
+
+</div>
+</div>
+
+   </mat-card>
+   </form>

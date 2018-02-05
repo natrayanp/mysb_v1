@@ -1,15 +1,10 @@
 
-<mat-card >
-<div  *ngIf="showspinner" fxLayoutAlign="center center">
-<mat-spinner></mat-spinner>
-</div>
-<notification></notification>
-</mat-card>
-<br>
+<noticomm  [screenid] = "lscreeid"></noticomm>
+
 
 <mat-radio-group>
   <mat-radio-button value="1">Option 1</mat-radio-button>
   <mat-radio-button value="2">Option 2</mat-radio-button>
 </mat-radio-group>
 <app-chart></app-chart>
-<button (click)="retrylazyid()">retrylazy</button>
+<!--button (click)="retrylazyid()">retrylazy</button-->

@@ -33,6 +33,7 @@ import { MatPaginatorModule } from '@angular/material';
 import { MatTableModule } from '@angular/material';
 import { MatButtonToggleModule } from '@angular/material';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 
 
@@ -49,7 +50,7 @@ import { ROUTES } from './app.routes';
 import { ToolbarComponent } from './home/toolbar/toolbar.component';
 import { LoginComponent } from './home/login/login.component';
 //import { Dialog1 } from './home/login/login.component';
-import { SetjwtService } from './natservices/setjwtservice.service';
+import { UserstateService } from './natservices/userstate.service';
 import { LogincheckComponent } from './logincheck/logincheck.component';
 import { PostloginComponent } from './postlogin/postlogin.component';
 import { PostlogintoolbarComponent } from './postlogin/postlogintoolbar/postlogintoolbar.component';
@@ -92,6 +93,9 @@ import { NotificationComponent } from './commonmodule/notificationmodule/notific
 import { FileuploadComponent } from './fileupload/fileupload.component';
 import { FileuploadService } from './natservices/fileupload.service';
 import { ForgotpassComponent } from './home/forgotpass/forgotpass.component';
+import { BseregsuccComponent } from './postlogin/settings/bseregsucc/bseregsucc.component';
+import { BsereguploadComponent } from './postlogin/settings/bseregupload/bseregupload.component';
+import { NoticommComponent } from './commonmodule/notificationmodule/noticomm/noticomm.component';
 
 
 
@@ -127,7 +131,10 @@ import { ForgotpassComponent } from './home/forgotpass/forgotpass.component';
     BannerComponent,
     AlertsComponent,
     NotificationComponent,
-    ForgotpassComponent
+    ForgotpassComponent,
+    BseregsuccComponent,
+    BsereguploadComponent,
+    NoticommComponent
   ],
   imports: [
       BrowserModule,
@@ -159,6 +166,7 @@ import { ForgotpassComponent } from './home/forgotpass/forgotpass.component';
       MatTableModule,
       MatButtonToggleModule,
       MatCheckboxModule,
+      MatProgressBarModule,
     RouterModule.forRoot(ROUTES /*,{enableTracing: true }*/),
     NotifymoduleModule,
     AngularFireModule.initializeApp(environment.firebase),
@@ -166,15 +174,15 @@ import { ForgotpassComponent } from './home/forgotpass/forgotpass.component';
     AngularFireAuthModule
   ],
   entryComponents: [PfqtypopupComponent],
-  providers: [SetjwtService,
-              GooglePieChartService,
+  providers: [GooglePieChartService,
               SettingspfService,
               OrderdbservService,
               DbservicesService,
               {provide: HTTP_INTERCEPTORS,useClass: NatInterceptor, multi: true,},
               AuthService, 
               NotifyService,
-              FileuploadService
+              FileuploadService,
+              UserstateService
               ],
   bootstrap: [AppComponent]
 })

@@ -22,6 +22,8 @@ import { OrderfinalComponent } from './postlogin/order/orderfinal/orderfinal.com
 import { SignupComponent } from './home/signup/signup.component';
 import { BsestarmfregistrationComponent } from './postlogin/settings/bsestarmfregistration/bsestarmfregistration.component';
 import { ForgotpassComponent } from './home/forgotpass/forgotpass.component';
+import { BseregsuccComponent } from './postlogin/settings/bseregsucc/bseregsucc.component';
+import { BsereguploadComponent } from './postlogin/settings/bseregupload/bseregupload.component';
 
 export const ROUTES: Routes = [
   
@@ -38,7 +40,10 @@ export const ROUTES: Routes = [
     {path: 'settings',  component: SettingsComponent, children: [
          {path: 'usersetup',  component: UserListComponent},
          {path: 'portfoliosetup',  component: PortfolioListComponent},
-         {path: 'mfreg',  component: BsestarmfregistrationComponent}      
+         {path: 'mfreg',  component: BsestarmfregistrationComponent},
+         {path: 'mfregsu',  component: BseregsuccComponent},
+         {path: 'mfregupload',  component: BsereguploadComponent}  
+                   
     ]},     
   ]},  
   {path: 'authchk', component: LogincheckComponent},

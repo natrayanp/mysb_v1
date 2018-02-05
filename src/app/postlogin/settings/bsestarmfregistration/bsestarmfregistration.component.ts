@@ -10,6 +10,7 @@ import {
   HttpEventType,
   HttpResponse
 } from '@angular/common/http';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { NotifyService } from '../../../natservices/notify.service';
 import { NotificationComponent } from '../../../commonmodule/notificationmodule/notification/notification.component'
@@ -46,12 +47,13 @@ export class BsestarmfregistrationComponent implements OnInit {
   filvaldiationmsg: string = "";
   incslbs: any;
   srcwlths:any;
-  
+  showsubmitprogress=false;
 
   constructor(private fb: FormBuilder,
               private dbserivce :DbservicesService,
               private ups:FileuploadService,
-              private notify: NotifyService)
+              private notify: NotifyService,
+              private router: Router)
     {
     this.getregistrationdetails();
     this.occupationcodes = Registration.OCCUPATION_CODE;
@@ -115,8 +117,8 @@ export class BsestarmfregistrationComponent implements OnInit {
   createclientaddfrm(){
     this.clientaddress = this.fb.group({
       clientaddress1: ['', Validators.compose([Validators.required,Validators.maxLength(40)])],
-      clientaddress2: ['', Validators.maxLength(40)],
-      clientaddress3: ['', Validators.maxLength(40)],
+      clientaddress2: [' ', Validators.maxLength(40)],
+      clientaddress3: [' ', Validators.maxLength(40)],
       clientcity: ['', Validators.required],
       clientstate: ['', Validators.required],
       clientcountry: [{value: 'India'}, Validators.required],
@@ -175,16 +177,23 @@ export class BsestarmfregistrationComponent implements OnInit {
   }
 
   getregistrationdetails(){
+    this.showsubmitprogress=true;
      console.log("insdier getregistrationdetails");
     this.dbserivce.dbaction('regist','fetch','').subscribe(
       data =>{
-                  console.log("data is taken");
+                  this.showsubmitprogress=false;
+                  console.log("data is taken insdier getregistrationdetails");
                   console.log(data);
                   this.regdet=<regisuccfatcadetail>data['body'];
                   this.assignvalue();
+
               },
      error => {
+                  this.showsubmitprogress=false;
                   console.log(error);
+                  this.notify.update(error['error']['statusdetails'],"error","alert");
+                  
+
                 }
               );  
   }
@@ -192,12 +201,14 @@ export class BsestarmfregistrationComponent implements OnInit {
 
 
   getbankdata(event){
+    this.showsubmitprogress=true;
     //this.ifscdet=null;
     this.ifscdet=new(bankifscdetail);
     console.log("insdier getbankdata");
     if (this.clientbank.controls['clientifsc'].valid){
       this.dbserivce.dbaction('IFSC','fetch',{"ifsc":this.clientbank.controls['clientifsc'].value}).subscribe(
-        data =>{
+        data =>{                  
+                  this.showsubmitprogress=false;
                   console.log("data is taken");
                   console.log(data);
                   this.ifscdet=<bankifscdetail>data['body'];
@@ -205,6 +216,7 @@ export class BsestarmfregistrationComponent implements OnInit {
 
                 },    
         error =>{
+          this.showsubmitprogress=false;
           console.log("insdie error");
           console.log(error);
                   if (error.hasOwnProperty('error')){
@@ -228,6 +240,7 @@ export class BsestarmfregistrationComponent implements OnInit {
                   
                 }
       )};
+      
   }
 
   assignvalue(){
@@ -372,16 +385,24 @@ export class BsestarmfregistrationComponent implements OnInit {
 
 
   saveformdata(){
+    this.showsubmitprogress=true;
     console.log("insdier save registration form");
     this.dbserivce.dbaction('registfrm','detailsave',JSON.stringify(this.regdet)).subscribe(
       data =>{
+                  this.showsubmitprogress=false;
                   console.log("data is updated successfully");
                   console.log(data);
+                  console.log(data['body']['statusdetails']);
+                  this.notify.update(data['body']['statusdetails'],"success","alert");
                   //this.regdet=<regisuccfatcadetail>data['body'];
                   //this.assignvalue();
               },
      error => {
-                  console.log(error);
+                this.showsubmitprogress=false;
+                console.log("insdie error");
+                console.log(error);
+                console.log(error['error']['statusdetails']);
+                this.notify.update(error['error']['statusdetails'],"error","alert");
                   
                 }
               );  
@@ -427,16 +448,20 @@ export class BsestarmfregistrationComponent implements OnInit {
             }
 
   submitregistobse(){    
+    this.showsubmitprogress=true;
     this.dbserivce.dbaction('registfrm','submit',JSON.stringify(this.regdet)).subscribe(
       data =>{
+                  this.showsubmitprogress=false;
                   var mydata = data['body'];
+                  this.router.navigateByUrl('/securedpg/settings/mfregsu');
                   //Navigate to success screen
                   //this.regdet=<regisuccfatcadetail>data['body'];
                   //this.assignvalue();
               },
      error => {
+                  this.showsubmitprogress=false;
                   console.log(error);
-                  var erdata = error['body'];
+                  var erdata = error['error'];
                   this.notify.clearalertmsg();
                   this.notify.update(erdata.statusdetails, 'error','alert');
                 }

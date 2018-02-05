@@ -7,7 +7,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { error } from 'selenium-webdriver';
 
-import { SetjwtService } from '../../natservices/setjwtservice.service';
+//import { SetjwtService } from '../../natservices/setjwtservice.service';
 //import {MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 //import { Dialog1Component} from './dialog1/dialog1.component';
 import { DbservicesService } from '../../natservices/dbservices.service';
@@ -23,7 +23,7 @@ export class SignupComponent implements OnInit {
   constructor(public auth: AuthService,
     private router: Router,
     private notify: NotifyService,
-    private setjwtservice: SetjwtService,
+    //private setjwtservice: SetjwtService,
     //public dialog: MatDialog,
     private dbserivce :DbservicesService,
     private fb: FormBuilder ) {
@@ -206,18 +206,6 @@ error =>{
     }
       );
 
-/*
-this.setjwtservice.login(natkey)
-.subscribe(
-  (data) => {
-    localStorage.setItem("natjwt",(data['natjwt']));
-    window.opener.location="/securedpg/dashboard";               
-  }, 
-  (error) => {
-    console.log('error ' );
-  });
-}
-*/
 }
 
 

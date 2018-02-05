@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  TknAddSites: ["http://127.0.0.1:8001/","http://127.0.0.1:8000/"],
+  TknAddSites: ["https://izsp1n5tfl.execute-api.ap-southeast-1.amazonaws.com/dev"],
   //Fund Allocation screen
   FundAllocapiUrl: "http://127.0.0.1:8000",
   FundAllocfetch: "getfundaloc",
@@ -14,7 +14,8 @@ export const environment = {
   bseCustcreate:"custcreation",
   bsemandatetUrl:"http://127.0.0.1:8000",
   bseMandataecreate:"mandatecreation",
-  SetJwtapiUrl:"http://127.0.0.1:8000",
+  SetJwtapiUrl:"https://izsp1n5tfl.execute-api.ap-southeast-1.amazonaws.com/dev",
+  //SetJwtapiUrl:"http://127.0.0.1:8000",
   SetJwtapiSave:"natkeyss",
   firebase: {
     apiKey: "AIzaSyAU9KLFWZ0YuHXuG8tLBLAg9ax3gJPKxck",
@@ -24,15 +25,17 @@ export const environment = {
     storageBucket: "rare-origin-161911.appspot.com",
     messagingSenderId: "474890725243"
   },
-  RecordSignupapiUrl:"http://127.0.0.1:8000",
+  RecordSignupapiUrl:"https://izsp1n5tfl.execute-api.ap-southeast-1.amazonaws.com/dev",
+  //RecordSignupapiUrl:"http://127.0.0.1:8000",
   RecordSignupapiSave:"signup",
-  IFSCfetchapiUrl:"http://127.0.0.1:8000",
+  IFSCfetchapiUrl:"https://o7cm2vmfq4.execute-api.ap-southeast-1.amazonaws.com/dev",
   IFSCapifetch:"bankdet",
-  notifiapiUrl :"http://127.0.0.1:8000",
+  notifiapiUrl :"https://816ug405pd.execute-api.ap-southeast-1.amazonaws.com/allprocessingdev",
+  //notifiapiUrl :"http://127.0.0.1:8000",
   notififetch:"notification",
-  registapiUrl:"http://127.0.0.1:8000",
+  registapiUrl:"https://o7cm2vmfq4.execute-api.ap-southeast-1.amazonaws.com/dev",
   registfetch:"registdetfetch",
-  registfrmapiUrl:"http://127.0.0.1:8000",
+  registfrmapiUrl:"https://o7cm2vmfq4.execute-api.ap-southeast-1.amazonaws.com/dev",
   detailsfrmsave:"dtlfrmsave",
  /* detailsfrmsave:"/dtlfrmsave"
   detailsfrmsave:"/dtlfrmsave"

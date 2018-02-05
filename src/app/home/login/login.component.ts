@@ -7,10 +7,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { error } from 'selenium-webdriver';
 
-import { SetjwtService } from '../../natservices/setjwtservice.service';
+//import { SetjwtService } from '../../natservices/setjwtservice.service';
 //import {MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { DbservicesService } from '../../natservices/dbservices.service';
-
+import { UserstateService } from '../../natservices/userstate.service';
 
 @Component({
     selector: 'app-login',
@@ -23,10 +23,11 @@ import { DbservicesService } from '../../natservices/dbservices.service';
     constructor(public auth: AuthService,
         private router: Router,
         private notify: NotifyService,
-        private setjwtservice: SetjwtService,
+        //private setjwtservice: SetjwtService,
         //public dialog: MatDialog,
         private dbserivce :DbservicesService,
-        private fb: FormBuilder ) { 
+        private fb: FormBuilder,
+        private userstate:UserstateService ) { 
           this.createloginForm();
         }
 
@@ -153,11 +154,12 @@ print(){
 getUsers(natkey) {
   this.dbserivce.dbaction('Set','Jwt',{"natkey":natkey}).subscribe(
     data =>{
-            console.log("inside success dbservice");
+            console.log("inside natkey success dbservice");
             var body=data['body'];
             console.log(body['natjwt']);
             localStorage.setItem("natjwt",(body['natjwt']));
             this.router.navigateByUrl('/securedpg/dashboard');
+            this.userstate.parseJwt();
           },
     error =>{
       console.log("inside success dbservice");
@@ -169,18 +171,5 @@ getUsers(natkey) {
       }
         }
           );
-
-/*
-    this.setjwtservice.login(natkey)
-    .subscribe(
-      (data) => {
-        localStorage.setItem("natjwt",(data['natjwt']));
-        window.opener.location="/securedpg/dashboard";               
-      }, 
-      (error) => {
-        console.log('error ' );
-      });
-    }
-*/
 }
   }

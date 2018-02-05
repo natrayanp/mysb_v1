@@ -1,3 +1,4 @@
+
 <!--mat-toolbar color="primary" -->
 <div fxLayout="row" fxLayoutWrap fxLayout.lt-sm="column" class="natheader natheadertitle"  fxLayoutGap="20px" fxLayoutAlign="center center" >
   <span fxFlex>Register your details</span>
@@ -7,6 +8,11 @@
   <button  mat-raised-button fxFlexAlign.lt-sm="end" color="accent" (click)="submitregistobse()" style="color:white"><strong>Submit</strong></button>
   </div>
   </div>
+  <alerts></alerts>
+  <mat-progress-bar *ngIf ="showsubmitprogress"  mode="buffer" color="accent"></mat-progress-bar>
+  <mat-progress-bar *ngIf ="showsubmitprogress" mode="indeterminate"></mat-progress-bar>
+  
+  
   <!--/mat-toolbar-->
   <mat-card>
   <mat-horizontal-stepper [linear]="isLinear">
@@ -481,88 +487,13 @@
           <div fxLayoutGap="30px">
               <span fxFlex></span>
               <button mat-raised-button color="primary" matStepperPrevious >Back</button>
-              <button mat-raised-button color="primary" matStepperNext >Next</button>
+
              
             </div>
           </form>
       </mat-step>
   
-      <mat-step >
-          <form  >
-            <ng-template matStepLabel>Document upload</ng-template>
-            <mat-card>
-            <div fxLayout="column" fxLayoutGap="50px" >
-             
-              <div fxLayout="row" fxLayoutGap="30px" >
-                <div fxFlex>
-              <h4 >Upload your AOF</h4>
-            </div>
-            <div fxFlex ="30%">
-              <button mat-mini-fab color="accent" (click)="fileInput.click()">
-                <mat-icon>attach_file</mat-icon> 
-                  <input #fileInput type="file" (change)="onFileInput($event)" style="display:none;" />
-              </button>        
-              <mat-form-field>
-                <input matInput type="text" [value]="fileName" disabled>
-                <mat-hint *ngIf="filevalerror">{{filvaldiationmsg}}</mat-hint>
-              </mat-form-field>
-              </div>
-              <span fxFlex></span>
-              <div fxFlex>  
-              <button mat-raised-button color="accent" (click)="uploadFile()">
-                  <mat-icon>file_upload</mat-icon> 
-                  UploadFile                  
-                </button>
-              </div>
-                <!--http://www.advancesharp.com/blog/1218/angular-4-upload-files-with-data-and-web-api-by-drag-drop
-                https://www.youtube.com/watch?v=FI7bzIuPous     -->                          
-              </div>
-  
-  
-              <hr>
-  
-              <div fxLayout="row" fxLayoutGap="30px" >
-                  <div fxFlex>
-                <h4 >Cancelled Cheque</h4>
-              </div>
-              <div fxFlex ="30%">
-                <button mat-mini-fab color="accent" (click)="fileInput.click()">
-                  <mat-icon>attach_file</mat-icon> 
-                    <input #fileInput type="file" (change)="onFileInput($event)" style="display:none;" />
-                </button>        
-                <mat-form-field>
-                  <input matInput type="text" [value]="fileName" disabled>
-                  <mat-hint *ngIf="filevalerror">{{filvaldiationmsg}}</mat-hint>
-                </mat-form-field>
-                </div>
-                <span fxFlex></span>
-                <div fxFlex>  
-                <button mat-raised-button color="accent" (click)="uploadFile()">
-                    <mat-icon>file_upload</mat-icon> 
-                    UploadFile                  
-                  </button>
-                </div>
-                  <!--http://www.advancesharp.com/blog/1218/angular-4-upload-files-with-data-and-web-api-by-drag-drop
-                  https://www.youtube.com/watch?v=FI7bzIuPous     -->                          
-                </div>
-  
-                <hr>
-  
-  
-            </div>
-            <br>
-            <br>
-            <br>
-          </mat-card>
-          <br>
-          <br>
-          <div fxLayoutGap="30px">
-              <span fxFlex></span>
-              <button mat-raised-button color="primary" matStepperPrevious >Back</button>
-             
-            </div>
-          </form>
-      </mat-step>
+   
   
     </mat-horizontal-stepper>
   </mat-card>

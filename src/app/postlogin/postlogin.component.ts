@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserstateService } from '../natservices/userstate.service';
 
 @Component({
   selector: 'app-postlogin',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PostloginComponent implements OnInit {
 
-  constructor() { }
+  constructor(private userstate:UserstateService ) { }
 
   ngOnInit() {
+    this.userstate.parseJwt();
   }
-
+  
 }

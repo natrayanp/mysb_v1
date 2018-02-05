@@ -18,10 +18,10 @@ export class NatInterceptor implements HttpInterceptor{
 
     //code to be added to ensure the bearer token is added only for certain urls
     console.log(req.url);
-    this.tosettkn = false;
+    this.tosettkn = true;
     this.TknAddSites.forEach(
         element => { if(req.url.startsWith(element)){
-                      this.tosettkn=true;                      
+                      this.tosettkn=false;                      
                     } 
                     });
     
