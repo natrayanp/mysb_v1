@@ -41,6 +41,11 @@ export const environment = {
   detailsfrmsave:"/dtlfrmsave"
   detailsfrmsave:"/dtlfrmsave"
   detailsfrmsave:"/dtlfrmsave"*/
-  regisfrmsubmit:"regisandfatcsubmit"  
-
+  regisfrmsubmit:"regisandfatcsubmit",
+  //Fileupload EndPoints START
+  FileuploadUrl:"https://o7cm2vmfq4.execute-api.ap-southeast-1.amazonaws.com/dev",
+  FileUpload:"uploadfile",
+  Filelist:"uploadedfilelist",
+  Filedelete:"uploadedfiledelete"
+  //Fileupload EndPoints END
 };

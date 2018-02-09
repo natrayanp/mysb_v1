@@ -1,18 +1,72 @@
 
+<!--mat-toolbar color="primary" -->
+<div fxLayout="row" fxLayoutWrap fxLayout.lt-sm="column" class="natheader natheadertitle"  fxLayoutGap="20px" fxLayoutAlign="center center" >
+  <span fxFlex>Upload your documents</span>
+  <div >
+  <button  mat-raised-button fxFlexAlign.lt-sm="end" color="accent" (click)="submitregistobse()" style="color:white" [disabled] = "upfiles.length >0"><strong>Submit</strong></button>
+  </div>
+  </div>
+  <alerts></alerts>
+  <mat-progress-bar *ngIf ="listfetchprogbar"  mode="buffer" color="accent"></mat-progress-bar>
+  <mat-progress-bar *ngIf ="listfetchprogbar" mode="indeterminate"></mat-progress-bar>
+
 <form>
-  <mat-card>
-     <div fxLayout="column" fxLayoutGap="50px" >
+  <mat-card >
+      <mat-tab-group class="demo-tab-group">
+
+          <mat-tab label="Prefilled AOF">
+              <br>
+              <h3> Download the prefilled Account Opening Form (AOF) from here.</h3>
+              <p>    Sign and upload the docs along with cancelled cheque in TIFF format in next tab</p>
+              <p>    If you don't see any file below for download, please wait for email from us</p>
+              <br>
+              <div fxFlexLayout = "row" fxLayoutWrap fxLayoutGap="50px">
+                  
+                  <div *ngFor="let item of tableData">                    
+                     <mat-card class="example-card" *ngIf="item.filecat == 'U'">
+                       <mat-card-header>
+                         <div mat-card-avatar class="example-header-image"></div>
+                         <mat-card-title style="font-size:18px"><strong>{{item.filetype}}</strong></mat-card-title>
+                         <!--mat-card-subtitle>Dog Breed</mat-card-subtitle-->
+                       </mat-card-header>
+                       <!--img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"-->
+                       <img mat-card-image src="/assets/tiffimsg.svg" alt={{item.filetype}}>
+                       <mat-card-content>
+                       <!--p>
+                           The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+                           A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+                           bred for hunting.
+                         </p-->
+                       </mat-card-content>
+                       <mat-card-actions>
+                        
+                        <a type ="button" href={{item.files3link}} fxAlign="end" mat-icon-button><strong>DOWNLOAD</strong></a>
+                         
+                       </mat-card-actions>
+                     </mat-card>
+                  
+                  </div>
+                  </div>
+
+          </mat-tab>              
+        
+          <mat-tab label="Upload your docs">
+            <br>
+    <h4 *ngIf = "upfiles.length <1" style="color:green"> You can click on "Submit" button to send the docs to us</h4>            
+     <div fxLayout="column" fxLayoutGap="50px" *ngIf = "upfiles.length >0">
       
        <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="30px" >
          <div fxFlex>
 
    <mat-form-field>       
-   <mat-select placeholder="File">
+   <mat-select placeholder="File" [(value)]="selectedupfile">
      <mat-option *ngFor="let upfile of upfiles" [value]="upfile">
        {{ upfile }}
      </mat-option>
    </mat-select>
  </mat-form-field>
+
+
 
      </div>
      <div fxFlex ="30%">
@@ -40,27 +94,35 @@
 
      </div>
 
- <hr style="background-color:red"/> 
-<div fxFlexLayout = "row">
+ <hr style="background-color:red" *ngIf = "upfiles.length >0"> 
+<div fxFlexLayout = "row" fxLayoutWrap fxLayoutGap="50px">
 <div *ngFor="let item of tableData">
-   <mat-card class="example-card">
+   <mat-card class="example-card" *ngIf="item.filecat == 'E'">
      <mat-card-header>
        <div mat-card-avatar class="example-header-image"></div>
-       <mat-card-title>{{item.fileName}}</mat-card-title>
-       
+       <mat-card-title style="font-size:18px"><strong>{{item.filetype}}</strong></mat-card-title>
+       <!--mat-card-subtitle>Dog Breed</mat-card-subtitle-->
      </mat-card-header>
-     
-     <img mat-card-image src={{item.fullPath}} alt={{item.fileName}}>
+     <!--img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"-->
+     <img mat-card-image src="/assets/tiffimsg.svg" alt={{item.filetype}}>
      <mat-card-content>
-
+     <!--p>
+         The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+         A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+         bred for hunting.
+       </p-->
      </mat-card-content>
      <mat-card-actions>
-       <button mat-button>Remove</button>            
+      <button mat-button (click)="deletefile(item)"><strong>DELETE</strong></button>      
+      <a type ="button" href={{item.files3link}} fxAlign="end" mat-icon-button><strong>DOWNLOAD</strong></a>
+       
      </mat-card-actions>
    </mat-card>
 
 </div>
 </div>
+</mat-tab>
+</mat-tab-group>
+</mat-card>
 
-   </mat-card>
-   </form>
+</form>

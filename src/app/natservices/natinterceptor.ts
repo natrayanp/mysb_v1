@@ -7,8 +7,11 @@ import { environment } from '../../environments/environment';
 export class NatInterceptor implements HttpInterceptor{
 
   TknAddSites=[];
+  nocontentsetsites=[];
   tosettkn = false;
-  
+  authReq:any;
+  authHeader:any;
+  contentset=true;
 
   constructor() {
     this.TknAddSites=environment.TknAddSites;
@@ -22,22 +25,34 @@ export class NatInterceptor implements HttpInterceptor{
     this.TknAddSites.forEach(
         element => { if(req.url.startsWith(element)){
                       this.tosettkn=false;                      
-                    } 
+                    }
                     });
-    
+   
     console.log(this.tosettkn);
+    
+    if(req.url.endsWith('uploadfile')){
+      this.contentset=false;
+    }
+              
 
     if(this.tosettkn){
-     // Get the auth header from the service.
-     const authHeader = localStorage.getItem("natjwt");;
-     // Clone the request to add the new header.
-     const authReq = req.clone({headers: req.headers.set("Authorization", ("Bearer "+ authHeader))
-                                                    .set("Content-Type","application/json")});
-     //const authReq = req.clone({setHeaders: {'Content-Type': "application/*"}});
-     console.log(authReq);
-     console.log(authReq.url);
-     // Pass on the cloned request instead of the original request.
-     return next.handle(authReq);
+        // Get the auth header from the service.
+        this.authHeader = localStorage.getItem("natjwt");;
+        // Clone the request to add the new header.
+              if(this.contentset){
+                  this.authReq = req.clone({headers: req.headers.set("Authorization", ("Bearer "+ this.authHeader))
+                                                                .set("Content-Type","application/json")});
+                                                            //*.set("Content-Type","multipart/form-data")});
+                  //const authReq = req.clone({setHeaders: {'Content-Type': "application/*"}});
+              } else{
+                //This is required for fileupload without this the content set is not correct
+                console.log("inside else where no content type is set");
+                  this.authReq = req.clone({headers: req.headers.set("Authorization", ("Bearer "+ this.authHeader))});
+              }
+        console.log(this.authReq);
+        console.log(this.authReq.url);
+        // Pass on the cloned request instead of the original request.
+        return next.handle(this.authReq);
     }
 
      // Use this to pass original request

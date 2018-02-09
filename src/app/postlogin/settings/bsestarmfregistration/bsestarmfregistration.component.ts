@@ -353,7 +353,7 @@ export class BsestarmfregistrationComponent implements OnInit {
  }
       
   
-
+/*
  uploadFile() {  
     this.showprogressbar=true;
     console.log(this.file);
@@ -376,7 +376,7 @@ export class BsestarmfregistrationComponent implements OnInit {
         }
       )
   }
-
+*/
   myfunc(){
     console.log("natrayan myfunc");
   }
@@ -453,7 +453,7 @@ export class BsestarmfregistrationComponent implements OnInit {
       data =>{
                   this.showsubmitprogress=false;
                   var mydata = data['body'];
-                  this.router.navigateByUrl('/securedpg/settings/mfregsu');
+                  this.router.navigateByUrl('/securedpg/dashboard');
                   //Navigate to success screen
                   //this.regdet=<regisuccfatcadetail>data['body'];
                   //this.assignvalue();
