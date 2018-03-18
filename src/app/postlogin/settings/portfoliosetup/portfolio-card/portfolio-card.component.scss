@@ -1,10 +1,19 @@
+
 .shadow, .shadow:hover{
    // border:3px solid lightgrey;
     box-shadow: 10px 10px 5px #888888;
     border:groove 1px green;
+    margin-top:15px;
+    //width: 97%;
     
   }
 
   mat-card{
     border:1px solid lightgrey;
   }
+
+
+
+.example-full-width {
+  width: 50px;
+}

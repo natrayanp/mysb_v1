@@ -1,0 +1,26 @@
+import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+import {Router} from "@angular/router";
+import { NotificationsService } from '../../../../commonmodule/notifymodule/services/notifications.service';
+import { DbservicesService } from '../../../../natservices/dbservices.service';
+import { NotifyService } from '../../../../natservices/notify.service';
+import { NotificationComponent } from '../../../../commonmodule/notificationmodule/notification/notification.component'
+
+import { empty } from 'rxjs/observable/empty';
+import { element } from 'protractor';
+const resolvedPromise = Promise.resolve(null);
+
+@Component({
+  selector: 'app-portfolio-card',
+  templateUrl: './portfolio-card.component.html',
+  styleUrls: ['./portfolio-card.component.scss']
+})
+export class PortfolioCardComponent implements OnInit 
+{
+    @Input() Mypfdetail;
+    @Input() OnAdd;
+    @Input() myindex;
+    @Input() onEdit;
+    @Input() EAMode;
+    ngOnInit() {}
+}

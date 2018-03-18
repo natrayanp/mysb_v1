@@ -2,7 +2,12 @@ import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import {Router} from "@angular/router";
 import { NotificationsService } from '../../../../commonmodule/notifymodule/services/notifications.service';
+import { DbservicesService } from '../../../../natservices/dbservices.service';
+import { NotifyService } from '../../../../natservices/notify.service';
+import { NotificationComponent } from '../../../../commonmodule/notificationmodule/notification/notification.component'
 
+import { empty } from 'rxjs/observable/empty';
+import { element } from 'protractor';
 const resolvedPromise = Promise.resolve(null);
 
 @Component({
@@ -12,25 +17,29 @@ const resolvedPromise = Promise.resolve(null);
 })
 export class PortfolioCardComponent implements OnInit 
 {
-  onEdit=false;
+  //onEdit=false;
   public pfForm : FormGroup;
   
   summed: number;
   balanceleft:number = 0;
 
-  mfsummed:number;
-  stksummed:number;
+  fundnames:string[];
+  mfsummed:number=0;
+  stksummed:number=0;
   today = new Date();
   @Input() Mypfdetail;
   @Input() OnAdd;
   @Input() myindex;
+  @Input() onEdit;
+  @Input() EAMode;
   
   Mypfdetailcpy:any;
   OnAddEdit=false;
 
 
-
-
+  MfPurTypes = ["SIP","One-Time"];
+  sipfreqs = ['Monthly'];
+  sipdates = ['1','2','3'];
  
  emptyPayOff = {
       pfstexchange: "",
@@ -45,10 +54,16 @@ export class PortfolioCardComponent implements OnInit
 
     emptymf= {
       pfmffundname: "",
-      pfmfnav: 0,
+      pfmfpurtype: "",
+      pfmffreq: "",
+      pfmfsipdt: "",
       pfmfamt: 0,
       pfmfpercent: 0,
-      pfmfallotedamt: 0
+      pfmfallotedamt: 0,
+      pfmfdathold:"",
+      pfmfsipdthold:"",
+      pfmfallotedamtmonequ:0,
+      pfmfsipendt:""
     };
  
   freqs = ['Daily','Weekly','Fortnightly','Monthly','Quaterly','Halfyearly','Yearly','Adhoc'];
@@ -58,11 +73,13 @@ export class PortfolioCardComponent implements OnInit
   selectedMFAmtSplitType = this.AmtSplitTypes[0];
   @Output() cardcancel: EventEmitter<any> = new EventEmitter();
   @Output() cardsave: EventEmitter<any> = new EventEmitter();
+  @Output() cardedit: EventEmitter<any> = new EventEmitter();
+  
 
   
   
 //, private ref: ChangeDetectorRef
-  constructor(private pffb: FormBuilder,private router: Router,private notifyservice: NotificationsService) { 
+  constructor(private pffb: FormBuilder,private router: Router,private notifyservice: NotificationsService,private dbserivce :DbservicesService,) { 
      
 
 }
@@ -70,54 +87,28 @@ export class PortfolioCardComponent implements OnInit
   ngOnInit() {
 
 
-  /*this has to come from master component either as blank or set of value
-       this.Mypfdetail = {  
-  pfPortfolioid:null,
-  pfuserid:null,
-  pfPortfolioname: null,
-  pfPurpose: null,
-  pfBeneUsers: null,
-  pfStartDt: null,
-  pfTargetDt: null,
-  pfTargetIntRate: null,
-  pfPlannedInvAmt: null,
-  pfStkAmtsplittype: null,
-  pfmfAmtsplittype:null,
-  pfSummed:null,
-  pfStocklists: [
-    {
-      pfstExchange: "",
-      pfstTradingsymbl: "",
-      pfstLtp: "",
-      pfstAmt: 0,
-      pfstPercent: 0,
-      pfstAllotedAmt: 0,
-      pfstTotUnit: 0
-    }
-  ]
-}
- // this has to come from master component*/
-
- //Empty
+ 
+ console.log("iam inside card");
  console.log("this.Mypfdetail");
   console.log(this.Mypfdetail);
   console.log("this.myindex");
   console.log(this.myindex);
        
-  this.Mypfdetail.pfplannedinvamt =0;
+  /*this.Mypfdetail.pfplannedinvamt =0;
   this.Mypfdetail.pfsummed =0;
   this.balanceleft=0;
     if (this.Mypfdetail == null || this.Mypfdetail.pfportfolioname == null )
     {
       this.onEdit=true;
     }
+    
     if(this.Mypfdetail.pfstksmtsplittype !== null){
       this.selectedAmtSplitType = this.Mypfdetail.pfstkamtsplittype;
     }
     if(this.Mypfdetail.pfmfAmtsplittype !== null){
       this.selectedMFAmtSplitType = this.Mypfdetail.pfmfamtsplittype;
     }
- 
+ */
 
     this.pfForm = this.pffb.group({ 
       pfPortfolioid:[null],
@@ -150,6 +141,8 @@ export class PortfolioCardComponent implements OnInit
       console.log(this.Mypfdetailcpy.pfplannedinvamt);
       console.log(this.Mypfdetail.pfsummed);
       this.balanceleft= this.Mypfdetailcpy.pfplannedinvamt - this.Mypfdetailcpy.pfsummed ;
+      this.calculateformfamtchange();
+      this.calculateforstkamtchange();
   })
   });
 
@@ -157,108 +150,107 @@ export class PortfolioCardComponent implements OnInit
      this.pfForm.get('pfStocklists').valueChanges.subscribe(values => {
      resolvedPromise.then(() => {
         
-       switch (this.pfForm.controls.pfStkAmtsplittype.value)
-       {
-         case "%":
-         console.log("inside %");
-            values.forEach((cure,inder) => {             
-              console.log("this.Mypfdetailcpy.pfplannedinvamt");
-              console.log(this.Mypfdetailcpy.pfplannedinvamt);
-              console.log("this.Mypfdetailcpy.pfstklist[inder].pfstpercent");
-              console.log(this.Mypfdetailcpy.pfstklist[inder].pfstpercent);
-
-
-              this.Mypfdetailcpy.pfstklist[inder].pfstallotedamt = this.Mypfdetailcpy.pfplannedinvamt *(this.Mypfdetailcpy.pfstklist[inder].pfstpercent/100);
-              this.Mypfdetailcpy.pfstklist[inder].pfstTotUnit = (Math.floor((this.Mypfdetailcpy.pfstklist[inder].pfstallotedamt/this.Mypfdetailcpy.pfstklist[inder].pfstltp))).toFixed(0);
-            });
-            break;
-
-         case "Amount":
-            values.forEach((cure,inder) => {
-              this.Mypfdetailcpy.pfstklist[inder].pfstallotedamt = <number>this.Mypfdetailcpy.pfstklist[inder].pfstamt;
-              this.Mypfdetailcpy.pfstklist[inder].pfstTotUnit = (Math.floor((this.Mypfdetailcpy.pfstklist[inder].pfstallotedamt/this.Mypfdetailcpy.pfstklist[inder].pfstltp))).toFixed(0);
-            });
-          break;
-        default:
-            values.forEach((cure,inder) => this.Mypfdetailcpy.pfstklist[inder].pfstTotUnit = 0);
-            break;
-        };
-
-
-
-        this.stksummed = values.reduce((acc, cur) => acc + cur.pfstAllotedAmt, 0);
-        this.summed = this.mfsummed  + this.stksummed;
-        this.Mypfdetailcpy.pfsummed = this.summed;
-        this.balanceleft= this.Mypfdetailcpy.pfplannedinvamt - this.Mypfdetailcpy.pfsummed ;
-      
+      this.calculateforstkamtchange();
+    
       });
-      //this.summed = values.reduce((acc, cur) => acc + cur.pfstTotUnit, 0);
-    })
+      
+    });
+    
+  this.pfForm.get('pfMFlists').valueChanges
+    .subscribe(values => {
+      console.log("printing value");
+      console.log(values);
+      console.log("printing value");
 
-
-    this.pfForm.get('pfMFlists').valueChanges.subscribe(values => {
       resolvedPromise.then(() => {
-         console.log("resolve");
-         console.log(this.pfForm.controls.pfmfAmtsplittype.value);
-         
-        switch (this.pfForm.controls.pfmfAmtsplittype.value)
-        {
-          case "%":
-             values.forEach((cure,inder) => {             
                
-               this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamt = this.Mypfdetailcpy.pfplannedinvamt * (this.Mypfdetailcpy.pfmflist[inder].pfmfpercent/100);
-               //this.Mypfdetailcpy.pfmflist[inder].pfstTotUnit = this.Mypfdetailcpy.pfmflist[inder].pfmfAllotedAmt/this.Mypfdetailcpy.pfstklist[inder].pfmfLtp;
-             });
-             break;
- 
-          case "Amount":
-             values.forEach((cure,inder) => {
-               this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamt = this.Mypfdetailcpy.pfmflist[inder].pfmfamt;
-               //this.Mypfdetailcpy.pfstklist[inder].pfstTotUnit = this.Mypfdetailcpy.pfstklist[inder].pfstAllotedAmt/this.Mypfdetailcpy.pfstklist[inder].pfstLtp;
-             });
-           break;
-         };
-         
-         this.mfsummed = values.reduce((acc, cur) => acc + cur.pfmfAllotedAmt, 0);
-         this.summed = this.mfsummed  + this.stksummed;
-         this.Mypfdetailcpy.pfsummed = this.summed;
-         this.balanceleft= this.Mypfdetailcpy.pfplannedinvamt - this.Mypfdetailcpy.pfsummed ;
+        this.calculateformfamtchange();      
         
        });
-      
-    
-       //this.summed = values.reduce((acc, cur) => acc + cur.pfstTotUnit, 0);
-     })
 
-
-    console.log("natnann");
-    console.log(this.pfForm.controls.pfMFlists);
+       
+     });
 
     this.Cancelutlogic();
 
-/*
-
-
-   //http://plnkr.co/edit/7jJJhkcgqk4YdjFOXTGF?p=preview  --> for form group array
-    //plnkr.co/edit/Q5HYcpnPQosSYvk2KkoP?p=preview
-      this.StocklistForm = this.Stocklistfb.group({
-        itemRows: this.Stocklistfb.array([this.initStkItemRows()])
-      }); */
+//ngoninit end
   }
 
   UserEdit(event){
-    this.onEdit=!this.onEdit;
+    //this.onEdit=!this.onEdit;
+    console.log("inside user edit");
+    console.log(this.myindex);
+    this.cardedit.emit(this.myindex);
+
   }
 
-
   initMFItemRows(MFObj) {
-    return new FormGroup({
-        pfmfFundname : new FormControl(MFObj.pfstExchange),
-        pfmfNAV: new FormControl(MFObj.pfstLtp),
-        pfmfAmt: new FormControl(MFObj.pfstAmt),
-        pfmfPercent: new FormControl(MFObj.pfstPercent),
-        pfmfAllotedAmt:new FormControl(MFObj.pfstAllotedAmt),        
+    let mfform = new FormGroup({
+        pfmfFundname : new FormControl(MFObj.pfmfFundname),
+        pfmfpurtype: new FormControl(MFObj.pfmfPurtype),
+        pfmffreq: new FormControl(MFObj.pfmfFreq),
+        pfmfsipdt: new FormControl(MFObj.pfmfSipdt),
+        pfmfAmt: new FormControl(MFObj.pfmfAmt),
+        pfmfPercent: new FormControl(MFObj.pfmfPercent),
+        pfmfAllotedAmt:new FormControl(MFObj.pfmfAllotedAmt),
+        pfmfDathold:new FormControl(MFObj.pfmfdathold),     
+        pfmfSipdthold:new FormControl(MFObj.pfmfsipdthold),
+        pfmfAllotedAmtMonEqu: new FormControl(MFObj.pfmfallotedamtmonequ),
+        pfSipEnDt: new FormControl(MFObj.pfmfsipendt)
     });
+
+    mfform.get('pfmfFundname').valueChanges
+    .debounceTime(200)
+    .distinctUntilChanged()
+    //.subscribe(
+    .switchMap((query) =>  ((query.length > 2) ? this.dbserivce.dbaction('fund','fetch',query.toUpperCase() ) : empty()))
+    .subscribe(        
+        queryField => {  
+          console.log("----->----@");                   
+                        console.log(queryField['body']);
+                        console.log("----->----@");                   
+                        this.fundnames=queryField['body'];                       
+                        this.fundnames.length >0? console.log(this.fundnames):0;
+                        if(this.fundnames.length == 1){
+                          this.fundnames.forEach(ele  => {
+                          if((<any>ele).fnsipdt!= null){
+                            (<any>ele).fnsipdt.forEach(sipele => {
+                              var array= sipele.sipfreqdates.split(',');
+                              sipele.sipfreqdates=array;                              
+                              
+                              
+                              mfform.get('pfmfSipdthold').patchValue(sipele.sipfreqdates);
+                            })
+                            console.log("----->----");
+                              console.log(this.fundnames);
+                              console.log("----->----");
+                          }
+
+                              });                               
+                  
+                              
+                          mfform.get('pfmfDathold').patchValue(this.fundnames.length >0? this.fundnames :{});
+
+                          mfform.controls.pfmfDathold
+                          console.log("nat---------########");
+                          console.log(mfform.get('pfmfFundname'));
+                          console.log("nat---------########");
+                          
+                          //mfform.get('pfmffreq').patchValue(this.fundnames.length >0? this.fundnames[0]['fnsipdt'][0]['sipfreq'] :0);
+                          //mfform.get('pfmfsipdt').patchValue(this.fundnames.length >0? this.fundnames[0]['sipfreq'] :0);
+                        }
+
+                      },
+        error =>      {
+                        console.log(error);
+                      },
+        () =>         {
+                        console.log("inside value ");
+                      }
+                    );
+
+
+    return mfform;
 }
 
 
@@ -274,11 +266,149 @@ initStkItemRows(payOffObj) {
   });
 }
 
+calculateformfamtchange(){
+
+  /*
+  switch (this.pfForm.controls.pfmfAmtsplittype.value)
+  {
+    case "%":
+    this.pfForm.controls.pfMFlists.value.forEach((cure,inder) => {   
+      if (this.Mypfdetailcpy.pfmflist[inder].pfmfpurtype !="One-Time"){          
+      
+      switch ((this.Mypfdetailcpy.pfmflist[inder].pfmffreq).toUpperCase()){
+        case "MONTHLY":
+          this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamt = this.Mypfdetailcpy.pfplannedinvamt * (this.Mypfdetailcpy.pfmflist[inder].pfmfpercent/100);
+          this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamtmonequ = this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamt;
+          break;
+        case "WEEKLY":
+          this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamt = (this.Mypfdetailcpy.pfplannedinvamt * (this.Mypfdetailcpy.pfmflist[inder].pfmfpercent/100))/4;
+          this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamtmonequ = this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamt*4;
+          break;
+        case "DAILY":
+          this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamt = (this.Mypfdetailcpy.pfplannedinvamt * (this.Mypfdetailcpy.pfmflist[inder].pfmfpercent/100))/21;
+          this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamtmonequ = this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamt*21;
+          break;
+        case "ANNUALLY":
+          this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamt = (this.Mypfdetailcpy.pfplannedinvamt * (this.Mypfdetailcpy.pfmflist[inder].pfmfpercent/100))*12;
+          this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamtmonequ = this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamt/12;
+          break;
+        case "QUARTERLY":
+          this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamt = (this.Mypfdetailcpy.pfplannedinvamt * (this.Mypfdetailcpy.pfmflist[inder].pfmfpercent/100))*3;
+          this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamtmonequ =this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamt/3;
+          break;
+        case "SEMI-ANNUALLY":
+          this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamt = (this.Mypfdetailcpy.pfplannedinvamt * (this.Mypfdetailcpy.pfmflist[inder].pfmfpercent/100))*6;
+          this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamtmonequ =this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamt/6;
+          break;
+        
+
+      }
+
+    }
+      //this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamt = this.Mypfdetailcpy.pfplannedinvamt * (this.Mypfdetailcpy.pfmflist[inder].pfmfpercent/100);
+      //this.Mypfdetailcpy.pfmflist[inder].pfstTotUnit = this.Mypfdetailcpy.pfmflist[inder].pfmfAllotedAmt/this.Mypfdetailcpy.pfstklist[inder].pfmfLtp;
+    });
+    break;
+
+   case "Amount":*/
+   this.pfForm.controls.pfMFlists.value.forEach((cure,inder) => {   
+   // values.forEach((cure,inder) => {
+    if (this.Mypfdetailcpy.pfmflist[inder].pfmfpurtype !="One-Time"){
+      switch ((this.Mypfdetailcpy.pfmflist[inder].pfmffreq).toUpperCase()){
+        case "MONTHLY":
+          //this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamt = this.Mypfdetailcpy.pfmflist[inder].pfmfamt;
+          this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamtmonequ = this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamt;
+          break;
+        case "WEEKLY":
+          //this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamt = this.Mypfdetailcpy.pfmflist[inder].pfmfamt;
+          this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamtmonequ = this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamt*4;
+          break;
+        case "DAILY":
+          //this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamt = this.Mypfdetailcpy.pfmflist[inder].pfmfamt;
+          this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamtmonequ = this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamt*21;
+          break;
+        case "ANNUALLY":
+          //this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamt = this.Mypfdetailcpy.pfmflist[inder].pfmfamt;
+          this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamtmonequ = this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamt/12;
+          break;
+        case "QUARTERLY":
+          //this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamt = this.Mypfdetailcpy.pfmflist[inder].pfmfamt;
+          this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamtmonequ = this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamt/3;
+          break;
+        case "SEMI-ANNUALLY":
+          //this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamt = this.Mypfdetailcpy.pfmflist[inder].pfmfamt;
+          this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamtmonequ = this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamt/6;
+          break;
+      }
+    }else{
+      this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamtmonequ = 0;
+    }
+  
+  });
+    /*
+      //this.Mypfdetailcpy.pfmflist[inder].pfmfallotedamt = this.Mypfdetailcpy.pfmflist[inder].pfmfamt;
+      //this.Mypfdetailcpy.pfstklist[inder].pfstTotUnit = this.Mypfdetailcpy.pfstklist[inder].pfstAllotedAmt/this.Mypfdetailcpy.pfstklist[inder].pfstLtp;
+    });
+    break;
+
+  }*/
+  //this.mfsummed = this.pfForm.controls.pfMFlists.value.reduce((acc, cur) => acc + cur.pfmfAllotedAmt, 0);
+  this.mfsummed = this.pfForm.controls.pfMFlists.value.reduce((acc, cur) => acc + cur.pfmfAllotedAmtMonEqu, 0);
+  
+  this.summed = this.mfsummed  + this.stksummed;
+  this.Mypfdetailcpy.pfsummed = this.summed;
+  this.balanceleft= this.Mypfdetailcpy.pfplannedinvamt - this.Mypfdetailcpy.pfsummed ;
+}
+
+calculateforstkamtchange(){
+  if (this.pfForm.controls.pfStocklists != null)
+  {
+    console.log("nnnnnnnnnnnnn");
+    console.log(this.pfForm.controls.pfStocklists);
+    console.log("nnnnnnnnnnnnn");
+  switch (this.pfForm.controls.pfStkAmtsplittype.value)
+  {
+    case "%":
+    console.log("inside %");
+    this.pfForm.controls.pfStocklists.value.forEach((cure,inder) => {             
+         console.log("this.Mypfdetailcpy.pfplannedinvamt");
+         console.log(this.Mypfdetailcpy.pfplannedinvamt);
+         console.log("this.Mypfdetailcpy.pfstklist[inder].pfstpercent");
+         console.log(this.Mypfdetailcpy.pfstklist[inder].pfstpercent);
+
+
+         this.Mypfdetailcpy.pfstklist[inder].pfstallotedamt = this.Mypfdetailcpy.pfplannedinvamt *(this.Mypfdetailcpy.pfstklist[inder].pfstpercent/100);
+         this.Mypfdetailcpy.pfstklist[inder].pfstTotUnit = (Math.floor((this.Mypfdetailcpy.pfstklist[inder].pfstallotedamt/this.Mypfdetailcpy.pfstklist[inder].pfstltp))).toFixed(0);
+       });
+       break;
+
+    case "Amount":
+    this.pfForm.controls.pfStocklists.value.forEach((cure,inder) => {
+         this.Mypfdetailcpy.pfstklist[inder].pfstallotedamt = <number>this.Mypfdetailcpy.pfstklist[inder].pfstamt;
+         this.Mypfdetailcpy.pfstklist[inder].pfstTotUnit = (Math.floor((this.Mypfdetailcpy.pfstklist[inder].pfstallotedamt/this.Mypfdetailcpy.pfstklist[inder].pfstltp))).toFixed(0);
+       });
+     break;
+   default:
+   this.pfForm.controls.pfStocklists.value.forEach((cure,inder) => this.Mypfdetailcpy.pfstklist[inder].pfstTotUnit = 0);
+       break;
+   };
+
+   this.stksummed = this.pfForm.controls.pfStocklists.value.reduce((acc, cur) => acc + cur.pfstAllotedAmt, 0);
+   this.summed = this.mfsummed  + this.stksummed;
+   this.Mypfdetailcpy.pfsummed = this.summed;
+   this.balanceleft= this.Mypfdetailcpy.pfplannedinvamt - this.Mypfdetailcpy.pfsummed ;   
+   console.log(this.stksummed);
+  }
+}
+
+
+
+
+
  
 AmtSplitchange(newobjval){
  this.Mypfdetailcpy.pfstkamtsplittype = this.selectedAmtSplitType;
  this.Mypfdetailcpy.pfstklist.forEach((cure,inder) => {
-
   this.Mypfdetailcpy.pfstklist[inder].pfstamt = 0;
   this.Mypfdetailcpy.pfstklist[inder].pfstpercent = 0;
   const control3 = (<FormGroup>(<FormArray>this.pfForm.controls['pfStocklists']).controls[inder]).controls['pfstAmt'].patchValue(0);   
@@ -291,12 +421,14 @@ AmtSplitchange(newobjval){
 MFAmtSplitchange(newobjval){
   this.Mypfdetailcpy.pfmfamtsplittype = this.selectedMFAmtSplitType;
 
+if(this.Mypfdetailcpy.pfmflist.length > 0){
  this.Mypfdetailcpy.pfmflist.forEach((cure,inder) => {
     this.Mypfdetailcpy.pfmflist[inder].pfstamt = 0;
     this.Mypfdetailcpy.pfmflist[inder].pfmfpercent = 0;
     const control3 = (<FormGroup>(<FormArray>this.pfForm.controls['pfMFlists']).controls[inder]).controls['pfmfAmt'].patchValue(0);
     const control4 = (<FormGroup>(<FormArray>this.pfForm.controls['pfMFlists']).controls[inder]).controls['pfmfPercent'].patchValue(0);        
   });
+}
 
 
  }
@@ -357,19 +489,31 @@ Cancelutlogic(){
 }
 
 FormCardpopulate(){
-
+  console.log("formcardpopulate");
+  console.log(this.Mypfdetail);
+  console.log(this.Mypfdetailcpy);
   this.Mypfdetailcpy=JSON.parse(JSON.stringify(this.Mypfdetail));
-  
-  if(this.Mypfdetail.pfstkamtsplittype !== null){
+  console.log(this.Mypfdetailcpy);
+  /*
+  if(this.Mypfdetailcpy.pfstklist==null){
+    console.log("is null");
+  }
+  if(this.Mypfdetailcpy.pfmflist==null){
+    console.log("is null");
+  }
+
+  if(this.Mypfdetail.pfstkamtsplittype != null){
     this.selectedAmtSplitType = this.Mypfdetail.pfstkamtsplittype;
   }
-  if(this.Mypfdetail.pfmfamtsplittype !== null){
+  if(this.Mypfdetail.pfmfamtsplittype != null){
     this.selectedMFAmtSplitType = this.Mypfdetail.pfmfamtsplittype;
   }
+*/
 
-   if (this.Mypfdetailcpy !== null){
+   if (this.Mypfdetailcpy != null){
 
-    if(this.Mypfdetailcpy.pfstklist!==null){ 
+    //if(this.Mypfdetailcpy.pfstklist.length>0){ 
+    if(this.Mypfdetailcpy.pfstklist!=null){ 
       this.Mypfdetailcpy.pfstklist.forEach( 
         (stklstobjor) => {
           var scontrol = <FormArray>this.pfForm.controls['pfStocklists'];
@@ -380,10 +524,11 @@ FormCardpopulate(){
     
 
 
-    if(this.Mypfdetailcpy.pfmflist!==null){ 
+    if(this.Mypfdetailcpy.pfmflist!=null){ 
       this.Mypfdetailcpy.pfmflist.forEach( 
         (mflstobjor) => {
-          
+          console.log('mypfdetails cardpopulate');
+          console.log(mflstobjor);
           var scontrol = <FormArray>this.pfForm.controls['pfMFlists'];
           scontrol.push(this.initMFItemRows(mflstobjor));
          
@@ -396,26 +541,29 @@ FormCardpopulate(){
 cancel_cardedit(i){
   event.preventDefault();
   this.onEdit=!this.onEdit; 
+  /*
   var scontrol = <FormArray>this.pfForm.controls['pfStocklists'];
   scontrol.controls=[];
   var scontrol = <FormArray>this.pfForm.controls['pfMFlists'];
   scontrol.controls=[];
   
   this.FormCardpopulate();
-
-  this.cardcancel.emit(i);
+  */
+ console.log("check index");
+ console.log(this.myindex);
+  this.cardcancel.emit(this.myindex);
   
 }
 
 save_cardedit(pfFormfrm){
  
-  this.onEdit=!this.onEdit;
+  //this.onEdit=!this.onEdit;
   console.log("natnat");
   console.log(pfFormfrm);
-  this.Mypfdetail=JSON.parse(JSON.stringify(this.Mypfdetailcpy));
+  //this.Mypfdetail=JSON.parse(JSON.stringify(this.Mypfdetailcpy));
   //this.FormCardpopulate();
   console.log(this.myindex);
-  this.cardsave.emit(this.Mypfdetail);
+  this.cardsave.emit(this.Mypfdetailcpy);
 
   
   //To be implemented either with service or with emitter to go back to parent
@@ -426,5 +574,62 @@ chtoupper(){
   this.Mypfdetailcpy.pfportfolioname=this.Mypfdetailcpy.pfportfolioname.toUpperCase();
 }
 
+/*
+itemSelected (evt: any) {
+  console.log("nat---------########");
+  console.log(evt);
+  console.log("nat---------########");
+  this.Mypfdetailcpy.pfmflist.forEach( 
+    (mflstobjor) => {     
+      console.log(mflstobjor);
+      if(mflstobjor['pfmffundname'] == evt){
+        var scontrol = <FormGroup>(<FormArray>this.pfForm.controls['pfMFlists']).controls[]
+        scontrol.push(this.initMFItemRows(mflstobjor));
+      }
 
+
+     
+    }
+
+
+}
+
+*/
+freqSelectchange(evt: any, inx: number){
+  
+  console.log(evt);
+  console.log(inx);
+  console.log(evt.source.value);
+  
+  var myss= this.Mypfdetailcpy.pfmflist[inx].pfmfdathold[0].fnsipdt.filter((rec) => rec.sipfreq == evt.source.value? rec.sipfreqdates :"");
+  console.log(myss[0].sipfreqdates);
+  this.Mypfdetailcpy.pfmflist[inx].pfmfSipdthold=myss[0].sipfreqdates;
+  this.Mypfdetailcpy.pfmflist[inx].sipminamtselect=myss[0].sipminamt;
+  this.Mypfdetailcpy.pfmflist[inx].sipmaxamtselect=myss[0].sipmaxamt;
+  //var array = myss[0].sipfreqdates.split(',');
+  
+  //console.log(array);
+  
+}
+  /*
+getdate(date){
+  var td = new Date();
+  td = date.toLocaleString();
+  console.log("iam printing date");
+  console.log(date);
+  console.log(typeof(date));
+  
+  return date;
+
+  const day = td.getDate();
+  const month = td.getMonth() + 1;
+  const year = td.getFullYear();
+  
+  
+  console.log(`${day}/${month}/${year}`);
+  return `${day}/${month}/${year}`;
+
+  
+}
+*/
 }

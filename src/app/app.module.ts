@@ -36,7 +36,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 
-
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -96,6 +96,7 @@ import { ForgotpassComponent } from './home/forgotpass/forgotpass.component';
 import { BseregsuccComponent } from './postlogin/settings/bseregsucc/bseregsucc.component';
 import { BsereguploadComponent } from './postlogin/settings/bseregupload/bseregupload.component';
 import { NoticommComponent } from './commonmodule/notificationmodule/noticomm/noticomm.component';
+
 
 
 
@@ -179,6 +180,7 @@ import { NoticommComponent } from './commonmodule/notificationmodule/noticomm/no
               OrderdbservService,
               DbservicesService,
               {provide: HTTP_INTERCEPTORS,useClass: NatInterceptor, multi: true,},
+              {provide: MAT_DATE_LOCALE, useValue: 'en-IN'},
               AuthService, 
               NotifyService,
               FileuploadService,

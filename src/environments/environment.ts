@@ -14,7 +14,8 @@ export const environment = {
   bseCustcreate:"custcreation",
   bsemandatetUrl:"http://127.0.0.1:8000",
   bseMandataecreate:"mandatecreation",
-  SetJwtapiUrl:"https://izsp1n5tfl.execute-api.ap-southeast-1.amazonaws.com/dev",
+  SetJwtapiUrl:" https://n54fu4lte2.execute-api.ap-southeast-1.amazonaws.com/dev/natkeyss",
+  //SetJwtapiUrl:"https://izsp1n5tfl.execute-api.ap-southeast-1.amazonaws.com/dev",
   //SetJwtapiUrl:"http://127.0.0.1:8000",
   SetJwtapiSave:"natkeyss",
   firebase: {
@@ -33,7 +34,8 @@ export const environment = {
   notifiapiUrl :"https://816ug405pd.execute-api.ap-southeast-1.amazonaws.com/allprocessingdev",
   //notifiapiUrl :"http://127.0.0.1:8000",
   notififetch:"notification",
-  registapiUrl:"https://o7cm2vmfq4.execute-api.ap-southeast-1.amazonaws.com/dev",
+  //registapiUrl:"https://o7cm2vmfq4.execute-api.ap-southeast-1.amazonaws.com/dev",
+  registapiUrl:"http://127.0.0.1:8000",
   registfetch:"registdetfetch",
   registfrmapiUrl:"https://o7cm2vmfq4.execute-api.ap-southeast-1.amazonaws.com/dev",
   detailsfrmsave:"dtlfrmsave",
@@ -43,9 +45,18 @@ export const environment = {
   detailsfrmsave:"/dtlfrmsave"*/
   regisfrmsubmit:"regisandfatcsubmit",
   //Fileupload EndPoints START
+  //FileuploadUrl:"http://127.0.0.1:8000",
   FileuploadUrl:"https://o7cm2vmfq4.execute-api.ap-southeast-1.amazonaws.com/dev",
   FileUpload:"uploadfile",
   Filelist:"uploadedfilelist",
-  Filedelete:"uploadedfiledelete"
+  Filedelete:"uploadedfiledelete",
+  Finalsubmit:"uploadedfilesubmit",
   //Fileupload EndPoints END
+  pfUrl:"http://127.0.0.1:8000",
+  //pfUrl:"http://127.0.0.1:5000/",
+  pffetch:"pfdatafetch",
+  pfsave:"pfdatasave",
+ fundUrl:"http://127.0.0.1:8000",
+  //fundUrl:"http://127.0.0.1:5000/",
+  fundfetch:"funddatafetch"
 };

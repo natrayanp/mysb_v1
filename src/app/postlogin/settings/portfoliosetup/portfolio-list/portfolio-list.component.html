@@ -1,46 +1,70 @@
-
+<mat-toolbar color ="primary" >
+    <!--button mat-raised-button color="warn" (click)="addpf()" [fxHide] = "onAddpfmode"><strong>Add Portfolio</strong></button>
+    <span>&nbsp;</span>
+    <button mat-raised-button color="warn" (click)="canceladdpf()" [fxHide] = "!onAddpfmode"><strong>Cancel Add</strong></button>
+    <span>&nbsp;</span>
+    <span fxFlex></span-->
+    <label>&nbsp; <strong>Portfolio Maintenance</strong> &nbsp;</label>
+  </mat-toolbar>
 
 <mat-toolbar color ="primary" >
-    <button mat-raised-button color="warn" (click)="addNewPortfolio()" [fxHide] = "onAddmode"><strong>Add</strong></button>
+    
+    <button mat-raised-button color="warn" (click)="addNewPortfolio()" [disabled] = "isEAModeon"><strong>Add</strong></button>
     <span>&nbsp;</span>
-    <button mat-raised-button color="warn" (click)="CanceladdNewPortfolio()" [fxHide] = "!onAddmode">Cancel</button>
+    <!--
+    <button mat-raised-button color="warn" (click)="CanceladdNewPortfolio()" [fxHide] = "isEAModeon">Cancel</button>
     <span>&nbsp;</span>
+    -->
     <span fxFlex></span>
     <label>&nbsp; Total Portfolios: &nbsp;</label>
     <mat-chip-list>
-    <mat-chip selected="true" style="background-color:white; color:black; font:30px"><strong>{{pfdetails?.length || 0}}</strong></mat-chip>
+    <mat-chip selected="true" style="background-color:white; color:black; font:30px"><strong>{{totalpf || 0}}</strong></mat-chip>
   </mat-chip-list>
     
     
-  </mat-toolbar>
-  
-  
-  
-  <div fxLayout="row" fxLayoutWrap fxLayoutGap="10px">    
+</mat-toolbar>
+<br>
+<alerts></alerts>
+
+<div fxLayout="row wrap" fxLayoutGap="10px">    
       
-      <div *ngFor="let pfdetail of pfdetails; let i = index" fxFlex.lt-lg="1 1 100" fxFlex="1 1 49" >
-
-        
-    <app-portfolio-card [Mypfdetail] = "pfdetail" [myindex]="i" [OnAdd]= "onAddmode" (cardcancel)="cardacancel($event,index)" (cardsave)="cardasave($event,formval)"> </app-portfolio-card>
-
-</div>
-<div *ngIf="!onfetch">
-<div *ngIf="pfdetails.length<1">
-  <br>
-  <p>{{message1}}</p>
-  <!--
-  <h3>You don't have any portfolio yet</h3>
-  <p>Click on Add to start your journey</p>
+    <div  *ngFor="let pfedetail of pfedetails" fxFlex.lt-lg="1 1 100" fxFlex="1 1 100" >            
+        <app-portfolio-card [Mypfdetail] = "pfedetail" [myindex]="editi" [OnAdd]= "true" [onEdit]="true" [EAMode]="false" (cardcancel)="cardacancel($event,index)" (cardsave)="cardasave($event,formval)"> </app-portfolio-card>
+    </div>  
+   <!--   
+    <div fxFlex.lt-lg="1 1 100" fxFlex="1 1 100" >      
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter Porfolio">
+      </mat-form-field>
+    </div>
   -->
-</div>
-</div>
+  <div *ngFor="let pfdetail of pfdetails; let i = index" fxFlex.lt-lg="1 1 100" fxFlex="1 1 49" >      
+    <app-portfolio-card [Mypfdetail] = "pfdetail" [myindex]="i" [OnAdd]= "false" [onEdit]="false" [EAMode]="isEAModeon" (cardcancel)="cardacancel($event,index)" (cardsave)="cardasave($event,formval)" (cardedit)="cardaedit($event,index)"> </app-portfolio-card>
+  </div>
+    <!--
+  <div *ngFor="let pfdetail of pfdetails; let i = index" fxFlex="1 1 100%">   
+    <p style="background-color: red" class="shnormal" fxFlex="1 1 40%">nat</p>
+    <!--app-portfolio-card [Mypfdetail] = "pfdetail" [myindex]="i" [OnAdd]= "onAddmode" (cardcancel)="cardacancel($event,index)" (cardsave)="cardasave($event,formval)"> </app-portfolio-card-->
+ <!--
+  </div>
+  <div *ngIf="!onfetch">
+    <div *ngIf="pfdetails.length<1">
+      <br>
+      <p>{{message1}}</p>
+      <!--
+      <h3>You don't have any portfolio yet</h3>
+      <p>Click on Add to start your journey</p>
+      -->
+      <!--
+    </div>
+  </div>
 
-<div *ngIf="onfetch">
-  <br>
-  <mat-progress-spinner mode="indeterminate" color = "blue"></mat-progress-spinner>
+  <div *ngIf="onfetch">
+    <br>
+    <mat-progress-spinner mode="indeterminate" color = "blue"></mat-progress-spinner>
+  </div>
 </div>
- 
   
 
   
-  
+-->

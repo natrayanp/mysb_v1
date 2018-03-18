@@ -3,12 +3,16 @@
 <div fxLayout="row" fxLayoutWrap fxLayout.lt-sm="column" class="natheader natheadertitle"  fxLayoutGap="20px" fxLayoutAlign="center center" >
   <span fxFlex>Upload your documents</span>
   <div >
+    <!--
+  <button  mat-raised-button fxFlexAlign.lt-sm="end" color="accent" (click)="submitregistobse()" style="color:white" ><strong>Submit</strong></button>
+  -->
   <button  mat-raised-button fxFlexAlign.lt-sm="end" color="accent" (click)="submitregistobse()" style="color:white" [disabled] = "upfiles.length >0"><strong>Submit</strong></button>
+  
   </div>
   </div>
   <alerts></alerts>
-  <mat-progress-bar *ngIf ="listfetchprogbar"  mode="buffer" color="accent"></mat-progress-bar>
-  <mat-progress-bar *ngIf ="listfetchprogbar" mode="indeterminate"></mat-progress-bar>
+  <mat-progress-bar *ngIf ="showprogressbar"  mode="buffer" color="accent"></mat-progress-bar>
+  <mat-progress-bar *ngIf ="showprogressbar" mode="indeterminate"></mat-progress-bar>
 
 <form>
   <mat-card >

@@ -94,6 +94,30 @@ dbaction(screen,functionality,data){
         var apiurl=environment.registfrmapiUrl + "/" + environment.regisfrmsubmit;
         return this.postmethod(apiurl,data,{observe: 'response'});
       }
+      case "pffetch":
+      {
+        console.log('inside pfdata fetch');
+        var apiurl=environment.pfUrl + "/" + environment.pffetch;
+        
+        return this.getmethod(apiurl,{observe: 'response'});
+        //return this.http.get('http://127.0.0.1:8000/pfdatafetch')
+        //return this.http.post('http://127.0.0.1:8000/pfdatasave', JSON.stringify(pfform),{observe: 'response'});
+      }
+      case "pfsave":
+      {
+        console.log('inside pfdata save');
+        var apiurl=environment.pfUrl + "/" + environment.pfsave;
+        return this.http.post(apiurl, JSON.stringify(data),{observe: 'response'});    
+        //return this.http.post('http://127.0.0.1:8000/pfdatasave', JSON.stringify(pfform),{observe: 'response'});
+      }
+      case "fundfetch":
+      {
+        
+            console.log('inside fund details fetch');
+            var apiurl=environment.fundUrl + "/" + environment.fundfetch;
+            return this.http.post(apiurl, JSON.stringify(data),{observe: 'response'});
+        
+      }
 
   }
 

@@ -16,9 +16,9 @@
          <a type ="button" mat-icon-button routerLink="/securedpg/settings/portfoliosetup" routerLinkActive="active" fxFlexAlign ="center" style="padding-left:55px; font-size:18px"> <mat-icon fxFlexAlign ="center">card_travel</mat-icon> &nbsp; Portfolio</a>
          <a type ="button" mat-icon-button routerLink="/securedpg/settings/usersetup" routerLinkActive="active" fxFlexAlign ="center" style="padding-left:55px; font-size:18px"> <mat-icon fxFlexAlign ="center">person_add</mat-icon> &nbsp; Users</a>
          <a *ngIf = "userstate.userstatus == 'R'" type ="button" mat-icon-button routerLink="/securedpg/settings/mfreg" routerLinkActive="active" fxFlexAlign ="center" style="padding-left:55px; font-size:18px"> <mat-icon fxFlexAlign ="center">assignment_ind</mat-icon> &nbsp; Registration</a>
+         
          <a *ngIf = "userstate.userstatus == 'U'" type ="button" mat-icon-button routerLink="/securedpg/settings/mfregupload" routerLinkActive="active" fxFlexAlign ="center" style="padding-left:55px; font-size:18px"> <mat-icon fxFlexAlign ="center">file_upload</mat-icon> &nbsp; Docupload</a>
-         <!--a type ="button" mat-icon-button routerLink="/securedpg/settings/mfreg" routerLinkActive="active" fxFlexAlign ="center" style="padding-left:55px; font-size:18px"> <mat-icon fxFlexAlign ="center">person_add</mat-icon> &nbsp; Registration</a-->
-
+         
          <a type ="button" mat-icon-button fxFlexAlign ="center" style="padding-left:10px; font-size:20px" (click)=navss.close()> <mat-icon fxFlexAlign ="center">folder_open</mat-icon> &nbsp; close NAV</a>
 
        </div>        

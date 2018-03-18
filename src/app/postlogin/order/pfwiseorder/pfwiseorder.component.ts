@@ -8,166 +8,208 @@ import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@ang
   styleUrls: ['./pfwiseorder.component.scss']
 })
 export class PfwiseorderComponent implements OnInit {
+  name = 'Angular 5';
+  onAddmode = false;
+   portfolios: string[]=['Natrayans','Nirudhis','Ananthis','Nidha','Jayakodi','Palaniappan','Arun'];
+  selectedpfs:string[] =[];
+  fundlists: string[]=['Aditya Birla Sun Life MNC Fund - Direct Growth','Aditya Birla Sun Life MNC Fund - Direct Divident'];
+  selectedfundlists:string[] =[];
+  investmenttypes: string[]=['One Time','SIP'];
+  selectedinvtyp:string[] =[];
+  sipshow= false;
+  otshow =false;
+  shofndselect = false;
+  onAddpfmode=false;
+
+  addonestklst(){
+    this.onAddmode=!this.onAddmode;
+  }
+
   public orForm : FormGroup;
-  constructor(private myordsr: OrderdbservService, private orfb: FormBuilder) { }
-  pfnamecpys:any;
-  showadvanced = false;
-  isallexpanded=true;
-  portfolios: string[]=['Natrayans','Nirudhis','Ananthis','Nidha','Jayakodi','Palaniappan','Arun'];
-  selectedpfs:string[];
+
+constructor(private orfb: FormBuilder){}
 
   ngOnInit() {
-    this.fetchpfdata();
+    //this.fetchpfdata();
     this.addPortfolio();
     //this.test();
   }
-
-
-  showadvancedf(i,j){
-   var value =  (<FormGroup>(<FormArray>(<FormArray>(<FormGroup>(<FormArray>this.orForm.controls['orpflists']).controls[i]).controls['orStocklists']).controls[j]).controls['orshowhide']).value;
-   console.log(value); 
-   if(value =="true"){
-    const control = <FormGroup>(<FormArray>(<FormArray>(<FormGroup>(<FormArray>this.orForm.controls['orpflists']).controls[i]).controls['orStocklists']).controls[j]).controls['orshowhide'].patchValue("false"); 
-    console.log("inside true");  
-  }else{
-    const control = <FormGroup>(<FormArray>(<FormArray>(<FormGroup>(<FormArray>this.orForm.controls['orpflists']).controls[i]).controls['orStocklists']).controls[j]).controls['orshowhide'].patchValue("true");
-    console.log("inside false");  
-  }
-
-  }
-
-  expandall(){
-    this.isallexpanded=!this.isallexpanded;
-  }
-
-  onChangeObj(newobjval){
-    console.log("inside");
-   console.log(newobjval);
-   }
-
-fetchpfdata(){
   
-  this.myordsr.getonlypf().subscribe(
-    data =>
-          {
-            console.log("success fetch");
-            console.log(data);            
-            this.pfnamecpys =data;
-            
-          },
-    error => 
-          {  
-
-            this.pfnamecpys=[];
-            console.log(error);
-                        
-          },
-    () => {
-            
-            console.log("Inside end of fetchpfdata observable");
-          }
-  );
- 
-}
-
-somemsg(){
-  console.log("success");
-}
-
   addPortfolio(){
     this.orForm = this.orfb.group({ 
       orpflists:new FormArray([])
       });
   }
 
-addonepf(){
+  addonepf(){
   const control = <FormArray>this.orForm.controls['orpflists'];
-  console.log(control);
   control.push(this.initorpflists(this.selectedpfs));
 }
 
-addonestklist(index){
-  const control = <FormArray>(<FormArray>this.orForm.controls['orpflists']).controls[index].get('orStocklists');
-  control.push(this.initorStocklists());
-}
-
-addonemflist(index){
-  const control = <FormArray>(<FormArray>this.orForm.controls['orpflists']).controls[index].get('orMFlists');
-  control.push(this.initorMFlists());
-}
-
-
-
-deleteStkRow(i,j) {
-  //this.Mypfdetailcpy.pfstklist.splice(index, 1);
-  const control = <FormArray>(<FormArray>this.orForm.controls['orpflists']).controls[i].get('orStocklists');
-  control.removeAt(j);
- 
-}
-
-deleteMFRow(i,k) {
-  //this.Mypfdetailcpy.pfstklist.splice(index, 1);
-  const control = <FormArray>(<FormArray>this.orForm.controls['orpflists']).controls[i].get('orMFlists');
-  control.removeAt(k);
- 
-}
-
-
-
- test(){
-/*
-  const control1 = <FormArray> (control).controls[0].get('orStocklists');
-  const control2 = <FormArray> (control).controls[0].get('orMFlists');
-  console.log("control1");
-  console.log(control1);
-  console.log("control1 end");
-  control1.push(this.initorStocklists());
-  control2.push(this.initorMFlists());*/
- }
-
-
-
-  initorpflists(pfname) {
+ initorpflists(pfname) {
     return new FormGroup({
       orportfolio:new FormControl(pfname,Validators.required),
       orStocklists:new FormArray([]),
-      orMFlists:new FormArray([])  
+      orMFlists:new FormArray([])   
     });
   }
 
-  initorStocklists() {
-    return new FormGroup({      
-      orsttransaction_type:new FormControl(null,Validators.required),
-      orstexchange:new FormControl(null,Validators.required),
-      orsttradingsymbol:new FormControl("ITC",Validators.required),      
-      orstorder_type:new FormControl(null,Validators.required),
-      orstquantity:new FormControl(null,Validators.required),
-      //Additional Details
-      orstproduct:new FormControl(null,Validators.required),
-      orstprice:new FormControl(null,Validators.required),
-      orsttrigger_price:new FormControl(null,Validators.required),
-      orstdisclosed_quantity:new FormControl(null,Validators.required),
-      orstvalidity:new FormControl(null,Validators.required),     
-      orstreadonly:new FormControl(null,Validators.required),
-      orstoploss: new FormControl(null,Validators.required),
-      orsquareoff: new FormControl(null,Validators.required),
-      ortrailing_stoploss: new FormControl(null,Validators.required),
-      orstorderid:new FormControl(null,Validators.required),
-      orshowhide:new FormControl("false")
-    });
-  }
+addonemflist(controln,fund,invtype){
+  //const control = <FormArray>(<FormArray>this.orForm.controls['orpflists']).controls[index].get('orMFlists');
+  controln.push(this.initorMFlists(fund,invtype));
+  console.log("55555555555555");
+  console.log(controln.controls.length);
+  console.log("55555555555555");
+  this.addonefundordlist(controln,invtype,(controln.controls.length-1));
+  this.restfundselect();
+  this.showfndselect();
+}
 
-  initorMFlists() {
+restfundselect(){
+  this.selectedfundlists=[];
+   this.selectedinvtyp =[];
+
+}
+
+addonefundordlist(controln,invtype,ind){  
+  const controll = <FormArray>(controln.controls[ind].get('orMFfundorderlists'));
+  console.log(controll);
+  controll.push(this.initfundordlist(invtype));
+
+  //this.computeshow(controll);
+  
+}
+
+initorMFlists(fund,invtype) {
     return new FormGroup({
-      ormffundname:new FormControl(null,Validators.required),
-      ormfquantity:new FormControl(null),
-      ormforderamt:new FormControl(null)
+      ormffundname:new FormControl(fund,Validators.required),
+      orMFfundorderlists:new FormArray([])      
+    });
+    
+  }
+
+
+
+  initfundordlist(invtype){
+     return new FormGroup({      
+      orMFfundordelstrtyp :new FormControl(invtype,Validators.required),
+      orMFfundordelsfreq:new FormControl(''),
+      orMFfundordelsstdt:new FormControl(''),
+      orMFfundordelsamt:new FormControl('',Validators.required),
+      
     });
   }
 
+deleteMFRow(controlls,k) {
+  const control = <FormArray>controlls['orMFfundorderlists'];
+  control.removeAt(k);
+   // this.computeshow(control);
+}
+
+  onChangeObj(newobjval){
+    console.log("inside");
+   console.log(newobjval);
+   }
+
+  onChangeObj1(newobjval){
+    console.log("inside");
+   console.log(newobjval);
+   }
+
+  onChangeObj2(newobjval){
+    console.log("inside");
+   console.log(newobjval);
+   }
+
+issip(controlnn){
+  if(controlnn.value =='SIP'){
+    return true;
+  } else{
+    return false;
+  }
 
 }
 
 
-//https://embed.plnkr.co/1qx5A6S9k9DM1FbXctvN/
-//https://scotch.io/tutorials/how-to-implement-conditional-validation-in-angular-2-model-driven-forms
+otshowcal(controlnn){
+  console.log("33333333333333");
+  console.log();
+  console.log("33333333333333");
+  return this.computeshows(controlnn['orMFfundorderlists'],"otshobutt");
+  
+
+}
+
+
+sipshowcal(controlnn){
+
+  return this.computeshows(controlnn['orMFfundorderlists'],"sipshobutt");
+
+}
+
+
+
+  computeshows(controlnn,resfor){
+    console.log(controlnn);
+    var cond1='';
+    var cond2='';
+    var sipshow = false;
+    var otshow = false;
+    for (var i=0 ;i < controlnn.length; i++){
+      if(controlnn.controls[i].get(['orMFfundordelstrtyp']).value == 'SIP'){
+        console.log("inside SIP");
+        cond1 = 'SIP';
+      }else if (controlnn.controls[i].get(['orMFfundordelstrtyp']).value == 'One Time'){
+        cond2 = 'OT';
+        console.log("inside OT");      }
+      
+      
+      }
+    var strss = cond1+cond2;
+    console.log(strss);
+      switch(strss){
+        case "SIP": {
+          sipshow= false;
+          otshow =true;
+          break;
+        }
+        case "OT":{
+          sipshow= true;
+          otshow =false;
+          break;
+        }
+        case "SIPOT":{
+         sipshow= false;
+         otshow =false;
+          break;
+        }
+        default:{
+          sipshow= true;
+          otshow =true;
+        }
+
+      }
+
+      if (resfor == 'otshobutt'){
+        return otshow;
+      }else if(resfor == 'sipshobutt'){
+        return sipshow;
+      }
+
+    }
+
+
+showfndselect(){
+  this.shofndselect=!this.shofndselect;
+}
+
+
+addpf(){
+  this.onAddpfmode=true;
+}
+
+canceladdpf(){
+  this.onAddpfmode=false;
+}
+  
+}

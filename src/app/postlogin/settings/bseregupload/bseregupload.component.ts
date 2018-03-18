@@ -13,7 +13,9 @@ import {
   HttpEventType,
   HttpResponse
 } from '@angular/common/http';
-
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { NotifyService } from '../../../natservices/notify.service';
+import { NotificationComponent } from '../../../commonmodule/notificationmodule/notification/notification.component'
 
 
 @Component({
@@ -31,7 +33,7 @@ export class BsereguploadComponent implements OnInit {
 */
 
   
-  upfilescpy:string[]=["AOF","CancelledCheque"];
+  upfilescpy:string[]=["AOFandCancelledCheque"];
   upfiles:string[];
   fileName:string= "Select a File";
   filelist: FileList;
@@ -41,13 +43,15 @@ export class BsereguploadComponent implements OnInit {
   filevalerror=true;
   filvaldiationmsg: string = ""; 
   selectedupfile:string;
-  listfetchprogbar=true;
   tableData:any;
 
 
   //tableData = [{'fileName':"Natrayan",'fullPath':"https://mybucket.s3.amazonaws.com/myfolder/afile.jpg"},{'fileName':"Kumar",'fullPath':"https://mybucket.s3.amazonaws.com/myfolder/afile.jpg"}]
 
-  constructor(private ups:FileuploadService, private http: HttpClient) { }
+  constructor(private ups:FileuploadService, 
+              private notify: NotifyService, 
+              private http: HttpClient,
+              private router: Router) { }
 
   ngOnInit() {
     this.upfiles=this.upfilescpy.slice();
@@ -124,14 +128,21 @@ onFileInput(event){
         } else if (event instanceof HttpResponse) {
           console.log('File is completely loaded!');
           this.showprogressbar=false;
-
+          this.tableData=event['body'];
+          console.log("this.tableData");
+          console.log(this.tableData);
+          this.updatedropdown();
+          this.notify.update("File Upload successful","success","alert");
         }
-        this.uplodfiledatafetch();
-        
+        //this.uplodfiledatafetch();
+              
+        //this.notify.update(event['body']['statusdetails'],"success","alert");
 
       },
-      (err) => {
-        console.log("Upload Error:", err);
+      (error) => {
+        console.log("Upload Error:", error);
+        console.log(error['message']);
+        this.notify.update(error['message'],"error","alert");
       }, () => {
         console.log("Upload done");
       }
@@ -140,51 +151,112 @@ onFileInput(event){
 }
 
 uplodfiledatafetch(){
-  this.listfetchprogbar=true;
+  this.showprogressbar=true;
   this.ups.fetchfilelist()
   .subscribe(
     data => {     
-      console.log(data['body'])
-      if (data['body'] == null){
-        console.log("empty body");
-        this.tableData=[];
-      }else{
-        this.tableData=data['body'];
+      console.log('--------------------');
+      console.log(data);
+      console.log('--------------------');
+        this.tableData=data;
         console.log("this.upfiles before");
         console.log(this.upfiles);
+
+        this.updatedropdown();
+        /*
         this.tableData.forEach(element => {
           console.log(element['filetype']);          
           if(element['filecat'] == 'E'){
             var indexofstr = this.upfiles.indexOf(element['filetype']);
+            console.log('indexofstr value: ',indexofstr);
             if(indexofstr != -1){
               this.upfiles.splice(indexofstr,1);
             }
           }
-        });
+        });*/
         
-      }
-
-      this.listfetchprogbar=false;
       
-      console.log(this.tableData);      
+
+      this.showprogressbar=false;
+      if (data['body'] == null){
+        
+      }else{
+        this.showprogressbar=false;        
+        this.notify.update(data['body']['statusdetails'],"success","alert");
+        console.log(this.tableData);      
+      }
     },
     error =>{
-      this.listfetchprogbar=false;
+      this.showprogressbar=false;
+      console.log(error);
+      console.log(error['message']);
+      this.notify.update(error['body']['statusdetails'],"error","alert");
     },
     ()=> {}
   );
 }
 
-deletefile(fileitem){
-  
-  this.ups.deleteafile(fileitem).subscribe(
-    data => {  
-      this.upfiles=this.upfilescpy.slice();
+deletefile(fileitem){  
+  this.showprogressbar=true;  
 
-      this.uplodfiledatafetch();
+  console.log("inside fileite");
+  console.log(fileitem);
+
+  this.ups.deleteafile(fileitem).subscribe(
+    data => {
+      console.log('-------------------');
+      console.log("inside data");
+      console.log(data);
+      console.log('-------------------');
+      this.showprogressbar=false;  
+      this.upfiles=this.upfilescpy.slice();
+      this.notify.update("File delete successful","success","alert");
+      this.tableData=data;
+      this.updatedropdown();
+      //this.uplodfiledatafetch();
+    },
+    error =>{
+      this.showprogressbar=false;
+      console.log(error['message']);
+      this.notify.update(error['message'],"error","alert");
+    },
+    ()=> {}
+  );
+}
+
+
+submitregistobse(){
+  this.showprogressbar=true;
+  this.ups.finalsubmit().subscribe(
+    data => {
+      this.showprogressbar=false;  
+      console.log('inside data of submit succcess');
+      this.notify.update(data['statusdetails'],"success","alert");
+      this.router.navigateByUrl('/securedpg/dashboard');
+
+    },
+    error =>{
+      this.showprogressbar=false;
+      console.log(error['message']);
+      this.notify.update(error['message'],"error","alert");
+    },
+    ()=> {
+      this.showprogressbar=false;
     }
   );
 }
 
+updatedropdown(){
+this.tableData.forEach(element => {
+  console.log(element['filetype']);          
+  if(element['filecat'] == 'E'){
+   
+    var indexofstr = this.upfiles.indexOf(element['filetype']);
+    if(indexofstr != -1){
+      this.upfiles.splice(indexofstr,1);
+    }
+  }
+});
+}
 
 }

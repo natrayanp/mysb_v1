@@ -33,6 +33,7 @@ uploadFile(file: File,filetype: string): Observable<HttpEvent<any>> {
   //var apiurl='http://127.0.0.1:8000/uploadfile';
   
   const req = new HttpRequest('POST', apiurl, formDatass);
+  
   return this.http.request(req);
   //return(this.uploadImage(formDatass));
 }
@@ -40,17 +41,21 @@ uploadFile(file: File,filetype: string): Observable<HttpEvent<any>> {
 
 fetchfilelist(){
   var apiurl=environment.FileuploadUrl + "/" + environment.Filelist;
-  //var apiurl='http://127.0.0.1:8000/uploadedfilelist';
-  const req = new HttpRequest('GET', apiurl);
-  return this.http.request(req);
+  
+  return this.http.get(apiurl);
 }
 
 deleteafile(fileitem){
   var apiurl=environment.FileuploadUrl + "/" + environment.Filedelete;
-  //var apiurl='http://127.0.0.1:8000/uploadedfiledelete';
   var jsondata = fileitem;
-  const req = new HttpRequest('POST', apiurl, jsondata);
-  return this.http.request(req);
+  return this.http.post(apiurl,jsondata);
+
+}
+
+finalsubmit(){
+  var apiurl=environment.FileuploadUrl + "/" + environment.Finalsubmit;
+  return this.http.get(apiurl);
+  
 }
 
 }

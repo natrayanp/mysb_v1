@@ -27,14 +27,16 @@ export class NatInterceptor implements HttpInterceptor{
                       this.tosettkn=false;                      
                     }
                     });
-   
-    console.log(this.tosettkn);
+                  
+    
     
     if(req.url.endsWith('uploadfile')){
+      console.log("inside uploadfile content set");
       this.contentset=false;
     }
               
-
+    console.log("set toke?:",this.tosettkn);
+    console.log("set content?:",this.contentset);
     if(this.tosettkn){
         // Get the auth header from the service.
         this.authHeader = localStorage.getItem("natjwt");;

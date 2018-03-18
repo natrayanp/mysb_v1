@@ -3,7 +3,9 @@ import {Router} from "@angular/router";
 import { AsyncPipe } from '@angular/common';
 import { SettingspfService } from '../../../../natservices/settingspf.service';
 import { NotificationsService } from '../../../../commonmodule/notifymodule/services/notifications.service';
-                                      
+import { NotifyService } from '../../../../natservices/notify.service';
+import { NotificationComponent } from '../../../../commonmodule/notificationmodule/notification/notification.component'
+import { DbservicesService } from '../../../../natservices/dbservices.service';
 @Component({
   selector: 'app-portfolio-list',
   templateUrl: './portfolio-list.component.html',
@@ -16,6 +18,9 @@ export class PortfolioListComponent implements OnInit {
   message1 = "You don't have any portfolio yet.....Click on Add to start your journey";
   showcancelalrt= true;
   dberror:boolean;
+  editi:number;
+  totalpf:number;
+  isEAModeon:boolean = false;
 
   empty_pfdetails=  {
     pfportfolioid: null,
@@ -59,33 +64,43 @@ export class PortfolioListComponent implements OnInit {
 
  //pfdetails=[{"pfPortfolioid": null,"pfuserid": null,"pfPortfolioname": "Natrayan","pfPurpose": null,"pfBeneUsers": null,"pfStartDt": null,"pfTargetDt": null,"pfTargetIntRate": null,"pfPlannedInvAmt": 10000,"pfInvAmtFeq":"Daily","pfStkAmtsplittype": "Amount","pfmfAmtsplittype":"%","pfStocklists": [{"pfstExchange": "NSE","pfstTradingsymbl": "ITC","pfstLtp": 300,"pfstAmt": 3000,        "pfstPercent": 0,"pfstAllotedAmt": 3000,"pfstTotUnit": 10},{"pfstExchange": "NSE","pfstTradingsymbl":"SBIN","pfstLtp":200,"pfstAmt":1000,"pfstPercent":0,"pfstAllotedAmt":1000,"pfstTotUnit": 2}],"pfMFlists":[{"pfmfFundname": "Birla MNC","pfmfNAV":600,"pfmfAmt":0,"pfmfPercent":50,"pfmfAllotedAmt":5000}]}];;
   pfdetails;
+  pfedetails=[];
+  pfcpydetails;
 
-  constructor(private router: Router, private spf :SettingspfService,private notifyservice: NotificationsService) { }
+  constructor(private router: Router, 
+              private spf :SettingspfService,
+              //private notifyservice: NotificationsService,
+              private notify: NotifyService,
+              private dbserivce :DbservicesService,) { }
 
   ngOnInit() {    
-
     this.fetchpfdata(); 
-    this.test=this.spf.servicepfdata;
+    this.editi=-1;
+    //this.test=this.spf.servicepfdata;
   }
 
 
 fetchpfdata(){
-  
-  this.spf.getpf().subscribe(
+  this.dbserivce.dbaction('pf','fetch','').subscribe(
+  //this.spf.getpf().subscribe(
     data =>
           {
             console.log("success fetch");
-            console.log(data);
-            
-            this.pfdetails =data;
+            console.log(data);            
+            this.pfdetails =data['body'];
+            this.totalpf=this.pfdetails.length;
+            console.log("this.pfdetails.length");
+            console.log(this.pfdetails.length);
+            this.pfcpydetails=JSON.parse(JSON.stringify((this.pfdetails)));
             this.onfetch=!this.onfetch;
           },
     error => 
           {  
             this.onfetch=!this.onfetch;          
-            this.message1=error.message;
+            //this.message1=error.message;
             this.pfdetails=[];
             console.log(error);
+            this.notify.update(error.message,"error","alert");
                         
           },
     () => {
@@ -97,35 +112,40 @@ fetchpfdata(){
 }
 
 
-cardacancel(event,index){
-  this.pfdetails.unshift(this.empty_pfdetails);
-  console.log("this.pfdetails");
-  console.log(this.pfdetails);
-  if (this.showcancelalrt  == true){
-    this.notifyservice.alert("Cancel Changes","Changes made in the portfolio are discarded");    
-  }  
-  this.refereshpf();
-  this.onAddmode=false;
-}
 
-CanceladdNewPortfolio(){  
-  if (this.showcancelalrt  == true){
-    this.notifyservice.alert("Cancel New addition","New portfolio addition cancelled");
-  }
-  this.refereshpf();
-}
 
+
+/*
 refereshpf(){
   this.pfdetails.shift();
+  this.pfcpydetails=JSON.parse(JSON.stringify((this.pfdetails)));
   console.log("after shitf");
   this.onAddmode=false;  
 }
 
-cardasave(pfformobj){
 
+
+cardasaveNewPortfolio(formval){
+  console.log("save NEW card");
+  event.preventDefault();
+  this.onAddmode=false;
+  console.log(JSON.stringify(formval));
+  this.callsavedbaction(formval);
+  if (this.dberror==true){
+    console.log("calling cancelnewportfolio");
+    //this.CanceladdNewPortfolio(); 
+  }
+}
+*/
+
+cardasave(pfformobj){
   event.preventDefault();
   console.log("save card");
   console.log((pfformobj));
+
+  this.callsavedbaction(pfformobj);
+  
+  /*
   if(pfformobj.pfportfolioid=="New"){
     console.log("new");
     this.cardasaveNewPortfolio(pfformobj); 
@@ -137,70 +157,99 @@ cardasave(pfformobj){
       this.cardacancel(event,0);
     }
 
-  }
+  }*/
 
 }
 
-cardasaveNewPortfolio(formval){
-  console.log("save NEW card");
-  event.preventDefault();
-  this.onAddmode=false;
-  console.log(JSON.stringify(formval));
-  this.callsavedbaction(formval);
-  if (this.dberror==true){
-    console.log("calling cancelnewportfolio");
-    this.CanceladdNewPortfolio(); 
-  }
-}
 
 callsavedbaction(formval){
-  this.dberror = true;
-  this.spf.savepf(formval).subscribe(
+  //this.dberror = true;
+  this.dbserivce.dbaction('pf','save',formval).subscribe(
+  //this.spf.savepf(formval).subscribe(
     data => { 
-              console.log("inside data of savepf");
               console.log(data);
-             if((data.body['natstatus']=='success') ) {
-              this.onfetch=!this.onfetch;
-              this.fetchpfdata();              
-              console.log("saved successfully");
-              this.notifyservice.success("Saved successfully",data.body['statusdetails']);
-              this.showcancelalrt=false;
-              this.dberror = false;
-              }
-              
-            },
+              this.fetchpfdata();                 
+              this.pfedetails=[];
+              this.isEAModeon=false;  
+              this.notify.update("Portfolio Saved Succesfully","success","alert");
+
+              },             
+            
     error=> {
             console.log("inside error of savepf");
-            console.log(error);
-
-            if((error.error['natstatus']=='error') ) {  
-              console.log("inside error");                         ;
-              this.notifyservice.error("Save failed",error.error['statusdetails']);    
-              console.log("inside error end") ;         
-            }else if((error.error['natstatus']=='warning') ) {
-              this.notifyservice.alert("Save failed",error.error['statusdetails']);
-            }else{
-              this.notifyservice.alert("Save failed",error.error);
-            }            
-            this.showcancelalrt=false;
-            this.dberror = true;
+            console.log(error);            
+            this.notify.update(error.message,"error","alert");
             },
     () =>   {
               console.log("end of savepf observable");
             }
 
   )
-  //this.pfdetails.shift(formval);
-  
-  //this.pfdetails.unshift(formval);  
+
 }
 
 addNewPortfolio(){
    var empty_pfdetails_fornew=JSON.parse(JSON.stringify((this.empty_pfdetails)));
    empty_pfdetails_fornew.pfportfolioid="New";
-   this.pfdetails.unshift(empty_pfdetails_fornew);
+   //this.pfdetails.unshift(empty_pfdetails_fornew);
+   this.pfedetails.unshift(empty_pfdetails_fornew);
+   console.log("inside add new portfolio");
+   console.log(this.pfedetails);
    this.onAddmode=!this.onAddmode;
+   this.editi=0;
+   this.isEAModeon=true;
+   this.notify.clearall();
  }
+
+ cardaedit(i){  
+  var cpy_of = this.pfdetails.splice(i,1);
+  this.pfedetails.unshift(cpy_of[0]);
+  this.editi=i;
+  this.notify.clearall();
+  this.pfcpydetails=JSON.parse(JSON.stringify((this.pfdetails)));
+  this.isEAModeon=true;
+  window.scroll(0, 0);
+ }
+
+ /*
+ CanceladdNewPortfolio(){  
+  if (this.showcancelalrt  == true){
+    //this.notifyservice.alert("Cancel New addition","New portfolio addition cancelled");
+  }
+  this.refereshpf();
+ }*/
+
+ cardacancel(event,index){
+  console.log("insde cardacancel");
+  console.log(index);
+  console.log(this.pfedetails);
+  console.log(this.pfedetails[0].pfportfolioid);
+  this.editi=-1;
+  if(this.pfedetails[0].pfportfolioid=="New"){
+    
+    console.log("inside new portfolio addition cancel");
+    this.pfedetails.shift();
+    this.notify.update("New Portfolio addition cancelled","error","alert");
+  }else{
+    console.log("inside editing an existing portfolio");
+    this.pfdetails.splice(index,0,this.pfedetails[0]);
+    console.log(this.pfdetails);
+    this.notify.update("Portfolio edit cancelled","error","alert");
+    this.pfedetails=[];
+  }
+  this.pfcpydetails=JSON.parse(JSON.stringify((this.pfdetails)));
+  //this.onAddmode=false;
+  this.isEAModeon=false;  
+}
+
+
+/* code to add filter... moved to day2
+applyFilter(filterValue: string) {  
+  filterValue = filterValue.toUpperCase(); 
+  this.pfdetails = (JSON.stringify((this.pfcpydetails)));
+  this.pfdetails = this.pfcpydetails.filter(({pfportfolioname}) => pfportfolioname.indexOf(filterValue) !== -1);
+}
+*/
 
 
 
