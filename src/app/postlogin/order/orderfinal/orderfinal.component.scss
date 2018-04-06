@@ -4,10 +4,14 @@
   }
 
   .example-full-width {
-    width: 110px;
-    margin-left:20px;
+    width: 80px;
+    margin-left:5px;
   }
 
   .chpcls1 {
-    max-height: 12px;
+    max-width: 80px;
+    min-height: 25px;
+    padding: 5px 0 0 5px;
+    background-color: lightgray;
+    border-radius: 12px;
   }

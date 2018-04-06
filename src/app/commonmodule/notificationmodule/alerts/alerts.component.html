@@ -6,8 +6,8 @@
           'is-success': m.style == 'success',
           'is-info': m.style == 'info'
         }">
-        <span class="closebtn" (click)="notify.clearalertmsg()">&times;</span>  
-        {{ m.content }}
+        <span class="closebtn" (click)="notify.clearalertmsg()">{{notify.alertticks}} &times;</span>  
+        {{ m.content }}   
       </mat-card>
     </div>
   </div>

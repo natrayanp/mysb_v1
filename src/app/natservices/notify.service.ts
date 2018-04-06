@@ -25,13 +25,13 @@
     notimsg = this._notimsgSource.asObservable();
     alertmsg =this._alrtmsgSource.asObservable();
     bannermsg =this._bannermsgSource.asObservable();
-
+    timer : any;
     //Timer related changes START
 
-    ticks =0;
+    alertticks =0;
+    m:any;
     ngOnInit(){
-      let timer = Observable.timer(2000,1000);
-      timer.subscribe(t=>this.ticks = t);
+          
     }
     
     //TImer related changes END
@@ -49,13 +49,25 @@
           this.alertmsg1.push(msg);
           console.log(JSON.stringify(this.alertmsg1));
           this._alrtmsgSource.next(this.alertmsg1);
+          this.starttimer();
       }else if(type == "banner"){
           const msg: Msg = { content, style, type };
           this.bannermsg1.push(msg);
           this._bannermsgSource.next(this.bannermsg1);
       }
     }
-  
+    starttimer(){
+    this.timer = Observable.timer(2000,1000); 
+    this.m = this.timer.subscribe(t=> 
+                          {
+                           
+                            this.alertticks=20-t;
+                            if(this.alertticks==0){                              
+                              this.clearalertmsg();                   
+                                 
+                            }
+                          } );
+    }
     clearnotifcation() {
 
       //this._notimsgSource.next(null);
@@ -66,6 +78,11 @@
 
     clearalertmsg(){
       this._alrtmsgSource.next(null);
+      if (typeof this.m != "undefined") {
+        this.m.unsubscribe(); 
+     }
+     
+      
     }
 
     clearbannermsg(){

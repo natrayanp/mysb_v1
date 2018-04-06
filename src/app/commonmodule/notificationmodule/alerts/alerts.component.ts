@@ -11,6 +11,7 @@ export class AlertsComponent implements OnInit {
   constructor(public notify: NotifyService) {console.log(notify.alertmsg); }
 
   ngOnInit() {
+    
   }
 
 }
