@@ -1,9 +1,29 @@
 
-<!--form [formGroup]="orForm" -->
+<app-pfwiseorderlist></app-pfwiseorderlist>
+
+
+
+      
+
+<!--form [formGroup]="orForm" >
 <mat-toolbar color ="primary" >
+        <mat-chip-list class="mat-chip-list-stacked">
+        <mat-chip selected="true" color="warn" >
+              
+            PF wise order placement
+              </mat-chip>
+
+              <mat-chip selected="true" color="warn" >
+              
+                    Stockwise order placement
+                      </mat-chip>
+            </mat-chip-list>
         <a type = "button" class = "txtwt" routerLink="/securedpg/orders/pfwise" routerLinkActive="active">PF wise order placement</a>
         <a class = "txtwt" routerLink="/securedpg/orders/stwise" routerLinkActive="active">Stockwise order placement</a>
-        <p>Natrayan</p>
+
+
+
+
 <!--
   <button mat-raised-button color="warn" (click)="addonepf()" ><strong>Add Portfolio</strong></button>
   <span>&nbsp;</span>
@@ -11,7 +31,7 @@
   <span>&nbsp;</span>
   <span fxFlex></span>
   <label>&nbsp; Total Portfolios: &nbsp;</label>
--->
+
 </mat-toolbar>
 <router-outlet></router-outlet>
 <!--

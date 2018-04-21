@@ -45,6 +45,7 @@
                     <div [fxHide]="true">
                         <input matInput fxFlex="100%" formControlName="pfPortfolioid" [(ngModel)]="Mypfdetailcpy.pfportfolioid" [fxHide]="true">
                         <input matInput fxFlex="100%" formControlName="pfuserid" [(ngModel)]="Mypfdetailcpy.pfuserid" [fxHide]="true">
+                        <input matInput fxFlex="100%" formControlName="pfScreen" [(ngModel)]="Mypfdetailcpy.pfscreen" [fxHide]="true">
                         <input matInput fxFlex="100%" formControlName="pfBeneUsers" [(ngModel)]="Mypfdetailcpy.pfbeneUsers" [fxHide]="true">
                     </div>
     
@@ -210,6 +211,7 @@
                         <app-orderfinal [pfMFlistsFormArray]="pfForm.controls['pfMFlists']"
                                         [mypfdet]="Mypfdetailcpy"
                                         [onEdit]="onEdit"
+                                        [rbsstr]="'NEW'"
                                         ></app-orderfinal>   
                                         <!--https://gist.github.com/dherges/e1ecdd03a319fbd2a5495f54fbc1ea87#file-nested-form-component-ts -->      
                                         
@@ -244,8 +246,8 @@
     <pre>{{pfmfdathold | json}}</pre>
   
         ##### DON NOT DELETED.  THIS IS FOR DEBUGGING ##### 
-
-
+  
+  -->
     <div fxLayout="column">
             <pre>{{pfForm.value | json}}</pre>
     </div>

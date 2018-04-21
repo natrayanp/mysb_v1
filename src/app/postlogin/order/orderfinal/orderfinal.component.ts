@@ -22,11 +22,12 @@ export class OrderfinalComponent  {
   shofndselect = false;
   @Input() public pfMFlistsFormArray:FormArray;
   @Input() public mypfdet: any;
-  @Input() onEdit;
+  @Input() public onEdit:string;
+  @Input() public rbsstr:string;
   fundnames:string[];
   cardpfonetimetotal:number = 0;
   cardpfsiptotal:number = 0;
-  teststr;any;
+  
 
 empty = {
   ormflistid:"",
@@ -53,7 +54,7 @@ emptyinitfundordlist={
   //holding select SIP data
   ormfsipdthold:"",
   ormfselctedsip:"",
-  ormffndstatus:"New"
+  ormffndstatus:this.rbsstr
 };
 
 
@@ -65,11 +66,13 @@ constructor(private orfb: FormBuilder,
   ngOnInit() {
 
     this.addPortfolio();    
-    this.populateform();   
+    this.populateform();
+    //this.populateform1();
   }
 
   populateform(){
-    
+    console.log(this.rbsstr);
+    console.log(this.mypfdet);
     if(this.mypfdet.pfmflist != null){  
       this.mypfdet.pfmflist.forEach((recor,index1) => {
 
@@ -81,13 +84,31 @@ constructor(private orfb: FormBuilder,
               (<FormArray>this.orForm.controls.orpflists).controls,              
               recor1,
               index1);
-          })
+           })
         } 
     })
   }
     
   }
 
+
+  populateform1(){
+    console.log(this.rbsstr);
+    console.log(this.mypfdet);
+    if(this.mypfdet.pfmflist != null){  
+      this.mypfdet.pfmflist.forEach((recor,index1) => {
+        if (recor.ormffundorderlists != null) {
+          if(recor.ormffundorderlists !== '') {
+            recor.ormffundorderlists.forEach((recor1,index2) => {              
+              this.populatesip(
+                (<FormArray>this.orForm.controls.orpflists).controls,index1,index2);              
+          })
+        }
+        } 
+    })
+  }
+    
+  }
 
  
   addPortfolio(){
@@ -117,6 +138,17 @@ addonefundordlist(controln,valuelist,ind){
   }
 
   
+}
+
+populatesip(controln,index1,index2){ 
+  const controll1=(<FormArray>((<FormGroup>this.pfMFlistsFormArray.controls[index1]).controls).orMFDathold);
+  const controll2=(<FormArray>((<FormGroup>this.pfMFlistsFormArray.controls[index1]).controls).orMFFundorderlists);
+  const controll3 = (<FormGroup>controll2.controls[index2]).controls;
+  const controll4= (controll3).orMFfundordelsfreq;
+  if(controll3.orMFfundordelstrtyp.value == "SIP"){
+    controll3.ormfSelctedSip.patchValue(controll1.value[0].fnsipdt.filter(rec => rec.sipfreq == controll4.value));
+    controll3.ormfSipdthold.patchValue(controll3.ormfSelctedSip.value[0].sipfreqdates);
+  }
 }
 
 initorMFlists(valuelist) {
@@ -149,6 +181,9 @@ initorMFlists(valuelist) {
                          
                           mfform.get('orMFDathold').patchValue(this.fundnames.length >0? this.fundnames :{});
                           mfform.get('orMFFndcode').patchValue(this.fundnames.length ==1? this.fundnames[0]['fndschcdfrmbse'] :{});
+                          if(mfform.get('orMFDathold')!= {}){
+                            this.populateform1();
+                          }
 
 
                         }
@@ -199,6 +234,7 @@ initfundordlist(valuelist){
         };
        
         this.cardMFtotalcalc();
+
         })
   });
 
@@ -207,6 +243,10 @@ initfundordlist(valuelist){
   .subscribe(values => {
     this.validatesip(orlisform.controls.orMFsipinstal,orlisform.controls.ormfSelctedSip.value);
   });
+
+
+
+  
 
   return orlisform;
   }
@@ -259,10 +299,9 @@ cardMFtotalcalc()
       }      
       
     })
-
-
     })
-    
+    this.mypfdet.pfonetimetotal=this.cardpfonetimetotal;
+    this.mypfdet.pfsiptotal = this.cardpfsiptotal;    
   }
 
 addnewmflist(){
@@ -281,6 +320,7 @@ addnewfundordlist(reccontrol,siponetime,ind){
   
   let modempty = JSON.parse(JSON.stringify(this.emptyinitfundordlist));
   modempty.ormffundordelstrtyp = siponetime;
+  modempty.ormffndstatus = this.rbsstr;
 
 
   if(siponetime=="SIP"){    
@@ -444,40 +484,53 @@ validatesip(controlref,selectedsip){
 }
 
 validateamt(sublist,main){
+  console.log(sublist.controls.orMFfundordelsamt.value);
+  console.log((main.controls.orMFDathold.value)[0].fndmaxpuramt);
+  console.log(sublist.controls.orMFfundordelstrtyp.value);
 
+  console.log((sublist.controls.ormfSelctedSip.value).sipmaxamt);
 
   if(main == 0){
-
     sublist.controls.orMFfundordelsamt.setErrors({'amtlimit': true});
   }
-
+  //Clear the error before the check
+  sublist.controls.orMFfundordelsamt.setErrors(null);  
+  
   if(sublist.controls.orMFfundordelstrtyp.value == "One Time"){
-    if(((sublist.controls.orMFfundordelsamt.value > (main.controls.ormfDathold.value)[0].fndmaxpuramt)) ||
-    ((sublist.controls.orMFfundordelsamt.value < (main.controls.ormfDathold.value)[0].fndminpuramt))){
-      sublist.controls.orMFfundordelsamt.setErrors({'amtlimit': true});     
-    }else {
-      if(((sublist.controls.orMFfundordelsamt.value)%((main.controls.ormfDathold.value)[0].fndpuramtinmulti))!=0){
-        sublist.controls.orMFfundordelsamt.setErrors({'amtlimit': true});
-      }else{
-        
-      sublist.controls.orMFfundordelsamt.setErrors(null);  
+    if((sublist.controls.orMFfundordelsamt.value > (main.controls.orMFDathold.value)[0].fndmaxpuramt)){
+      sublist.controls.orMFfundordelsamt.setErrors({'amtlimit': true});
+      console.log("indieonetime1");
     }
+    
+    if((sublist.controls.orMFfundordelsamt.value < (main.controls.orMFDathold.value)[0].fndminpuramt)){
+      console.log("indieonetime11");
+      sublist.controls.orMFfundordelsamt.setErrors({'amtlimit': true});      
     }
-}if(sublist.controls.orMFfundordelstrtyp.value == "SIP"){
-  if(((sublist.controls.orMFfundordelsamt.value > (sublist.controls.ormfSelctedSip.value).sipmaxamt)) ||
-  ((sublist.controls.orMFfundordelsamt.value < (sublist.controls.ormfSelctedSip.value).sipminamt))){
-    sublist.controls.orMFfundordelsamt.setErrors({'amtlimit': true});  
-  }else {
-    if(((sublist.controls.orMFfundordelsamt.value) % ((sublist.controls.ormfSelctedSip.value).sipmulamt))!=0){
-      sublist.controls.orMFfundordelsamt.setErrors({'amtlimit': true});  
-    }else{
-      
-      sublist.controls.orMFfundordelsamt.setErrors(null); 
+
+    console.log(((sublist.controls.orMFfundordelsamt.value*100)%(((main.controls.orMFDathold.value)[0].fndpuramtinmulti)*100)));
+    if(((sublist.controls.orMFfundordelsamt.value*100)%(((main.controls.orMFDathold.value)[0].fndpuramtinmulti)*100))!=0){
+      sublist.controls.orMFfundordelsamt.setErrors({'amtlimit': true});
+      console.log("indieonetime2");
     }
   }
-}
+    
+  if(sublist.controls.orMFfundordelstrtyp.value == "SIP"){
+
+  if((sublist.controls.orMFfundordelsamt.value > (sublist.controls.ormfSelctedSip.value).sipmaxamt)){
+    sublist.controls.orMFfundordelsamt.setErrors({'amtlimit': true});  
+  }
+
+  if((sublist.controls.orMFfundordelsamt.value < (sublist.controls.ormfSelctedSip.value).sipminamt)){
+    sublist.controls.orMFfundordelsamt.setErrors({'amtlimit': true});  
+  }
+
+  if((((sublist.controls.orMFfundordelsamt.value)*100) % (((sublist.controls.ormfSelctedSip.value).sipmulamt)*100))!=0){
+      sublist.controls.orMFfundordelsamt.setErrors({'amtlimit': true});    
+  }
 
 }
+}
+
 
 viewchildchk(){
   

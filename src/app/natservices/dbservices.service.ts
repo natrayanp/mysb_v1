@@ -110,11 +110,27 @@ dbaction(screen,functionality,data){
         return this.http.post(apiurl, JSON.stringify(data),{observe: 'response'});    
         //return this.http.post('http://127.0.0.1:8000/pfdatasave', JSON.stringify(pfform),{observe: 'response'});
       }
+      case "pforderfetch":
+      {
+        console.log('inside pforderdata fetch');
+        var apiurl=environment.pfUrl + "/" + environment.pforderfetch;
+        
+        return this.getmethod(apiurl,{observe: 'response'});  
+        //return this.http.post('http://127.0.0.1:8000/pfdatasave', JSON.stringify(pfform),{observe: 'response'});
+      }
       case "fundfetch":
       {
         
             console.log('inside fund details fetch');
             var apiurl=environment.fundUrl + "/" + environment.fundfetch;
+            return this.http.post(apiurl, JSON.stringify(data),{observe: 'response'});
+        
+      }
+      case "pfmainfetch":
+      {
+        
+            console.log('inside fund details fetch');
+            var apiurl=environment.pfUrl + "/" + environment.pfmainfetch;
             return this.http.post(apiurl, JSON.stringify(data),{observe: 'response'});
         
       }

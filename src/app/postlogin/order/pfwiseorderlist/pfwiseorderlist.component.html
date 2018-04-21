@@ -1,4 +1,79 @@
 
+
+<mat-toolbar color ="primary" >
+        <label>&nbsp; <strong>Order Placement</strong> &nbsp;</label>
+        <span>&nbsp;</span>      
+      </mat-toolbar>
+      <mat-toolbar color ="primary" *ngIf="fundnames !='allused'">
+      <button mat-raised-button color="warn" (click)="addNewPortfolio()" [disabled] = "isEAModeon"><strong>Add portfolio for order addition</strong></button>
+    </mat-toolbar>
+    <!--mat-toolbar color ="primary" >
+        
+        <button mat-raised-button color="warn" (click)="addNewPortfolio()" [disabled] = "isEAModeon"><strong>Add</strong></button>
+        <span>&nbsp;</span>
+        <span fxFlex></span>
+        <label>&nbsp; Total Portfolios: &nbsp;</label>
+        <mat-chip-list>
+        <mat-chip selected="true" style="background-color:white; color:black; font:30px"><strong>{{totalpf || 0}}</strong></mat-chip>
+      </mat-chip-list>
+        
+        
+    </mat-toolbar-->
+    <br>
+    <alerts></alerts>
+
+
+    
+    <div fxLayout="row wrap" fxLayoutGap="10px">    
+
+        
+    <div fxLayout="column" fxFlex="70" fxFlex.lt-lg="100" fxFlexOrder.lt-lg="2" fxFlexOrder="1">
+      <div *ngFor="let pfdetail of orderservice.pforderdetails; let i = index" 
+      fxFlex.lt-lg="1 1 100" fxFlex="1 1 auto" 
+      >        
+        <app-pfwiseordercard [Mypfdetail] = "pfdetail" 
+                            [myindex]="i" 
+                            [onEdit]="true" 
+                            [EAMode]="isEAModeon" 
+                            [fundnames]="fundnames"
+                            (cardsave)="cardasave($event,ind)" 
+                            > 
+        </app-pfwiseordercard>
+    
+    
+    <div *ngIf="orderservice.pforderdetails?.length <1" [fxShow]="!orderservice.onfetch">
+        <h3>You don't have any pending Orders</h3>
+        <p>Check Order History for orders already placed</p>
+        <p>Click on Add to Place New Orders</p>
+    </div>
+    
+    <div *ngIf="orderservice.onfetch" class="circle">
+        <br>
+        <mat-progress-spinner mode="indeterminate" color = "blue"></mat-progress-spinner>
+    </div>
+    </div>
+</div> 
+    <div fxFlexOrder="2" fxFlexOrder.lt-lg="1" fxFlex.lt-lg="1 1 100" fxFlex="1 1 auto" >
+        <br>
+        
+        <mat-card>
+            <p>Total sip  {{orderservice.sipamtacrosspf.value}}  </p>
+            <p>Total Onetime {{orderservice.onetimeamtacrosspf.value}} </p>
+            <div fxLayout="row">                
+                <span fxFlex></span>
+                <button mat-raised-button color="accent" *ngIf="!showit">Place order</button>
+                <button mat-raised-button color="accent" *ngIf="showit" (click)="refshclk()">Refresh</button>
+                
+            </div>
+            
+        </mat-card>   
+        </div>
+    </div>
+
+
+
+
+<!--
 <form [formGroup]="orForm" >
   <mat-toolbar color ="primary" >
     <button mat-raised-button color="warn" (click)="addonepf()" ><strong>Add Portfolio</strong></button>
@@ -56,7 +131,7 @@
                                 {{ pfnamecpy }}
                               </mat-option>                    
                             </mat-select-->
-                            <input matInput placeholder="Tran" formControlName="orsttransaction_type" ([ngModel])="orStocklist.orsttransaction_type">
+ <!--                           <input matInput placeholder="Tran" formControlName="orsttransaction_type" ([ngModel])="orStocklist.orsttransaction_type">
                           </mat-form-field>
   
                           <mat-form-field >
@@ -92,7 +167,7 @@
                            <button mat-icon-button (click)="showadvancedf(i,j)" ><mat-icon>arrow_drop_down</mat-icon>Advanced Options</button>
                             <!--button class="btt" (click)="showadvancedf(i,j)" ><mat-icon>arrow_drop_down</mat-icon>Advanced Options</button-->
   
-                        </div>
+<!--                        </div>
   
                       <div class="triangle-isosceles" [fxShow]="orStocklist.controls.orshowhide.value == 'true'">
                           <mat-form-field >
@@ -190,6 +265,6 @@
   </div> 
   </div> 
   </form>
+-->
   
-  
-  <pre>{{ orForm.value | json }}</pre>
+  <pre>{{ orderservice.pforderdetails | json }}</pre>

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, AfterViewInit} from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import {Router} from "@angular/router";
-import { NotificationsService } from '../../../../commonmodule/notifymodule/services/notifications.service';
+//import { NotificationsService } from '../../../../commonmodule/notifymodule/services/notifications.service';
 import { DbservicesService } from '../../../../natservices/dbservices.service';
 import { NotifyService } from '../../../../natservices/notify.service';
 import { NotificationComponent } from '../../../../commonmodule/notificationmodule/notification/notification.component'
@@ -70,7 +70,7 @@ export class PortfolioCardComponent implements OnInit
  
   constructor(private pffb: FormBuilder,
               private router: Router,
-              private notifyservice: NotificationsService,
+            //  private notifyservice: NotificationsService,
               private dbserivce :DbservicesService) { }
 
   
@@ -79,6 +79,7 @@ export class PortfolioCardComponent implements OnInit
     this.pfForm = this.pffb.group({ 
       pfPortfolioid:[null],
       pfuserid:[null],
+      pfScreen:["pfs",Validators.required],
       pfPortfolioname:[null,Validators.required],
       pfPurpose:[null],
       pfBeneUsers:[null,Validators.required],
@@ -95,7 +96,7 @@ export class PortfolioCardComponent implements OnInit
       pfStocklists:new FormArray([]),
       pfMFlists:new FormArray([])  
       });
-
+    this.Mypfdetail['pfscreen']="pfs";
     this.Mypfdetailcpy=JSON.parse(JSON.stringify(this.Mypfdetail));
 
   }

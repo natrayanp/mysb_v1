@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import { AsyncPipe } from '@angular/common';
 import { SettingspfService } from '../../../../natservices/settingspf.service';
-import { NotificationsService } from '../../../../commonmodule/notifymodule/services/notifications.service';
+//import { NotificationsService } from '../../../../commonmodule/notifymodule/services/notifications.service';
 import { NotifyService } from '../../../../natservices/notify.service';
 import { NotificationComponent } from '../../../../commonmodule/notificationmodule/notification/notification.component'
 import { DbservicesService } from '../../../../natservices/dbservices.service';
@@ -21,10 +21,15 @@ export class PortfolioListComponent implements OnInit {
   editi:number;
   totalpf:number;
   isEAModeon:boolean = false;
+  
+  pfdetails;
+  pfedetails=[];
+  pfcpydetails;
 
   empty_pfdetails=  {
     pfportfolioid: null,
     pfuserid: null,
+    pfscreen:"pfs",
     pfportfolioname: null,
     pfpurpose: null,
     pfbeneUsers: null,
@@ -61,9 +66,7 @@ export class PortfolioListComponent implements OnInit {
     ]
   };
 
-  pfdetails;
-  pfedetails=[];
-  pfcpydetails;
+
 
   constructor(private router: Router, 
               private spf :SettingspfService,
@@ -80,7 +83,7 @@ fetchpfdata(){
   this.dbserivce.dbaction('pf','fetch','').subscribe(
     data =>
           {        
-            this.pfdetails =data['body'];
+            this.pfdetails =data['body'];            
             this.totalpf=this.pfdetails.length;
             this.pfcpydetails=JSON.parse(JSON.stringify((this.pfdetails)));
             this.onfetch=false;
@@ -107,6 +110,7 @@ cardasave(pfformobj){
 
 
 callsavedbaction(formval){
+  console.log(formval);
   this.dbserivce.dbaction('pf','save',formval).subscribe(
     data => { 
               
@@ -131,7 +135,8 @@ callsavedbaction(formval){
 
 addNewPortfolio(){
    var empty_pfdetails_fornew=JSON.parse(JSON.stringify((this.empty_pfdetails)));
-   empty_pfdetails_fornew.pfportfolioid="New";
+   empty_pfdetails_fornew.pfportfolioid="NEW";
+   empty_pfdetails_fornew.pfscreen="pfs";
    this.pfedetails.unshift(empty_pfdetails_fornew);
 
    this.onAddmode=!this.onAddmode;

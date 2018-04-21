@@ -1,20 +1,28 @@
+
 <div fxLayout = "row" >
 <div fxFlex >
-    <label>Onetime Total Amount:</label>
     <p>
+    <label>Onetime Total Amount: <h3>{{cardpfonetimetotal| number}}</h3></label>
+</p>
+  <!--  <p> 
+        
         <label>
             <h3>{{cardpfonetimetotal| number}}</h3>
         </label>
     </p>
+-->
 </div>
 
 <div fxFlex>
-    <label>SIP Total Amount :</label>
-    <p>
+    <label>SIP Total Amount :<h3>{{cardpfsiptotal| number}}</h3></label>
+  <!--    <p>
         <label>
+    
+                 
             <h3>{{cardpfsiptotal| number}}</h3>
         </label>
     </p>
+-->
 </div>
 
 <div fxFlex>
@@ -28,7 +36,7 @@
    
 <mat-card>  
 <div fxLayout = "row" fxLayout.lt-md="row wrap" [fxHide]="!onEdit">
-<div  fxFlex="40%" fxFlex.lt-md="100%">
+<div  fxFlex="35%" fxFlex.lt-md="100%" style="padding-right:7%">
     <div> 
         <h3 [fxHide]="orMFlist.controls.orMFFndnameedit.value == 'edit'">{{orMFlist.controls.orMFFundname.value}} <button mat-icon-button (click)="edittog(orMFlist,k)" *ngIf="orMFlist.controls.orMFFndnameedit.value == 'noedit' && onEdit"><mat-icon style="color:Red;" [fxShow]="orMFlist.controls.orMFFndnameedit.value == 'noedit' && onEdit">edit</mat-icon></button></h3>
 
@@ -48,7 +56,9 @@
                 Please chose a valid fund
             </mat-error>              
             </mat-form-field>
-            <button  mat-icon-button (click)="edittog(orMFlist,k)" [fxShow]="orMFlist.controls.orMFFndnameedit.value == 'edit' && orMFlist.controls.orMFFundname.valid" ><mat-icon style="color:green;">check_circle</mat-icon></button>
+            <!--button  mat-icon-button (click)="edittog(orMFlist,k)" [fxShow]="orMFlist.controls.orMFFndnameedit== 'edit' && orMFlist.controls.orMFFundname.valid" ><mat-icon style="color:green;">check_circle</mat-icon></button-->
+
+            <button  mat-icon-button (click)="edittog(orMFlist,k)" [fxShow]="mypfdet.pfmflist[k].ormffndnameedit=== 'edit' && orMFlist.controls.orMFFundname.valid" ><mat-icon style="color:green;">check_circle</mat-icon></button>
 
         <mat-form-field [fxHide]="true">
             <input matInput formControlName="orMFFndnameedit" [(ngModel)]="mypfdet.pfmflist[k].ormffndnameedit" >
@@ -111,7 +121,7 @@
                     
                     <span class="example-full-width" [fxHide]="!onEdit" *ngIf="orMFfundorderlis.controls.orMFfundordelstrtyp.value !='SIP'"></span>
                     <mat-form-field  class="example-full-width" *ngIf="orMFfundorderlis.controls.orMFfundordelstrtyp.value =='SIP'" >
-                    <input type="text" placeholder="Frequency" matInput  formControlName="orMFfundordelsfreq" [matAutocomplete]="auto5" [readonly]="!onEdit || orMFfundorderlis.controls.orMFFndstatus.value != 'New'" [(ngModel)]="mypfdet.pfmflist[k].ormffundorderlists[l].ormffundordelsfreq">
+                    <input type="text" placeholder="Frequency" matInput  formControlName="orMFfundordelsfreq" [matAutocomplete]="auto5" [readonly]="!onEdit || orMFfundorderlis.controls.orMFFndstatus.value != rbsstr" [(ngModel)]="mypfdet.pfmflist[k].ormffundorderlists[l].ormffundordelsfreq">
                         <mat-autocomplete #auto5="matAutocomplete">
                         <div *ngFor="let fnsipdts of orMFlist.controls.orMFDathold.value">                                 
                             <mat-option *ngFor="let fnsipd of fnsipdts.fnsipdt" [value]="fnsipd.sipfreq" (onSelectionChange)="freqSelectchange(orMFfundorderlis.controls,fnsipd)">
@@ -123,7 +133,7 @@
 
                     <mat-form-field class="example-full-width">
                         <!--(orMFlist.controls.ormfDathold.value)[0].fndminpuramt,(orMFlist.controls.ormfDathold.value)[0].fndmaxpuramt,(orMFfundorderlis.controls.ormfSelctedSip.value).sipminamt,(orMFfundorderlis.controls.ormfSelctedSip.value).sipmaxamt)     -->
-                        <input matInput placeholder="Amount" formControlName="orMFfundordelsamt" [readonly]="!onEdit || orMFfundorderlis.controls.orMFFndstatus.value != 'New'" [(ngModel)]="mypfdet.pfmflist[k].ormffundorderlists[l].ormffundordelsamt" (change)="validateamt(orMFfundorderlis,orMFlist)">
+                        <input matInput placeholder="Amount" formControlName="orMFfundordelsamt" [readonly]="!onEdit || orMFfundorderlis.controls.orMFFndstatus.value != rbsstr" [(ngModel)]="mypfdet.pfmflist[k].ormffundorderlists[l].ormffundordelsamt" (change)="validateamt(orMFfundorderlis,orMFlist)">
 
                         <mat-error                            
                             *ngIf="!orMFfundorderlis.controls.orMFfundordelsamt.valid && 
@@ -146,7 +156,7 @@
 
                     <span class="example-full-width" [fxHide]="!onEdit" *ngIf="orMFfundorderlis.controls.orMFfundordelstrtyp.value !='SIP'"></span>
                     <mat-form-field class="example-full-width"  *ngIf="orMFfundorderlis.controls.orMFfundordelstrtyp.value=='SIP'" >
-                        <input type="text" matInput  placeholder="SIP on" [readonly]="!onEdit || orMFfundorderlis.controls.orMFFndstatus.value != 'New'" formControlName="orMFfundordelsstdt" [matAutocomplete]="auto6" [(ngModel)]="mypfdet.pfmflist[k].ormffundorderlists[l].ormffundordelsstdt"
+                        <input type="text" matInput  placeholder="SIP on" [readonly]="!onEdit || orMFfundorderlis.controls.orMFFndstatus.value != rbsstr" formControlName="orMFfundordelsstdt" [matAutocomplete]="auto6" [(ngModel)]="mypfdet.pfmflist[k].ormffundorderlists[l].ormffundordelsstdt"
                             [readonly]="!onEdit">                   
                         <mat-autocomplete #auto6="matAutocomplete">
                             <!--mat-option *ngFor="let sipdate of orMFfundorderlis.controls.ormfSipdthold.value" [value]="sipdate" (onSelectionChange)="filterss(orMFfundorderlis.controls,(orMFlist.controls.orMFFundorderlists.value))"-->
@@ -160,14 +170,14 @@
                     <!-- SIP END DATE -->
                     <mat-form-field class="example-full-width" *ngIf="orMFfundorderlis.controls.orMFfundordelsfreq.value ==='DAILY' && orMFfundorderlis.controls.orMFfundordelstrtyp.value ==='SIP'"> 
                         <input matInput [min]="today" [matDatepicker]="picker2" placeholder="SIP Untill" formControlName="orMFsipendt" 
-                        [(ngModel)]="mypfdet.pfmflist[k].ormffundorderlists[l].ormfsipendt" [readonly]="!onEdit || orMFfundorderlis.controls.orMFFndstatus.value != 'New'">
+                        [(ngModel)]="mypfdet.pfmflist[k].ormffundorderlists[l].ormfsipendt" [readonly]="!onEdit || orMFfundorderlis.controls.orMFFndstatus.value != rbsstr">
                         <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                         <mat-datepicker #picker2></mat-datepicker>
                         <mat-hint>Min installment {{(orMFfundorderlis.controls.ormfSelctedSip.value).sipmininstal}}</mat-hint>
                     </mat-form-field>
                     
                     <mat-form-field class="example-full-width"  *ngIf="orMFfundorderlis.controls.orMFfundordelsfreq.value !=='DAILY' && orMFfundorderlis.controls.orMFfundordelstrtyp.value =='SIP'">                            
-                        <input matInput placeholder="Instalments" [readonly]="!onEdit || orMFfundorderlis.controls.orMFFndstatus.value != 'New'" formControlName="orMFsipinstal" [(ngModel)]="mypfdet.pfmflist[k].ormffundorderlists[l].ormfsipinstal" >                              
+                        <input matInput placeholder="Instalments" [readonly]="!onEdit || orMFfundorderlis.controls.orMFFndstatus.value != rbsstr" formControlName="orMFsipinstal" [(ngModel)]="mypfdet.pfmflist[k].ormffundorderlists[l].ormfsipinstal" >                              
                         <mat-error *ngIf="!orMFfundorderlis.controls.orMFsipinstal.valid">                                
                             Min {{(orMFfundorderlis.controls.ormfSelctedSip.value).sipmininstal}} Max {{(orMFfundorderlis.controls.ormfSelctedSip.value).sipmaxinstal}}
                         </mat-error>
@@ -176,7 +186,7 @@
 
                     
                     
-                    <button mat-icon-button (click)="deleteMFRow(orMFlist.controls,k,l)" [fxShow]="onEdit && (orMFfundorderlis.controls.orMFFndstatus.value == 'New')"><mat-icon mat-48 style="color:red">delete_forever</mat-icon></button>
+                    <button mat-icon-button (click)="deleteMFRow(orMFlist.controls,k,l)" [fxShow]="onEdit && (orMFfundorderlis.controls.orMFFndstatus.value == rbsstr)"><mat-icon mat-48 style="color:red">delete_forever</mat-icon></button>
                     <br>
                     <br>
             </div>
@@ -227,5 +237,4 @@
             <mat-icon fxAlign="end">add_circle</mat-icon>
         </button>
         <strong [fxHide]="!onEdit" style="color:blue; font:8px; margin-left:-10px; ">Add Fund</strong>
-    
       

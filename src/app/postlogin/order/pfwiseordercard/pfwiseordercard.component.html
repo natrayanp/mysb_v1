@@ -1,0 +1,159 @@
+<form [formGroup]="pfForm">
+        <input matInput [fxHide]="true" formControlName="pfOnetimetotal" [(ngModel)]="Mypfdetail.pfonetimetotal" (ngModelChange)="onetimeonChange()">
+        <input matInput [fxHide]="true" formControlName="pfSiptotal" [(ngModel)]="Mypfdetail.pfsiptotal" (ngModelChange)="onetimeonChange()">
+      
+        <mat-card [ngClass]="{'shadow':onEdit}" style="margin-top:15px; border-radius:10px" >
+            <mat-card-header>
+                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 1 100%">
+    
+                    <mat-card-title [fxShow]="Mypfdetail.pfnameadd!='edit'">
+                        <h1>{{Mypfdetail.pfportfolioname}}</h1>
+                    </mat-card-title>
+    
+                    <mat-form-field [fxShow]="Mypfdetail.pfnameadd =='edit'" fxFlex>
+
+
+                            
+                                    <mat-select placeholder="Portfolioname"  [(value)]="orderservice.selected2" >
+                                      <mat-option *ngFor="let fundname of fundnames" [value]="fundname.pfportfolioname ">
+                                        {{ fundname.pfportfolioname }}
+                                      </mat-option>
+                                    </mat-select>
+                                  
+
+                    <!--    <input matInput placeholder="Portfolioname" [matAutocomplete]="fnauto" [disabled]=true formControlName="pfPortfolioname" [(ngModel)]="Mypfdetail.pfportfolioname"
+                            (keyup)="chtoupper()">
+                            <mat-autocomplete #fnauto="matAutocomplete" (optionSelected)="formpopulate($event)" >
+                                <mat-option *ngFor="let fundname of fundnames" [value]="fundname" >
+                                    <!--img style="vertical-align:middle;" aria-hidden src="{{state.flag}}" height="25" /-->
+      <!--                              <span>{{ fundname.pfportfolioname }}</span> |
+                                    <!--small>Population: {{state.population}}</small-->
+          <!--                      </mat-option>
+                            </mat-autocomplete> 
+                    
+                        -->      
+                    
+                    
+                            <mat-error *ngIf="!pfForm.controls['pfPortfolioname'].valid">
+                            Portfolioname is
+                            <strong>required</strong>
+                        </mat-error>
+                        <mat-error *ngIf="pfForm.controls.pfPortfolioname.hasError('nameincorct')">                                                                
+                                Please chose a valid Portfolioname
+                            </mat-error>  
+                    
+                    
+                    </mat-form-field>
+                    <button  mat-icon-button (click)="pfconfirm(Mypfdetail)" [fxShow]="Mypfdetail.pfnameadd=='edit' || EAMode=='true'" ><mat-icon style="color:green;">check_circle</mat-icon></button>
+                </div>
+                <label style="color:green">{{myindex + 1}}</label>
+
+            </mat-card-header>
+            <mat-card-content>
+                <!--  This is for NONEDIT START-->
+
+
+                <div [fxHide]="onEdit" fxLayout="row wrap">
+    
+    
+    
+                    <div [fxHide]="true">
+                        <input matInput fxFlex="100%" formControlName="pfPortfolioid" [(ngModel)]="Mypfdetail.pfportfolioid" [fxHide]="true">
+                        <input matInput fxFlex="100%" formControlName="pfuserid" [(ngModel)]="Mypfdetail.pfuserid" [fxHide]="true">
+                        <input matInput fxFlex="100%" formControlName="pfScreen" [(ngModel)]="Mypfdetail.pfscreen" [fxHide]="true">
+                        <input matInput fxFlex="100%" formControlName="pfBeneUsers" [(ngModel)]="Mypfdetail.pfbeneUsers" [fxHide]="true">
+                    </div>
+    
+
+    
+                </div>
+    
+                <!--  This is for NONEDIT END-->
+    
+    
+                <!--  This is for edit START-->
+    
+                <div [fxHide]="!onEdit" fxLayout="row wrap" fxLayoutGap="10px">    
+
+    
+    
+    
+                </div>
+                <!--  This is for edit END-->
+    
+                <!-- This is for any new row >
+    
+                <div fxFlexLayout="row" fxLayoutAlign="center center">
+                </div-->
+       
+                <app-orderfinal [pfMFlistsFormArray]="pfForm.controls['pfMFlists']"
+                [mypfdet]="Mypfdetail"
+                [onEdit]=true
+                [rbsstr]="'INCART'"                                   
+                ></app-orderfinal>   
+                <!--https://gist.github.com/dherges/e1ecdd03a319fbd2a5495f54fbc1ea87#file-nested-form-component-ts -->      
+                
+        <!--
+                <div fxLayout="row" fxLayoutAlign="center center"  >
+                    <mat-expansion-panel fxFlex="1 1 auto">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title fxFlexAlign="center" style="color:rgb(74, 23, 190)">
+                                <h3>Mutual Fund List</h3>
+                            </mat-panel-title>
+                            <mat-panel-description fxFlexAlign="center">
+                                Funds Planned
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+
+                  
+                    </mat-expansion-panel>
+    
+                </div>
+            -->
+    
+
+            </mat-card-content>
+    
+            <!--mat-card-actions>
+                <div fxLayout="row wrap" fxLayoutAlign="center center">
+    
+                    <button mat-raised-button (click)="cancel_cardedit(index)" color="warn" [fxHide]="!onEdit"><strong>Cancel</strong></button>
+    
+                    <button mat-raised-button (click)="UserEdit($event)" color="accent" [fxHide]="onEdit" [disabled]="EAMode"><strong>Edit</strong></button>
+                    <span fxFlex="30" [fxHide]="!onEdit"></span>
+                    
+                    <button mat-raised-button  (click)="pfexecute($event)" [fxHide]="onEdit || !showex()" style="background-color:lightgreen;"><strong>Add To Cart</strong></button>
+
+                    <button mat-raised-button (click)="save_cardedit(pfForm)" color="accent" [fxHide]="!onEdit"><strong> Save</strong></button>
+    
+    
+                </div>
+            </mat-card-actions-->
+    
+        </mat-card>
+       
+    </form>
+  <!--  
+    <pre>{{pfmfdathold | json}}</pre>
+  
+        ##### DON NOT DELETED.  THIS IS FOR DEBUGGING ##### 
+  
+  
+    <div fxLayout="column">
+            <pre>{{pfForm.value | json}}</pre>
+    </div>
+    <div style="display: flex; justify-content: right;">
+            <div style="padding: 1em; border: 1px solid lightgray;">
+              <h5>pfForm Controls:</h5>
+              <pre>{{ pfForm.value | json }}</pre>
+            </div>
+            <div style="padding: 1em; border: 1px solid lightgray;">
+              <h5>Mypfdetail</h5>
+              <pre>{{ Mypfdetail | json }}</pre>
+            </div>
+            <div style="padding: 1em; border: 1px solid lightgray;">
+                    <h5>Mypfdetail</h5>
+                    <pre>{{ Mypfdetail | json }}</pre>
+                  </div>
+          </div>
+    <!--##### DON NOT DELETED.  THIS IS FOR DEBUGGING #####-->

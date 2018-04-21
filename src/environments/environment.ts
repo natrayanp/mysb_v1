@@ -55,9 +55,11 @@ export const environment = {
   pfUrl:"http://127.0.0.1:8000",
   //pfUrl:"http://127.0.0.1:5000/",
   pffetch:"pfdatafetch",
+  pforderfetch:"pforderdatafetch",
   executepf:"executepf",
   pfsave:"pfdatasave",
- fundUrl:"http://127.0.0.1:8000",
+  fundUrl:"http://127.0.0.1:8000",
   //fundUrl:"http://127.0.0.1:5000/",
-  fundfetch:"funddatafetch"
+  fundfetch:"funddatafetch",
+  pfmainfetch:"onlypf"
 };

@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 //import { HttpModule }    from '@angular/http';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 
-import { NotifymoduleModule } from './commonmodule/notifymodule/notifymodule.module';
+//import { NotifymoduleModule } from './commonmodule/notifymodule/notifymodule.module';
 import { environment } from '../environments/environment';
 
 import { MatSidenavModule } from '@angular/material';
@@ -32,9 +32,9 @@ import { MatDatepickerModule,MatNativeDateModule } from '@angular/material';
 import { MatPaginatorModule } from '@angular/material';
 import { MatTableModule } from '@angular/material';
 import { MatButtonToggleModule } from '@angular/material';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
-
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatDividerModule } from '@angular/material/divider';
 
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -71,9 +71,10 @@ import { SettingspfService } from './natservices/settingspf.service';
 import { NatInterceptor } from './natservices/natinterceptor';
 import { FundallocatComponent } from './postlogin/fundallocat/fundallocat.component';
 import { OrderComponent } from './postlogin/order/order.component';
-import { OrderdbservService } from "./natservices/orderdbserv.service";
+import { OrderservService } from "./natservices/orderserv.service";
 import { DbservicesService } from "./natservices/dbservices.service";
-import { PfwiseorderComponent } from './postlogin/order/pfwiseorder/pfwiseorder.component';
+import { PfwiseorderlistComponent } from './postlogin/order/pfwiseorderlist/pfwiseorderlist.component';
+import { PfwiseordercardComponent } from './postlogin/order/pfwiseordercard/pfwiseordercard.component';
 import { StkwiseorderComponent } from './postlogin/order/stkwiseorder/stkwiseorder.component';
 import { OrderfinalComponent } from './postlogin/order/orderfinal/orderfinal.component';
 
@@ -124,7 +125,8 @@ import { NoticommComponent } from './commonmodule/notificationmodule/noticomm/no
     PfserviceService,
     FundallocatComponent,
     OrderComponent,
-    PfwiseorderComponent,
+    PfwiseorderlistComponent,
+    PfwiseordercardComponent,
     StkwiseorderComponent,
     OrderfinalComponent,
     SignupComponent,
@@ -168,8 +170,9 @@ import { NoticommComponent } from './commonmodule/notificationmodule/noticomm/no
       MatButtonToggleModule,
       MatCheckboxModule,
       MatProgressBarModule,
+      MatDividerModule,
     RouterModule.forRoot(ROUTES /*,{enableTracing: true }*/),
-    NotifymoduleModule,
+   // NotifymoduleModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule
@@ -177,7 +180,7 @@ import { NoticommComponent } from './commonmodule/notificationmodule/noticomm/no
   entryComponents: [PfqtypopupComponent],
   providers: [GooglePieChartService,
               SettingspfService,
-              OrderdbservService,
+              OrderservService,
               DbservicesService,
               {provide: HTTP_INTERCEPTORS,useClass: NatInterceptor, multi: true,},
               {provide: MAT_DATE_LOCALE, useValue: 'en-IN'},
