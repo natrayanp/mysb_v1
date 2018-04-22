@@ -86,11 +86,11 @@
                 <div fxFlexLayout="row" fxLayoutAlign="center center">
                 </div-->
        
-                <app-orderfinal [pfMFlistsFormArray]="pfForm.controls['pfMFlists']"
+                <mffundlist [pfMFlistsFormArray]="pfForm.controls['pfMFlists']"
                 [mypfdet]="Mypfdetail"
-                [onEdit]=true
+                [onEdit]="onEdit"
                 [rbsstr]="'INCART'"                                   
-                ></app-orderfinal>   
+                ></mffundlist>   
                 <!--https://gist.github.com/dherges/e1ecdd03a319fbd2a5495f54fbc1ea87#file-nested-form-component-ts -->      
                 
         <!--

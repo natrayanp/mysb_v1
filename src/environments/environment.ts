@@ -51,15 +51,16 @@ export const environment = {
   Filelist:"uploadedfilelist",
   Filedelete:"uploadedfiledelete",
   Finalsubmit:"uploadedfilesubmit",
-  //Fileupload EndPoints END
-  pfUrl:"http://127.0.0.1:8000",
-  //pfUrl:"http://127.0.0.1:5000/",
-  pffetch:"pfdatafetch",
-  pforderfetch:"pforderdatafetch",
-  executepf:"executepf",
-  pfsave:"pfdatasave",
-  fundUrl:"http://127.0.0.1:8000",
-  //fundUrl:"http://127.0.0.1:5000/",
-  fundfetch:"funddatafetch",
-  pfmainfetch:"onlypf"
+  // Fileupload EndPoints END
+  pfUrl: 'http://127.0.0.1:8000',
+  pffetch: 'pfdatafetch',
+  executepf: 'executepf',
+  pfsave: 'pfdatasave',
+  pfmainfetch: 'onlypf',
+  fundUrl: 'http://127.0.0.1:8000',
+  // fundUrl:"http://127.0.0.1:5000/",
+  fundfetch: 'funddatafetch',
+  orderUrl: 'http://127.0.0.1:8000',
+  pforderfetch: 'mforderdatafetch',
+  saveforlater: 'mfordersave',
 };

@@ -1,17 +1,16 @@
 import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import { OrderdbservService } from '../../../natservices/orderdbserv.service';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
-import { NotifyService } from '../../../natservices/notify.service';
-import { NotificationComponent } from '../../../commonmodule/notificationmodule/notification/notification.component'
-import { DbservicesService } from '../../../natservices/dbservices.service';
-import { OrderservService } from '../../../natservices/orderserv.service';
+import { NotifyService } from '../../../../natservices/notify.service';
+import { NotificationComponent } from '../../../../commonmodule/notificationmodule/notification/notification.component'
+import { DbservicesService } from '../../../../natservices/dbservices.service';
+import { OrderservService } from '../../../../natservices/orderserv.service';
 
 @Component({
-  selector: 'app-pfwiseordercard',
-  templateUrl: './pfwiseordercard.component.html',
-  styleUrls: ['./pfwiseordercard.component.scss']
+  selector: 'mfpfwiseordercard',
+  templateUrl: './mfpfwiseordercard.component.html',
+  styleUrls: ['./mfpfwiseordercard.component.scss']
 })
-export class PfwiseordercardComponent implements OnInit {
+export class mfpfwiseordercardComponent implements OnInit {
   public pfForm : FormGroup;
 
 
@@ -150,8 +149,8 @@ showex() {
 */
 
 onetimeonChange() {
-  this.orderservice.pforderdetails[this.myindex].pfsiptotal = this.Mypfdetail.pfsiptotal;
-  this.orderservice.pforderdetails[this.myindex].pfonetimetotal = this.Mypfdetail.pfonetimetotal;
+  this.orderservice.mforderdetails[this.myindex].pfsiptotal = this.Mypfdetail.pfsiptotal;
+  this.orderservice.mforderdetails[this.myindex].pfonetimetotal = this.Mypfdetail.pfonetimetotal;
   this.orderservice.gettotalacrosspf();
   console.log("emiting");
   //this.calctotalamt.emit();

@@ -2,10 +2,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-//import { HttpModule }    from '@angular/http';
+// import { HttpModule }    from '@angular/http';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 
-//import { NotifymoduleModule } from './commonmodule/notifymodule/notifymodule.module';
+// import { NotifymoduleModule } from './commonmodule/notifymodule/notifymodule.module';
 import { environment } from '../environments/environment';
 
 import { MatSidenavModule } from '@angular/material';
@@ -49,19 +49,19 @@ import { RouterModule, PreloadAllModules } from '@angular/router';
 import { ROUTES } from './app.routes';
 import { ToolbarComponent } from './home/toolbar/toolbar.component';
 import { LoginComponent } from './home/login/login.component';
-//import { Dialog1 } from './home/login/login.component';
+// import { Dialog1 } from './home/login/login.component';
 import { UserstateService } from './natservices/userstate.service';
 import { LogincheckComponent } from './logincheck/logincheck.component';
 import { PostloginComponent } from './postlogin/postlogin.component';
 import { PostlogintoolbarComponent } from './postlogin/postlogintoolbar/postlogintoolbar.component';
 import { DashboardComponent } from './postlogin/dashboard/dashboard.component';
-import { OrdersComponent } from './postlogin/orders/orders.component';
-import { PfqtypopupComponent } from './postlogin/orders/pfqtypopup/pfqtypopup.component';
+// import { OrdersComponent } from './postlogin/orders/orders.component';
+// import { PfqtypopupComponent } from './postlogin/orders/pfqtypopup/pfqtypopup.component';
 import { SettingsComponent } from './postlogin/settings/settings.component';
 import { UserssetupComponent } from './postlogin/settings/userssetup/userssetup.component';
 import { UserListComponent } from './postlogin/settings/userssetup/user-list/user-list.component';
 import { UserCardComponent } from './postlogin/settings/userssetup/user-card/user-card.component';
-import { PortfoliosetupComponent } from './postlogin/settings/portfoliosetup/portfoliosetup.component';
+// import { PortfoliosetupComponent } from './postlogin/settings/portfoliosetup/portfoliosetup.component';
 import { PortfolioCardComponent } from './postlogin/settings/portfoliosetup/portfolio-card/portfolio-card.component';
 import { PortfolioListComponent } from './postlogin/settings/portfoliosetup/portfolio-list/portfolio-list.component';
 import { GooglePieChartService } from './googlechartservice/google-pie-chart.service';
@@ -70,13 +70,12 @@ import { PfserviceService } from './natservices/pfservice.service';
 import { SettingspfService } from './natservices/settingspf.service';
 import { NatInterceptor } from './natservices/natinterceptor';
 import { FundallocatComponent } from './postlogin/fundallocat/fundallocat.component';
-import { OrderComponent } from './postlogin/order/order.component';
-import { OrderservService } from "./natservices/orderserv.service";
-import { DbservicesService } from "./natservices/dbservices.service";
-import { PfwiseorderlistComponent } from './postlogin/order/pfwiseorderlist/pfwiseorderlist.component';
-import { PfwiseordercardComponent } from './postlogin/order/pfwiseordercard/pfwiseordercard.component';
+import { OrderservService } from './natservices/orderserv.service';
+import { DbservicesService } from './natservices/dbservices.service';
+import { mfpfwiseorderlistComponent } from './postlogin/order/mforder/mfpfwiseorderlist/mfpfwiseorderlist.component';
+import { mfpfwiseordercardComponent } from './postlogin/order/mforder/mfpfwiseordercard/mfpfwiseordercard.component';
 import { StkwiseorderComponent } from './postlogin/order/stkwiseorder/stkwiseorder.component';
-import { OrderfinalComponent } from './postlogin/order/orderfinal/orderfinal.component';
+import { mffundlistComponent } from './postlogin/order/mforder/mffundlist/mffundlist.component';
 
 
 
@@ -112,23 +111,23 @@ import { NoticommComponent } from './commonmodule/notificationmodule/noticomm/no
     PostloginComponent,
     PostlogintoolbarComponent,
     DashboardComponent,
-    OrdersComponent,
-    PfqtypopupComponent,
+    // OrdersComponent,
+    // PfqtypopupComponent,
     SettingsComponent,
     UserssetupComponent,
     UserListComponent,
     UserCardComponent,
-    PortfoliosetupComponent,
+    // PortfoliosetupComponent,
     PortfolioCardComponent,
     PortfolioListComponent,
     ChartComponent,
     PfserviceService,
     FundallocatComponent,
-    OrderComponent,
-    PfwiseorderlistComponent,
-    PfwiseordercardComponent,
+    // OrderComponent,
+    mfpfwiseorderlistComponent,
+    mfpfwiseordercardComponent,
     StkwiseorderComponent,
-    OrderfinalComponent,
+    mffundlistComponent,
     SignupComponent,
     BsestarmfregistrationComponent,
     BannerComponent,
@@ -150,7 +149,7 @@ import { NoticommComponent } from './commonmodule/notificationmodule/noticomm/no
       FlexLayoutModule,
       MatInputModule,
       MatFormFieldModule,
-      MatAutocompleteModule,    
+      MatAutocompleteModule,
       FormsModule,
       ReactiveFormsModule,
       MatSlideToggleModule,
@@ -163,8 +162,8 @@ import { NoticommComponent } from './commonmodule/notificationmodule/noticomm/no
       MatTabsModule,
       MatProgressSpinnerModule,
       MatDialogModule,
-      MatSnackBarModule,      
-      MatDatepickerModule,MatNativeDateModule,
+      MatSnackBarModule,
+      MatDatepickerModule, MatNativeDateModule,
       MatPaginatorModule,
       MatTableModule,
       MatButtonToggleModule,
@@ -177,7 +176,7 @@ import { NoticommComponent } from './commonmodule/notificationmodule/noticomm/no
     AngularFireDatabaseModule,
     AngularFireAuthModule
   ],
-  entryComponents: [PfqtypopupComponent],
+  // entryComponents: [PfqtypopupComponent],
   providers: [GooglePieChartService,
               SettingspfService,
               OrderservService,

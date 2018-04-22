@@ -1,16 +1,16 @@
 import { Component, OnInit, Input, Output, EventEmitter}  from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
-import { DbservicesService } from '../../../natservices/dbservices.service';
+import { DbservicesService } from '../../../../natservices/dbservices.service';
 import { empty } from 'rxjs/observable/empty';
 
 const resolvedPromise = Promise.resolve(null);
 
 @Component({
-  selector: 'app-orderfinal',
-  templateUrl: './orderfinal.component.html',
-  styleUrls: ['./orderfinal.component.scss']
+  selector: 'mffundlist',
+  templateUrl: './mffundlist.component.html',
+  styleUrls: ['./mffundlist.component.scss']
 })
-export class OrderfinalComponent  {
+export class mffundlistComponent  {
 
 
 
@@ -65,7 +65,7 @@ constructor(private orfb: FormBuilder,
 
   ngOnInit() {
 
-    this.addPortfolio();    
+    this.addPortfolio();
     this.populateform();
     //this.populateform1();
   }
@@ -95,13 +95,15 @@ constructor(private orfb: FormBuilder,
   populateform1(){
     console.log(this.rbsstr);
     console.log(this.mypfdet);
-    if(this.mypfdet.pfmflist != null){  
+    if(this.mypfdet.pfmflist != null){
       this.mypfdet.pfmflist.forEach((recor,index1) => {
         if (recor.ormffundorderlists != null) {
           if(recor.ormffundorderlists !== '') {
-            recor.ormffundorderlists.forEach((recor1,index2) => {              
+            console.log(recor.ormffundorderlists);
+            recor.ormffundorderlists.forEach((recor1,index2) => {
+              console.log(recor1);
               this.populatesip(
-                (<FormArray>this.orForm.controls.orpflists).controls,index1,index2);              
+                (<FormArray>this.orForm.controls.orpflists).controls,index1,index2)
           })
         }
         } 
@@ -145,7 +147,12 @@ populatesip(controln,index1,index2){
   const controll2=(<FormArray>((<FormGroup>this.pfMFlistsFormArray.controls[index1]).controls).orMFFundorderlists);
   const controll3 = (<FormGroup>controll2.controls[index2]).controls;
   const controll4= (controll3).orMFfundordelsfreq;
-  if(controll3.orMFfundordelstrtyp.value == "SIP"){
+  console.log(controll3.orMFfundordelstrtyp.value);
+  console.log(controll4);
+  console.log(controll3);
+  console.log(controll1);
+  console.log();
+  if(controll3.orMFfundordelstrtyp.value === 'SIP' && typeof(controll1.value[0]) !== 'undefined') {
     controll3.ormfSelctedSip.patchValue(controll1.value[0].fnsipdt.filter(rec => rec.sipfreq == controll4.value));
     controll3.ormfSipdthold.patchValue(controll3.ormfSelctedSip.value[0].sipfreqdates);
   }
@@ -171,16 +178,13 @@ initorMFlists(valuelist) {
     .subscribe(        
         queryField => {  
                  
-                        this.fundnames=queryField['body'];
-                       
+                        this.fundnames= queryField['body'];
                         this.fundnames.length >0? console.log(this.fundnames):0;
-
+                        console.log(this.fundnames);
                         if(this.fundnames.length == 1){
-                          
-                  
-                         
                           mfform.get('orMFDathold').patchValue(this.fundnames.length >0? this.fundnames :{});
                           mfform.get('orMFFndcode').patchValue(this.fundnames.length ==1? this.fundnames[0]['fndschcdfrmbse'] :{});
+
                           if(mfform.get('orMFDathold')!= {}){
                             this.populateform1();
                           }

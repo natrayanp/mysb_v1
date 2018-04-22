@@ -18,10 +18,12 @@
 <alerts></alerts>
 
 <div fxLayout="row wrap" fxLayoutGap="10px">    
-      
+    
+  <!-- This is the code for edit card : START-->
     <div  *ngFor="let pfedetail of pfedetails" fxFlex.lt-lg="1 1 100" fxFlex="1 1 100" >            
         <app-portfolio-card [Mypfdetail] = "pfedetail" [myindex]="editi" [onEdit]="true" [EAMode]="false" (cardcancel)="cardacancel($event,index)" (cardsave)="cardasave($event,formval)"> </app-portfolio-card>
     </div>  
+  <!-- This is the code for edit card : END-->
    <!--   
     <div fxFlex.lt-lg="1 1 100" fxFlex="1 1 100" >      
       <mat-form-field>
@@ -29,10 +31,12 @@
       </mat-form-field>
     </div>
   -->
+  <!-- This is the code for Showing the card : START-->
   <div *ngFor="let pfdetail of pfdetails; let i = index" fxFlex.lt-lg="1 1 100" fxFlex="1 1 49" >      
     <app-portfolio-card [Mypfdetail] = "pfdetail" [myindex]="i" [onEdit]="false" [EAMode]="isEAModeon" (cardcancel)="cardacancel($event,index)" (cardsave)="cardasave($event,formval)" (cardedit)="cardaedit($event,index)" (cardexecute)="executepf($event,index)"> </app-portfolio-card>
   </div>
-
+  <!-- This is the code for Showing the  card : END-->
+  
 <div *ngIf="totalpf<1 && pfedetails.length <1" [fxShow]="!onfetch">
     <h3>You don't have any portfolio yet</h3>
     <p>Click on Add to start your journey</p>

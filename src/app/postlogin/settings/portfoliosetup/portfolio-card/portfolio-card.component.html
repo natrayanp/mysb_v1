@@ -208,11 +208,11 @@
                             </mat-panel-description>
                         </mat-expansion-panel-header>
 
-                        <app-orderfinal [pfMFlistsFormArray]="pfForm.controls['pfMFlists']"
+                        <mffundlist [pfMFlistsFormArray]="pfForm.controls['pfMFlists']"
                                         [mypfdet]="Mypfdetailcpy"
                                         [onEdit]="onEdit"
                                         [rbsstr]="'NEW'"
-                                        ></app-orderfinal>   
+                                        ></mffundlist>   
                                         <!--https://gist.github.com/dherges/e1ecdd03a319fbd2a5495f54fbc1ea87#file-nested-form-component-ts -->      
                                         
                     </mat-expansion-panel>
@@ -247,7 +247,7 @@
   
         ##### DON NOT DELETED.  THIS IS FOR DEBUGGING ##### 
   
-  -->
+
     <div fxLayout="column">
             <pre>{{pfForm.value | json}}</pre>
     </div>

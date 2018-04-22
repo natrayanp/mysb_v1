@@ -6,8 +6,8 @@ import { DbservicesService } from '../../../../natservices/dbservices.service';
 import { NotifyService } from '../../../../natservices/notify.service';
 import { NotificationComponent } from '../../../../commonmodule/notificationmodule/notification/notification.component'
 
-import { OrderfinalComponent } from '../../../../postlogin/order/orderfinal/orderfinal.component'
-                
+import { mffundlistComponent } from '../../../../postlogin/order/mforder/mffundlist/mffundlist.component'
+
 
 import { empty } from 'rxjs/observable/empty';
 import { element } from 'protractor';
@@ -23,8 +23,7 @@ export class PortfolioCardComponent implements OnInit
 
   public pfForm : FormGroup;
 
-  ngAfterViewInit() {
-  }
+  ngAfterViewInit() {  }
 
   summed: number;
   balanceleft:number = 0;

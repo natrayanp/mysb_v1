@@ -1,0 +1,78 @@
+
+
+<mat-toolbar color ="primary" >
+        <label>&nbsp; <strong>Order Placement</strong> &nbsp;</label>
+        <span>&nbsp;</span>  
+        <p style="font-size:8px"> *Changes will be lost if it is not saved before navigating away from this page</p>    
+      </mat-toolbar>
+      <mat-toolbar color ="primary" *ngIf="fundnames !='allused'">
+      <button mat-raised-button color="warn" (click)="addNewPortfolio()" [disabled] = "isEAModeon || !editmode" ><strong>Add portfolio for order addition</strong></button>
+    </mat-toolbar>
+
+    <br>
+    <alerts></alerts>
+
+
+    
+    <div fxLayout="row wrap" fxLayoutGap="10px">    
+
+        
+    <div fxLayout="column" fxFlex="70" fxFlex.lt-lg="100" fxFlexOrder.lt-lg="2" fxFlexOrder="1">
+      <div *ngFor="let pfdetail of orderservice.mforderdetails; let i = index" 
+      fxFlex.lt-lg="1 1 100" fxFlex="1 1 auto" 
+      >        
+        <mfpfwiseordercard [Mypfdetail] = "pfdetail" 
+                            [myindex]="i" 
+                            [onEdit]="editmode" 
+                            [EAMode]="isEAModeon" 
+                            [fundnames]="fundnames"
+                            (cardsave)="cardasave($event,ind)" 
+                            > 
+        </mfpfwiseordercard>
+    
+    
+    <div *ngIf="orderservice.mforderdetails?.length <1" [fxShow]="!orderservice.onfetch">
+        <h3>You don't have any pending Orders</h3>
+        <p>Check Order History for orders already placed</p>
+        <p>Click on Add to Place New Orders</p>
+    </div>
+    
+    <div *ngIf="orderservice.onfetch" class="circle">
+        <br>
+        <mat-progress-spinner mode="indeterminate" color = "blue"></mat-progress-spinner>
+    </div>
+    </div>
+</div> 
+    <div fxFlexOrder="2" fxFlexOrder.lt-lg="1" fxFlex.lt-lg="1 1 100" fxFlex="1 1 auto" >
+        <br>
+        
+        <mat-card>
+            <p>Every Month you Invest : {{orderservice.sipamtacrosspf.value}} </p>
+            <p>Amount you pay now : {{orderservice.onetimeamtacrosspf.value}} </p>
+            <div *ngIf="orderservice.onsavelater" class="circle">
+                <br>
+                <mat-progress-spinner mode="indeterminate" color = "blue"></mat-progress-spinner>
+            </div>
+            <div fxLayout="row">                
+                <!--span fxFlex></span>
+                <button mat-raised-button color="accent" *ngIf="!showit">Place order</button>
+                <button mat-raised-button color="accent" *ngIf="showit" (click)="refshclk()">Refresh</button-->
+                <div *ngIf="!orderservice.onsavelater" class="circle">
+                    <button mat-raised-button color="accent" *ngIf="showit && editmode" (click)="savordforlater()">Save for Later</button>
+                    <button mat-raised-button color="accent" *ngIf="!editmode" (click)="backbtn()">back</button>
+                    <span fxFlex></span>
+                    <button mat-raised-button color="accent" *ngIf="editmode" (click)="placeorder()">Place order</button>
+                    <button mat-raised-button color="accent" *ngIf="!editmode" (click)="confirmorder()">confirm order</button>
+                </div>
+                
+            </div>
+            
+        </mat-card>   
+
+        
+
+        </div>
+    </div>
+
+  
+  <pre>{{ orderservice.mforderdetails | json }}</pre>
