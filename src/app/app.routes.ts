@@ -24,12 +24,14 @@ import { BsestarmfregistrationComponent } from './postlogin/settings/bsestarmfre
 import { ForgotpassComponent } from './home/forgotpass/forgotpass.component';
 import { BseregsuccComponent } from './postlogin/settings/bseregsucc/bseregsucc.component';
 import { BsereguploadComponent } from './postlogin/settings/bseregupload/bseregupload.component';
+import { MforderconfpgComponent } from './postlogin/order/mforder/mforderconfpg/mforderconfpg.component';
 
 export const ROUTES: Routes = [
-  
+
   { path: 'home',  component: HomeComponent},
   { path: 'securedpg',  component: PostloginComponent, children: [
-  { path: 'orders',  component: mfpfwiseorderlistComponent},
+    { path: 'orders',  component: mfpfwiseorderlistComponent },
+    { path: 'mfordcof',  component: MforderconfpgComponent },
   /*  {path: 'orders',  component: OrderComponent, children: [
       {path: 'pfwise',  component: PfwiseorderlistComponent},
       {path: 'stwise',  component: StkwiseorderComponent},

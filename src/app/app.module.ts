@@ -96,6 +96,7 @@ import { ForgotpassComponent } from './home/forgotpass/forgotpass.component';
 import { BseregsuccComponent } from './postlogin/settings/bseregsucc/bseregsucc.component';
 import { BsereguploadComponent } from './postlogin/settings/bseregupload/bseregupload.component';
 import { NoticommComponent } from './commonmodule/notificationmodule/noticomm/noticomm.component';
+import { MforderconfpgComponent } from './postlogin/order/mforder/mforderconfpg/mforderconfpg.component';
 
 
 
@@ -136,7 +137,8 @@ import { NoticommComponent } from './commonmodule/notificationmodule/noticomm/no
     ForgotpassComponent,
     BseregsuccComponent,
     BsereguploadComponent,
-    NoticommComponent
+    NoticommComponent,
+    MforderconfpgComponent
   ],
   imports: [
       BrowserModule,
@@ -170,7 +172,7 @@ import { NoticommComponent } from './commonmodule/notificationmodule/noticomm/no
       MatCheckboxModule,
       MatProgressBarModule,
       MatDividerModule,
-    RouterModule.forRoot(ROUTES /*,{enableTracing: true }*/),
+    RouterModule.forRoot(ROUTES ,{enableTracing: true }),
    // NotifymoduleModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,

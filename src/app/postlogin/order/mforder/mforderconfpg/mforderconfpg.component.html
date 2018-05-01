@@ -1,0 +1,31 @@
+
+<div *ngIf="orderservice.validateprogress">
+  <mat-spinner></mat-spinner>
+  <p>
+    Validation in progress
+  </p>
+</div>
+
+
+<div *ngIf="orderservice.orderplacment">
+  <mat-spinner></mat-spinner>
+  <p>
+    Orderplacement in progress
+  </p>
+</div>
+
+
+<div *ngIf="orderservice.validatefail">
+  <mat-spinner></mat-spinner>
+  <p>
+    table with order details with failure validation
+  </p>
+</div>
+
+
+<div *ngIf="orderservice.bsevalidationfail">
+  <mat-spinner></mat-spinner>
+  <p>
+    table with order details with failures at bse
+  </p>
+</div>

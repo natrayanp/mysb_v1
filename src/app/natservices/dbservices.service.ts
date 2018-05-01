@@ -106,68 +106,71 @@ dbaction(screen,functionality,data){
       case "pfsave":
       {
         console.log('inside pfdata save');
-        var apiurl=environment.pfUrl + "/" + environment.pfsave;
-        return this.http.post(apiurl, JSON.stringify(data),{observe: 'response'});    
-        //return this.http.post('http://127.0.0.1:8000/pfdatasave', JSON.stringify(pfform),{observe: 'response'});
+        var apiurl = environment.pfUrl + '/' + environment.pfsave;
+        return this.http.post(apiurl, JSON.stringify(data), {observe: 'response'});
+        // return this.http.post('http://127.0.0.1:8000/pfdatasave', JSON.stringify(pfform),{observe: 'response'});
       }
-      case "pforderfetch":
+      case 'mforderfetch':
       {
         console.log('inside pforderdata fetch');
-        var apiurl=environment.pfUrl + "/" + environment.pforderfetch;
-        
-        return this.getmethod(apiurl,{observe: 'response'});  
-        //return this.http.post('http://127.0.0.1:8000/pfdatasave', JSON.stringify(pfform),{observe: 'response'});
+        var apiurl = environment.pfUrl + '/' + environment.mforderfetch;
+        return this.getmethod(apiurl,{observe: 'response'});
+        // return this.http.post('http://127.0.0.1:8000/pfdatasave', JSON.stringify(pfform),{observe: 'response'});
       }
-      case "fundfetch":
+      case 'fundfetch':
       {
-        
             console.log('inside fund details fetch');
-            var apiurl=environment.fundUrl + "/" + environment.fundfetch;
+            var apiurl = environment.fundUrl + '/' + environment.fundfetch;
             return this.http.post(apiurl, JSON.stringify(data),{observe: 'response'});
-        
       }
-      case "pfmainfetch":
+      case 'pfmainfetch':
       {
-        
             console.log('inside fund details fetch');
-            var apiurl=environment.pfUrl + "/" + environment.pfmainfetch;
+            var apiurl = environment.pfUrl + '/' + environment.pfmainfetch;
             return this.http.post(apiurl, JSON.stringify(data),{observe: 'response'});
-        
       }
       case 'pfexecute':
       {
-        
             console.log('inside execute pf');
-            var apiurl=environment.pfUrl + "/" + environment.executepf;
+            var apiurl = environment.pfUrl + '/' + environment.executepf;
             return this.http.post(apiurl, JSON.stringify(data),{observe: 'response'});
-        
       }
-      case 'pfordersaveforlater':
+      case 'mfordersaveforlater':
       {
-        
-            console.log('inside execute pf');
-            var apiurl=environment.orderUrl + "/" + environment.saveforlater;
+            console.log('inside mf order save');
+            var apiurl = environment.mforderUrl + '/' + environment.mfsaveforlater;
             return this.http.post(apiurl, JSON.stringify(data),{observe: 'response'});
-        
       }
-      
-
+      case 'mfordersubmit':
+      {
+            console.log('inside mf order submit');
+            var apiurl = environment.mforderUrl + '/' + environment.mfsubmitmorder;
+            return this.http.post(apiurl, JSON.stringify(data), {observe: 'response'});
+      }
+      case 'mfordervalidate':
+      {
+            console.log('inside mf order validation');
+            var apiurl = environment.mforderUrl + '/' + environment.mfvalidatemorder;
+            return this.http.post(apiurl, JSON.stringify(data), {observe: 'response'});
+      }
+      case 'mforderpayment':
+      {
+            console.log('inside mf order payment');
+            var apiurl = environment.mforderUrl + '/' + environment.mforderpayment;
+            return this.http.post(apiurl, JSON.stringify(data), {observe: 'response'});
+      }
   }
-
-
-
 }
 
-postmethod(apiurl,data,param){
+
+postmethod(apiurl, data, param) {
   console.log(typeof(data));
-  return this.http.post(apiurl,data,param);
-}
-
-getmethod(apiurl,param){
-  return this.http.get(apiurl,param);
-}
-
+  return this.http.post(apiurl, data, param);
 }
 
 
-  
+getmethod(apiurl, param) {
+  return this.http.get(apiurl, param);
+}
+
+}

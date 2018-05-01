@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter}  from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { DbservicesService } from '../../../../natservices/dbservices.service';
 import { empty } from 'rxjs/observable/empty';
+import { NotifyService } from '../../../../natservices/notify.service';
 
 const resolvedPromise = Promise.resolve(null);
 
@@ -14,84 +15,88 @@ export class mffundlistComponent  {
 
 
 
-  selectedfundlists:string[] =[];
-  investmenttypes: string[]=['One Time','SIP'];
-  selectedinvtyp:string[] =[];
+  selectedfundlists = [];
+  investmenttypes = ['One Time', 'SIP'];
+  selectedinvtyp = [];
   sipshow= false;
-  otshow =false;
+  otshow = false;
   shofndselect = false;
-  @Input() public pfMFlistsFormArray:FormArray;
+  @Input() public pfMFlistsFormArray: FormArray;
   @Input() public mypfdet: any;
-  @Input() public onEdit:string;
-  @Input() public rbsstr:string;
-  fundnames:string[];
-  cardpfonetimetotal:number = 0;
-  cardpfsiptotal:number = 0;
+  @Input() public onEdit: string;
+  @Input() public rbsstr: string;
+  fundnames: string[];
+  cardpfonetimetotal = 0;
+  cardpfsiptotal = 0;
   
 
 empty = {
-  ormflistid:"",
-  orportfolioid:"",
-  ormffundname:"",
-  ormffndcode:"",
-  ormffndnameedit:"edit",
-  ormfdathold:"",  
-  ormffundorderlists:"",
-  ormfexecuteshow:"dontshow"
+  ormflistid: '',
+  orportfolioid: '',
+  ormffundname: '',
+  ormffndcode: '',
+  ormfnatamccode: '',
+  ormffndnameedit: 'edit',
+  ormfdathold: '',
+  ormffundorderlists: '',
+  ormfexecuteshow: 'dontshow'
 };
 
 
 
-emptyinitfundordlist={
-  orormflistid:"",
-  orormfpflistid:"",
-  ormffundordelstrtyp :"",
-  ormffundordelsfreq:"",
-  ormffundordelsstdt:0,
-  ormffundordelsamt:0,
-  ormfsipinstal:0,
-  ormfsipendt:null,
-  //holding select SIP data
-  ormfsipdthold:"",
-  ormfselctedsip:"",
-  ormffndstatus:this.rbsstr
+emptyinitfundordlist= {
+  orormflistid: '',
+  orormfpflistid: '',
+  ormffundordelstrtyp : '',
+  ormffundordelsfreq: '',
+  ormffundordelsstdt: 0,
+  ormffundordelsamt: 0,
+  ormfsipinstal: 0,
+  ormfsipendt: null,
+  // holding select SIP data
+  ormfsipdthold: '',
+  ormfselctedsip: '',
+  orormfprodtype: 'MF', // MF,EQ,IN
+  orormftrantype: '', // New(N),Mod(M),Cxl(C)
+  orormfwhattran: '',  // Pur (PU),Redem (RE) ,SwiOut(SO) ,SwiIn (SI)
+  ormffndstatus: this.rbsstr
 };
 
 
   public orForm : FormGroup;
 
 constructor(private orfb: FormBuilder,
-            private dbserivce :DbservicesService){}
+            private notify: NotifyService,
+            private dbserivce: DbservicesService) {}
 
   ngOnInit() {
 
     this.addPortfolio();
     this.populateform();
-    //this.populateform1();
+    // this.populateform1();
   }
 
-  populateform(){
+  populateform() {
     console.log(this.rbsstr);
     console.log(this.mypfdet);
-    if(this.mypfdet.pfmflist != null){  
-      this.mypfdet.pfmflist.forEach((recor,index1) => {
-
+    if(this.mypfdet.pfmflist != null) {
+      this.mypfdet.pfmflist.forEach((recor, index1) => {
+        console.log(recor);
         this.addonemflist(recor);
-        if (recor.ormffundorderlists != null){
-          recor.ormffundorderlists.forEach((recor1,index2) => {
+        if (recor.ormffundorderlists != null) {
+          recor.ormffundorderlists.forEach((recor1, index2) => {
 
             this.addonefundordlist(
-              (<FormArray>this.orForm.controls.orpflists).controls,              
+              (<FormArray>this.orForm.controls.orpflists).controls,
               recor1,
               index1);
            })
-        } 
+        }
     })
   }
-    
   }
 
-
+/*
   populateform1(){
     console.log(this.rbsstr);
     console.log(this.mypfdet);
@@ -111,38 +116,33 @@ constructor(private orfb: FormBuilder,
   }
     
   }
+  */
 
  
   addPortfolio(){
     this.orForm = this.orfb.group({ 
-      orpflists:new FormArray([])
+      orpflists: new FormArray([])
       });
   }
 
   addonemflist(valuelist){
-
+    console.log(valuelist);
     (<FormArray>this.pfMFlistsFormArray).push(this.initorMFlists(valuelist));
   }
 
-addonefundordlist(controln,valuelist,ind){  
-
-  const controll1=(<FormArray>((<FormGroup>this.pfMFlistsFormArray.controls[ind]).controls).orMFFundorderlists);
-  
-  if(valuelist.ormffundordelstrtyp=="SIP"){        
-   
+addonefundordlist(controln, valuelist, ind) {
+  // New Purchase transaction
+  valuelist.orormftrantype = 'NEW'; // NEW,MOD,CXL
+  valuelist.orormfwhattran = 'P'; // Pur (P),Redem (R) ,SwiOut(SO) ,SwiIn (SI)
+  const controll1 = (<FormArray>((<FormGroup>this.pfMFlistsFormArray.controls[ind]).controls).orMFFundorderlists);
+  if (valuelist.ormffundordelstrtyp === 'SIP') {
     controll1.push(this.initfundordlist(valuelist));
-    
-    
-  }else{
-    
-    controll1.insert(0,this.initfundordlist(valuelist));
-    
+  }else {
+    controll1.insert(0, this.initfundordlist(valuelist));
   }
-
-  
 }
 
-populatesip(controln,index1,index2){ 
+populatesip(controln, index1, index2) {
   const controll1=(<FormArray>((<FormGroup>this.pfMFlistsFormArray.controls[index1]).controls).orMFDathold);
   const controll2=(<FormArray>((<FormGroup>this.pfMFlistsFormArray.controls[index1]).controls).orMFFundorderlists);
   const controll3 = (<FormGroup>controll2.controls[index2]).controls;
@@ -153,64 +153,73 @@ populatesip(controln,index1,index2){
   console.log(controll1);
   console.log();
   if(controll3.orMFfundordelstrtyp.value === 'SIP' && typeof(controll1.value[0]) !== 'undefined') {
-    controll3.ormfSelctedSip.patchValue(controll1.value[0].fnsipdt.filter(rec => rec.sipfreq == controll4.value));
+    controll3.ormfSelctedSip.patchValue(controll1.value[0].fnsipdt.filter(rec => rec.sipfreq === controll4.value));
     controll3.ormfSipdthold.patchValue(controll3.ormfSelctedSip.value[0].sipfreqdates);
   }
 }
 
 initorMFlists(valuelist) {
-    
+  console.log(valuelist);
   let mfform = new FormGroup({
-      orMFListid:new FormControl(valuelist.ormflistid),
-      orPortfolioid:new FormControl(valuelist.orportfolioid),
-      orMFFundname:new FormControl(valuelist.ormffundname,Validators.required),
-      orMFFndnameedit:new FormControl(valuelist.ormffndnameedit,Validators.required),
-      orMFFndcode:new FormControl(valuelist.ormffndcode),
-      orMFFndsipstatus:new FormControl(valuelist.ormffndsipstatus),
-      orMFDathold:new FormControl(valuelist.ormfdathold),
-      orMFFundorderlists:new FormArray([])      
+      orMFListid: new FormControl(valuelist.ormflistid),
+      orPortfolioid: new FormControl(valuelist.orportfolioid),
+      orMFFundname: new FormControl(valuelist.ormffundname,Validators.required),
+      orMFFndnameedit: new FormControl(valuelist.ormffndnameedit,Validators.required),
+      orMFFndcode: new FormControl(valuelist.ormffndcode),
+      orMFNatAmccode: new FormControl(valuelist.ormfnatamccode),
+      orMFFndsipstatus: new FormControl(valuelist.ormffndsipstatus),
+      orMFDathold: new FormControl(valuelist.ormfdathold),
+      orMFFundorderlists: new FormArray([])
     });
+
+    console.log(mfform);
 
     mfform.get('orMFFundname').valueChanges
     .debounceTime(200)
     .distinctUntilChanged()
-    .switchMap((query) =>  ((query.length > 2) ? this.dbserivce.dbaction('fund','fetch',query.toUpperCase() ) : empty()))
-    .subscribe(        
-        queryField => {  
-                 
-                        this.fundnames= queryField['body'];
-                        this.fundnames.length >0? console.log(this.fundnames):0;
+    .switchMap((query) =>  ((query.length > 2) ? this.dbserivce.dbaction('fund', 'fetch', query.toUpperCase() ) : empty()))
+    .subscribe(
+        queryField => {
+                        console.log(queryField['body']);
+                        this.fundnames = queryField['body'];
+                        this.fundnames.length > 0 ? console.log(this.fundnames) : 0 ;
                         console.log(this.fundnames);
-                        if(this.fundnames.length == 1){
-                          mfform.get('orMFDathold').patchValue(this.fundnames.length >0? this.fundnames :{});
-                          mfform.get('orMFFndcode').patchValue(this.fundnames.length ==1? this.fundnames[0]['fndschcdfrmbse'] :{});
+                        if(this.fundnames.length === 1) {
+
+                          // this.mypfdet.pfmflist[k].push(this.fundnames);
+                          mfform.get('orMFDathold').patchValue(this.fundnames.length > 0? this.fundnames :{});
+                          mfform.get('orMFFndcode').patchValue(this.fundnames.length == 1? this.fundnames[0]['fndschcdfrmbse'] :{});
+                          mfform.get('orMFNatAmccode').patchValue(this.fundnames.length == 1? this.fundnames[0]['fndamcnatcode'] :{});
+
+                          /* Intention of this code is to populated hint values (like sipminamt etc..)
+                             but it is not working as expected.  So commenting out.
+                             Future work to be done to acheive this.
 
                           if(mfform.get('orMFDathold')!= {}){
                             this.populateform1();
                           }
 
+                          */
 
                         }
 
                       },
         error =>      {
-                        
+                          this.notify.update("All Porfolios' are already in order list", 'info', 'alert');
                       },
         () =>         {
-                        
+
                       }
                     );
 
 
     return mfform;
-
-    
   }
 
 
 
-initfundordlist(valuelist){
-    let orlisform =  new FormGroup({      
+initfundordlist(valuelist) {
+    let orlisform =  new FormGroup({
       orORMFlistid:new FormControl(valuelist.orormflistid),
       orORMFpflistid:new FormControl(valuelist.orormfpflistid),
       orMFfundordelstrtyp :new FormControl(valuelist.ormffundordelstrtyp,Validators.required),
@@ -219,7 +228,7 @@ initfundordlist(valuelist){
       orMFfundordelsamt:new FormControl(valuelist.ormffundordelsamt,Validators.required),
       orMFsipinstal:new FormControl(valuelist.ormfsipinstal),
       orMFsipendt:new FormControl(valuelist.ormfsipendt),
-      //holding select SIP data
+      // holding select SIP data
       ormfSipdthold:new FormControl(valuelist.ormfsipdthold),
       ormfSelctedSip:new FormControl(valuelist.ormfselctedsip),
       orMFFndstatus:new FormControl(valuelist.ormffndstatus),
@@ -229,17 +238,13 @@ initfundordlist(valuelist){
     .distinctUntilChanged()
     .subscribe(values => {
       resolvedPromise.then(() => {
-        
-        
-        if(orlisform.controls.orMFfundordelsfreq.value =="" || orlisform.controls.orMFfundordelsfreq.value == null){
+        if(orlisform.controls.orMFfundordelsfreq.value === '' || orlisform.controls.orMFfundordelsfreq.value == null){
           orlisform.controls.orMFfundordelsfreq.setErrors({'incorrect': true});
         }else{
           orlisform.controls.orMFfundordelsfreq.setErrors(null);
-        };
-       
+        }
         this.cardMFtotalcalc();
-
-        })
+        });
   });
 
   orlisform.get('orMFsipinstal').valueChanges
@@ -247,10 +252,6 @@ initfundordlist(valuelist){
   .subscribe(values => {
     this.validatesip(orlisform.controls.orMFsipinstal,orlisform.controls.ormfSelctedSip.value);
   });
-
-
-
-  
 
   return orlisform;
   }
@@ -425,10 +426,12 @@ showfndselect(){
 
 edittog(control,k){
 
-
+  console.log(control);
+  console.log(this.mypfdet.pfmflist[k]);
+  
   if(control.controls.orMFFndnameedit.value == 'edit'){
-      //Check to restrict same fund added in the pf
 
+  // Check to restrict same fund added in the pf
   let allrecord =  this.pfMFlistsFormArray.value;
   let result = allrecord.filter(recs => recs.orMFFundname == control.controls.orMFFundname.value);  
   if(result.length>1){
@@ -436,28 +439,28 @@ edittog(control,k){
     return;
   }else{
     control.controls.orMFFundname.setErrors(null);
+    
   }
   
-  //Check to see valid fund is selected
-  result = this.fundnames.filter(recs => (<any>recs).fnddisplayname == control.controls.orMFFundname.value);
-  
+  // Check to see valid fund is selected // Check to see valid fund is selected
+  result = this.fundnames.filter(recs => (<any>recs).fnddisplayname == control.controls.orMFFundname.value);  
   if(result.length<1){
     control.controls.orMFFundname.setErrors({'invalidfund': true});
     return;
   }else{
     control.controls.orMFFundname.setErrors(null);
   }
-  control.controls.orMFFndnameedit.patchValue("noedit");    
+  control.controls.orMFFndnameedit.patchValue('noedit');
 
   }else{
-    control.controls.orMFFndnameedit.patchValue("edit");
+    control.controls.orMFFndnameedit.patchValue('edit');
     while (control.controls.orMFFundorderlists.length !== 0) {
-      control.controls.orMFFundorderlists.removeAt(0);
-      this.mypfdet.pfmflist[k].ormffundorderlists=[];
+      control.controls.orMFFundorderlists.removeAt(0); // control.controls.orMFFundorderlists.removeAt(0);
+      this.mypfdet.pfmflist[k].ormffundorderlists = [];
 
     }
   }
-  this.cardMFtotalcalc();  
+  this.cardMFtotalcalc();
 }
 
 

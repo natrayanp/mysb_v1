@@ -186,9 +186,6 @@ cardasave(ind) {
     }
 }
 
-
-
-
 getordchanged(){  
   if (this.orderservice.ordchanged =="YES"){
     console.log("inside getorderchanged true");
@@ -203,17 +200,29 @@ getordchanged(){
 
 savordforlater(){
   this.orderservice.saveorder();
-  this.fundnames = [];
+  this.orderservice.getfundnames();
+  this.fundnames = this.orderservice.fundnames;
   this.showit = false;
 }
 
 placeorder(){
+  this.orderservice.saveorder();
+  this.orderservice.getfundnames();
+  this.fundnames = this.orderservice.fundnames;
   this.editmode = false;
+}
 
+confirmorder() {
+  this.orderservice.placeorder();
 }
 
 backbtn(){
+  this.showit = true;
   this.editmode = true;
 }
+
+
+
+
 
 }
