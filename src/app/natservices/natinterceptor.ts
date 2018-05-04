@@ -34,10 +34,16 @@ export class NatInterceptor implements HttpInterceptor{
       console.log("inside uploadfile content set");
       this.contentset=false;
     }
+
+    if(req.url.endsWith('mforderpayment')){
+      console.log("inside mforderpayment content set");
+      this.responseType='text/html';
+    }
+
               
     console.log("set toke?:",this.tosettkn);
     console.log("set content?:",this.contentset);
-    if(this.tosettkn){
+    if(this.tosettkn || !(req.url.endsWith('mforderpayment'))) {
         // Get the auth header from the service.
         this.authHeader = localStorage.getItem("natjwt");;
         // Clone the request to add the new header.
@@ -52,7 +58,7 @@ export class NatInterceptor implements HttpInterceptor{
                   this.authReq = req.clone({headers: req.headers.set("Authorization", ("Bearer "+ this.authHeader))});
               }
         console.log(this.authReq);
-        console.log(this.authReq.url);
+        console.log(this.authReq.url);  
         // Pass on the cloned request instead of the original request.
         return next.handle(this.authReq);
     }

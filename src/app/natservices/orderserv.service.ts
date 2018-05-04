@@ -29,6 +29,7 @@ export class OrderservService {
   orderplacment = false;
   validatefail = false;
   bsevalidationfail= false;
+  paymentlink = false;
   // ordchanged= new BehaviorSubject("YES");
   sipamtacrosspf= new BehaviorSubject(0);
   onetimeamtacrosspf = new BehaviorSubject(0);
@@ -182,6 +183,8 @@ submitorder(succrecs) {
                 console.log('submitorder');
                 console.log(record['body']);
                 if (record['body'].failure_recs === null && (record['body'].success_recs.length > 0) ) {
+                  this.bsevalidationfail = true;
+                }else {
                   this.order_payment(record['body'].success_recs);
                 }
                 this.orderplacment = false;
@@ -196,14 +199,15 @@ submitorder(succrecs) {
 
 }
 
-order_payment(orderrec){
+order_payment(orderrec) {
   this.bsevalidationfail = false;
-
+  this.paymentlink = true;
+  console.log("insider order payment");
   console.log(orderrec);
   this.dbserivce.dbaction('mforder', 'payment', orderrec )
   .subscribe(
     record => {
-                console.log('submitorder');
+                console.log('payment link');
                 console.log(record['body']);
               },
     error =>  {

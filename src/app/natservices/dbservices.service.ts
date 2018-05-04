@@ -156,6 +156,7 @@ dbaction(screen,functionality,data){
       case 'mforderpayment':
       {
             console.log('inside mf order payment');
+            console.log(JSON.stringify(data));
             var apiurl = environment.mforderUrl + '/' + environment.mforderpayment;
             return this.http.post(apiurl, JSON.stringify(data), {observe: 'response'});
       }

@@ -29,3 +29,10 @@
     table with order details with failures at bse
   </p>
 </div>
+
+<div *ngIf="orderservice.paymentlink">
+  <mat-spinner></mat-spinner>
+  <p>
+    waiting for payment link
+  </p>
+</div>
